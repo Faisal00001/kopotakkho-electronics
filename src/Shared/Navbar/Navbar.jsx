@@ -1,6 +1,7 @@
 import { FaChevronDown, FaRegWindowRestore, FaShoppingCart } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -9,7 +10,7 @@ const Navbar = () => {
             <div className="navbar bg-[#0046be] pl-5">
                 <div className="navbar-start">
                     <div className="flex flex-row lg:gap-5 items-center">
-                        <div className="font-semibold lg:font-bold text-white lg:text-2xl text-xl">Kopotakkho Electronics</div>
+                        <Link to={'/'} className="font-semibold lg:font-bold text-white lg:text-2xl text-xl">Kopotakkho Electronics</Link>
                         <div className="relative">
                             <input className="focus:outline-none w-auto lg:w-[300px] py-2 pl-3 hidden lg:block rounded-sm text-sm" type="text" placeholder="Search Here.." />
                             <IoSearchSharp className="absolute hidden lg:block cursor-pointer text-blue-700 text-xl top-[25%] right-3" />
@@ -57,7 +58,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="bg-[#003099] flex flex-row items-center pl-5">
-                <div className="dropdown ">
+                <div className="dropdown z-20">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <MdMenu className="text-white text-3xl" />
                     </div>
