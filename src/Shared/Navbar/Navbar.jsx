@@ -41,7 +41,7 @@ const Navbar = () => {
                                         <MdAccountCircle className="text-xl lg:text-3xl" />
                                     </div>
                                     <div className="text-xs">
-                                        Account
+                                        <Link to={'/login'}>Account</Link>
                                     </div>
                                 </li>
                                 <li className="flex gap-2 items-center text-white hover:text-yellow-400 cursor-pointer">

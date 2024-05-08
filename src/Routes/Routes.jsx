@@ -4,6 +4,8 @@ import {
 import Main from "../Layout/Main";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import Home from "../Pages/Home/Home";
+import Login from "../Pages/Login/Login";
+import Registration from "../Pages/Registration/Registration";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
             {
                 path: '/categories/:id',
                 element: <CategoryDetails></CategoryDetails>
+            },
+            {
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/registration',
+                element: <Registration></Registration>
             }
         ]
     },

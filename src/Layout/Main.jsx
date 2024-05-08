@@ -1,11 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 
 
 const Main = () => {
+    const location = useLocation()
+    console.log(location.pathname)
     return (
         <div>
-            <Navbar></Navbar>
+            {
+                location.pathname === ('/login' || '/registration') ? '' : <Navbar></Navbar>
+            }
+
             <Outlet></Outlet>
         </div>
     );
