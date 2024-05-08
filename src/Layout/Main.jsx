@@ -8,7 +8,7 @@ const Main = () => {
     return (
         <div>
             {
-                location.pathname === ('/login' || '/registration') ? '' : <Navbar></Navbar>
+                location.pathname === '/login' || location.pathname === '/registration' ? '' : <Navbar></Navbar>
             }
 
             <Outlet></Outlet>
