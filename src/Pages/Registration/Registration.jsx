@@ -10,6 +10,39 @@ import { Link } from "react-router-dom";
 
 const Registration = () => {
     const [showPassword, setShowPassword] = useState(false)
+    const [checked, setChecked] = useState(false)
+    const [registrationInformation, setRegistrationInformation] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+    })
+    const handleChecked = () => {
+        setChecked(!checked)
+    }
+    const handleRegistration = (event) => {
+        event.preventDefault()
+        const form = event.target
+        const userFirstName = form.firstName.value
+        const userLastName = form.lastName.value
+        const userEmail = form.email.value
+        const userPassword = form.password.value
+        setRegistrationInformation({
+            firstName: userFirstName,
+            lastName: userLastName,
+            email: userEmail,
+            password: userPassword
+
+        })
+        if (checked) {
+            console.log('Perform Operation')
+            console.log(registrationInformation)
+        }
+        else {
+            alert('Not checked')
+            return
+        }
+    }
     return (
         <div>
             <nav className="bg-[#0046be] pl-5 py-2">
@@ -31,25 +64,25 @@ const Registration = () => {
                             <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Create an Account</h3>
 
 
-                            <form className="max-w-sm mt-5 pb-20">
+                            <form onSubmit={handleRegistration} className="max-w-sm mt-5 pb-20">
                                 <div className="mb-5">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-                                    <input type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="firstName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
-                                    <input type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="lastName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                    <input type="email" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="email" type="email" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5 relative">
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                    <input type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="password" type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
                                     <div onClick={() => setShowPassword(!showPassword)} className="cursor-pointer select-none">
                                         {
                                             !showPassword ? <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Show</h3> : <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Hide</h3>
@@ -58,7 +91,7 @@ const Registration = () => {
                                     </div>
                                 </div>
                                 <div className="flex my-5">
-                                    <input type="checkbox" value="" className="w-4 h-4 mt-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:outline-none" />
+                                    <input checked={checked} onChange={handleChecked} type="checkbox" value="" className="w-4 h-4 mt-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:outline-none" />
                                     <label htmlFor="checked-checkbox" className="ms-2 text-sm text-gray-900">Sign up for our newsletter to stay in the loop about hot deals, new products, and more. Don’t worry, you can unsubscribe at any time.</label>
                                 </div>
                                 <div>
@@ -79,8 +112,10 @@ const Registration = () => {
                                         <div>
                                             <p className="text-sm">Already have an account?</p>
                                             <div className="flex gap-1 items-center text-blue-800">
-                                                <h3 className="text-sm font-bold">Sign In</h3>
-                                                <MdKeyboardArrowRight />
+                                                <Link className="flex  items-center" to={'/login'}>
+                                                    <h3 className="text-sm font-bold cursor-pointer hover:underline">Sign In</h3>
+                                                    <MdKeyboardArrowRight />
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +125,7 @@ const Registration = () => {
                             </form>
                         </div>
                         <div className="pt-36 pb-20">
-                            <h3 className="text-2xl font-bold mb-2">Don't have an account?</h3>
+                            <h3 className="text-2xl font-bold mb-2">Don’t have an account?</h3>
                             <p className="text-sm text-slate-700">Here are some of the benefits you’ll enjoy:</p>
                             <div className="mt-5">
                                 <div className="flex gap-1">

@@ -9,7 +9,24 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
+    const [loginInformation, setLoginInformation] = useState({
+        userName: '',
+        password: ''
+    })
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const form = event.target;
+        const userEmail = form.email.value
+        const userPassword = form.password.value
+        setLoginInformation({
+            userName: userEmail,
+            password: userPassword
+        })
+        console.log(loginInformation)
 
+
+
+    }
     return (
         <div>
             <nav className="bg-[#0046be] pl-5 py-2">
@@ -31,15 +48,15 @@ const Login = () => {
                             <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Sign In</h3>
 
 
-                            <form className="max-w-sm mt-5">
+                            <form onSubmit={handleSubmit} className="max-w-sm mt-5">
                                 <div className="mb-5">
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
-                                    <input type="email" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your email address" required />
+                                    <input name="email" type="email" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your email address" required />
 
                                 </div>
                                 <div className="mb-5 relative">
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                    <input type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="password" type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
                                     <div onClick={() => setShowPassword(!showPassword)} className="cursor-pointer select-none">
                                         {
                                             !showPassword ? <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Show</h3> : <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Hide</h3>
@@ -55,7 +72,7 @@ const Login = () => {
                             </form>
                         </div>
                         <div className="pt-36 pb-20">
-                            <h3 className="text-2xl font-bold mb-2">Don't have an account?</h3>
+                            <h3 className="text-2xl font-bold mb-2">Don’t have an account?</h3>
                             <p className="text-sm text-slate-700">Here are some of the benefits you’ll enjoy:</p>
                             <div className="mt-5">
                                 <div className="flex gap-1">
