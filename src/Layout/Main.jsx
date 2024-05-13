@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 
@@ -12,6 +13,7 @@ const Main = () => {
             }
 
             <Outlet></Outlet>
+            <Toaster />
         </div>
     );
 };

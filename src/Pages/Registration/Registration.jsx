@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { CiLock } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
@@ -6,14 +7,19 @@ import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdShoppingCartCheckout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
 const Registration = () => {
+    const axiosPublic = useAxiosPublic()
     const [showPassword, setShowPassword] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [checked, setChecked] = useState(false)
     const [registrationInformation, setRegistrationInformation] = useState({
         firstName: '',
         lastName: '',
+        userName: '',
+        phoneNumber: '',
         email: '',
         password: ''
     })
@@ -25,23 +31,29 @@ const Registration = () => {
         const form = event.target
         const userFirstName = form.firstName.value
         const userLastName = form.lastName.value
+        const user_name = form.userName.value
+        const userPhoneNumber = form.phoneNumber.value
         const userEmail = form.email.value
         const userPassword = form.password.value
         setRegistrationInformation({
             firstName: userFirstName,
             lastName: userLastName,
+            userName: user_name,
+            phoneNumber: userPhoneNumber,
             email: userEmail,
             password: userPassword
 
         })
-        if (checked) {
-            console.log('Perform Operation')
-            console.log(registrationInformation)
-        }
-        else {
-            alert('Not checked')
-            return
-        }
+        console.log('Hello')
+        axiosPublic.post('/customer-register/', registrationInformation)
+            .then(res => {
+                console.log('Hello bhai')
+                if (res.data.bool === true) {
+                    toast.success('User Created Successfully')
+                }
+            })
+            .catch(error => setErrorMessage(error.message))
+        console.log(errorMessage)
     }
     return (
         <div>
@@ -73,6 +85,16 @@ const Registration = () => {
                                 <div className="mb-5">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
                                     <input name="lastName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900">User Name</label>
+                                    <input name="userName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
+                                    <input name="phoneNumber" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">
