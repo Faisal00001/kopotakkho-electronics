@@ -36,22 +36,22 @@ const Navbar = () => {
                                     <div className=" text-white group-hover:text-yellow-400"><FaRegWindowRestore className="text-xl lg:text-2xl" /></div>
                                     <div className="text-white group-hover:text-yellow-400 text-xs">Stores</div>
                                 </li>
-                                <li className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
+                                <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
                                     <div>
                                         <MdAccountCircle className="text-xl lg:text-3xl" />
                                     </div>
                                     <div className="text-xs">
-                                        <Link to={'/login'}>Account</Link>
+                                        Account
                                     </div>
-                                </li>
-                                <li className="flex gap-2 items-center text-white hover:text-yellow-400 cursor-pointer">
+                                </Link>
+                                <Link to={'/basket'} className="flex gap-2 items-center text-white hover:text-yellow-400 cursor-pointer">
                                     <div>
                                         <FaShoppingCart className="text-xl lg:text-2xl" />
                                     </div>
                                     <div className="text-xs">
                                         Cart
                                     </div>
-                                </li>
+                                </Link>
                             </ul>
                         </div>
                     </div>
