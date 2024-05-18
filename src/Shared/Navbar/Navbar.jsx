@@ -1,10 +1,23 @@
+import { useContext, useEffect, useState } from "react";
 import { FaChevronDown, FaRegWindowRestore, FaShoppingCart } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const Navbar = () => {
+    const storedUser = localStorage.getItem('user');
+    const [firstName, setFirstName] = useState('')
+    const { cartItems } = useContext(AuthContext)
+    useEffect(() => {
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            setFirstName(user.firstName)
+
+        }
+    }, [storedUser])
+
     return (
         <div>
             <div className="navbar bg-[#0046be] pl-5">
@@ -25,7 +38,7 @@ const Navbar = () => {
                         <div className="mb-5 lg:mt-2 hidden lg:block ">
                             <ul className="flex gap-5 text-xs text-white">
                                 <li className="cursor-pointer hover:underline">Order Status</li>
-                                <li className="cursor-pointer hover:underline">Blog</li>
+                                <Link to={'/blogs'} className="cursor-pointer hover:underline">Blog</Link>
                                 <li className="cursor-pointer hover:underline">Business</li>
                                 <li className="cursor-pointer hover:underline">Francais</li>
                             </ul>
@@ -36,20 +49,33 @@ const Navbar = () => {
                                     <div className=" text-white group-hover:text-yellow-400"><FaRegWindowRestore className="text-xl lg:text-2xl" /></div>
                                     <div className="text-white group-hover:text-yellow-400 text-xs">Stores</div>
                                 </li>
-                                <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
-                                    <div>
-                                        <MdAccountCircle className="text-xl lg:text-3xl" />
-                                    </div>
-                                    <div className="text-xs">
-                                        Account
-                                    </div>
-                                </Link>
+                                {
+                                    storedUser ? <>
+                                        <Link className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
+
+                                            <div className="text-sm">
+                                                {`Hi ${firstName} !`}
+                                            </div>
+
+                                        </Link>
+                                    </> : <>
+                                        <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
+                                            <div>
+                                                <MdAccountCircle className="text-xl lg:text-3xl" />
+                                            </div>
+                                            <div className="text-xs">
+                                                Account
+                                            </div>
+                                        </Link>
+                                    </>
+                                }
+
                                 <Link to={'/basket'} className="flex gap-2 items-center text-white hover:text-yellow-400 cursor-pointer">
                                     <div>
                                         <FaShoppingCart className="text-xl lg:text-2xl" />
                                     </div>
                                     <div className="text-xs">
-                                        Cart
+                                        Cart <span>({cartItems.length})</span>
                                     </div>
                                 </Link>
                             </ul>

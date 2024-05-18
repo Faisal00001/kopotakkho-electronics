@@ -15,7 +15,8 @@ const Main = () => {
 
             <Outlet></Outlet>
             <Footer></Footer>
-            <Toaster />
+            <Toaster position="top-right"
+                reverseOrder={false} />
         </div>
     );
 };

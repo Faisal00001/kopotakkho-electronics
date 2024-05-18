@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CiLock } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdShoppingCartCheckout } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
 const Login = () => {
+    const axiosPublic = useAxiosPublic()
+    const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
     const [loginInformation, setLoginInformation] = useState({
         userName: '',
@@ -16,13 +22,28 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
         const form = event.target;
-        const userEmail = form.email.value
+        const user_name = form.userName.value
         const userPassword = form.password.value
         setLoginInformation({
-            userName: userEmail,
+            userName: user_name,
             password: userPassword
         })
-        console.log(loginInformation)
+        const formData = new FormData()
+        formData.append('username', user_name)
+        formData.append('password', userPassword)
+        axiosPublic.post('/customer-login/', formData)
+            .then(res => {
+                if (res.data.bool === true) {
+                    Swal.fire({
+                        title: "Login Successful!",
+                        icon: "success"
+                    });
+                    localStorage.setItem('user', JSON.stringify(user))
+                    form.reset()
+                    navigate('/')
+                }
+            })
+            .catch(error => console.log(error))
 
 
 
@@ -50,8 +71,8 @@ const Login = () => {
 
                             <form onSubmit={handleSubmit} className="max-w-sm mt-5">
                                 <div className="mb-5">
-                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
-                                    <input name="email" type="email" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your email address" required />
+                                    <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900">User Name</label>
+                                    <input name="userName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your user name" required />
 
                                 </div>
                                 <div className="mb-5 relative">

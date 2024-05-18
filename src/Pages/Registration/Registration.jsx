@@ -1,12 +1,13 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useContext, useState } from "react";
 import { CiLock } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdShoppingCartCheckout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
@@ -15,14 +16,9 @@ const Registration = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [checked, setChecked] = useState(false)
-    const [registrationInformation, setRegistrationInformation] = useState({
-        firstName: '',
-        lastName: '',
-        userName: '',
-        phoneNumber: '',
-        email: '',
-        password: ''
-    })
+    const navigate = useNavigate()
+    const { setUser } = useContext(AuthContext)
+    console.log(setUser)
     const handleChecked = () => {
         setChecked(!checked)
     }
@@ -35,25 +31,37 @@ const Registration = () => {
         const userPhoneNumber = form.phoneNumber.value
         const userEmail = form.email.value
         const userPassword = form.password.value
-        setRegistrationInformation({
-            firstName: userFirstName,
-            lastName: userLastName,
-            userName: user_name,
-            phoneNumber: userPhoneNumber,
-            email: userEmail,
-            password: userPassword
 
-        })
-        console.log('Hello')
-        axiosPublic.post('/customer-register/', registrationInformation)
+        const formData = new FormData();
+        formData.append('first_name', userFirstName);
+        formData.append('last_name', userLastName);
+        formData.append('username', user_name);
+        formData.append('email', userEmail);
+        formData.append('phone', userPhoneNumber);
+        formData.append('password', userPassword);
+
+        axiosPublic.post('/customer-register/', formData)
             .then(res => {
-                console.log('Hello bhai')
+                console.log(res.data.bool)
                 if (res.data.bool === true) {
-                    toast.success('User Created Successfully')
+                    Swal.fire({
+                        title: "Registration Successful!",
+                        text: "Please login to continue!",
+                        icon: "success"
+                    });
+                    const user_information = {
+                        firstName: userFirstName,
+                        lastName: userLastName,
+                        user_name: user_name,
+                        email: userEmail
+
+                    };
+                    setUser(user_information)
+                    form.reset()
+                    navigate('/login')
                 }
             })
-            .catch(error => setErrorMessage(error.message))
-        console.log(errorMessage)
+            .catch(error => setErrorMessage(error))
     }
     return (
         <div>
@@ -94,7 +102,7 @@ const Registration = () => {
                                 </div>
                                 <div className="mb-5">
                                     <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
-                                    <input name="phoneNumber" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="phoneNumber" type="number" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">

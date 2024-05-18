@@ -12,8 +12,9 @@ import 'swiper/css/pagination';
 // import required modules
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 
-const ProductDetailsSlider = () => {
-
+const ProductDetailsSlider = ({ product }) => {
+    console.log(product?.product_image)
+    console.log(`http://127.0.0.1:8000/${product?.product_image}`)
     return (
         <div>
             <Swiper
@@ -32,33 +33,13 @@ const ProductDetailsSlider = () => {
                 modules={[EffectCoverflow, Pagination]}
                 className="mySwiper"
             >
-                <SwiperSlide>
-                    <img  src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                </SwiperSlide>
+                {
+                    product?.product_image.map((image, index) => <SwiperSlide key={index}>
+                        <img src={`http://127.0.0.1:8000${image}`} />
+                    </SwiperSlide>)
+                }
+
+
             </Swiper>
         </div>
     );
