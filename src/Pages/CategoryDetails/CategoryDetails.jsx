@@ -23,7 +23,7 @@ const CategoryDetails = () => {
         product.category === idInt
     )
 
-    console.log(categoryWiseProducts)
+
     return (
         <div>
             <div className="container mx-auto mt-5 mb-10">

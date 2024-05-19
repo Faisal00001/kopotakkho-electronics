@@ -51,7 +51,6 @@ const ProductDetails = () => {
     if (isLoading) {
         return "Loading"
     }
-
     const handleAddToCart = (product) => {
         const isFound = cartItems.find(cartItem => cartItem.id === product.id)
         if (!isFound) {

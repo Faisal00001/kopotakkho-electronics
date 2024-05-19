@@ -19,8 +19,8 @@ const Navbar = () => {
     }, [storedUser])
 
     return (
-        <div>
-            <div className="navbar bg-[#0046be] pl-5">
+        <div className="sticky top-0 z-50">
+            <div className="navbar bg-[#0046be] pl-5 ">
                 <div className="navbar-start">
                     <div className="flex flex-row lg:gap-5 items-center">
                         <Link to={'/'} className="font-semibold lg:font-bold text-white lg:text-2xl text-xl">Kopotakkho Electronics</Link>
@@ -70,12 +70,21 @@ const Navbar = () => {
                                     </>
                                 }
 
-                                <Link to={'/basket'} className="flex gap-2 items-center text-white hover:text-yellow-400 cursor-pointer">
+                                <Link to={'/basket'} className="flex relative gap-3 items-center text-white hover:text-yellow-400 cursor-pointer">
                                     <div>
                                         <FaShoppingCart className="text-xl lg:text-2xl" />
                                     </div>
-                                    <div className="text-xs">
-                                        Cart <span>({cartItems.length})</span>
+                                    <div >
+                                        <h3 className="text-xs">
+                                            Cart
+
+                                        </h3>
+
+                                    </div>
+                                    <div className="absolute left-3 -top-1">
+                                        <div className="w-5 h-5 bg-yellow-400 rounded-full">
+                                            <span className="text-xs absolute left-[30%] top-[10%] font-medium text-black">{cartItems.length}</span>
+                                        </div>
                                     </div>
                                 </Link>
                             </ul>
