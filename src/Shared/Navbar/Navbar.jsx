@@ -13,7 +13,7 @@ const Navbar = () => {
     useEffect(() => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
-            setFirstName(user.firstName)
+            setFirstName(user.user_name)
 
         }
     }, [storedUser])
@@ -49,26 +49,20 @@ const Navbar = () => {
                                     <div className=" text-white group-hover:text-yellow-400"><FaRegWindowRestore className="text-xl lg:text-2xl" /></div>
                                     <div className="text-white group-hover:text-yellow-400 text-xs">Stores</div>
                                 </li>
-                                {
-                                    storedUser ? <>
-                                        <Link className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
 
-                                            <div className="text-sm">
-                                                {`Hi ${firstName} !`}
-                                            </div>
 
-                                        </Link>
-                                    </> : <>
-                                        <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
-                                            <div>
-                                                <MdAccountCircle className="text-xl lg:text-3xl" />
-                                            </div>
-                                            <div className="text-xs">
-                                                Account
-                                            </div>
-                                        </Link>
-                                    </>
-                                }
+                                <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
+                                    <div>
+                                        <MdAccountCircle className="text-xl lg:text-3xl" />
+                                    </div>
+                                    <div className="text-xs">
+                                        {
+                                            storedUser ? `${firstName}` : 'Account'
+                                        }
+                                    </div>
+                                </Link>
+
+
 
                                 <Link to={'/basket'} className="flex relative gap-3 items-center text-white hover:text-yellow-400 cursor-pointer">
                                     <div>

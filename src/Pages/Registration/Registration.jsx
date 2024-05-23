@@ -49,14 +49,14 @@ const Registration = () => {
                         text: "Please login to continue!",
                         icon: "success"
                     });
-                    const user_information = {
-                        firstName: userFirstName,
-                        lastName: userLastName,
-                        user_name: user_name,
-                        email: userEmail
+                    // const user_information = {
+                    //     firstName: userFirstName,
+                    //     lastName: userLastName,
+                    //     user_name: user_name,
+                    //     email: userEmail
 
-                    };
-                    setUser(user_information)
+                    // };
+                    // setUser(user_information)
                     form.reset()
                     navigate('/login')
                 }

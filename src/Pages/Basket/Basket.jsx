@@ -1,14 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdRemoveShoppingCart } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const Basket = () => {
-    const { cartItems } = useContext(AuthContext)
-    const OriginalPrice = cartItems.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.price
-    }, 0)
+    const { cartItems, setCartItems } = useContext(AuthContext)
+    const [totalPrice, setTotalPrice] = useState(0)
+    const [originalPrice, setOriginalPrice] = useState()
+    const navigate = useNavigate()
+    useEffect(() => {
+        const originalPrice = cartItems.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.price
+        }, 0)
+        setOriginalPrice(originalPrice)
+        setTotalPrice(originalPrice)
+    }, [cartItems])
+    const handleRemoveItem = (cartItem) => {
+        const updatedItems = cartItems.filter(item => item.id !== cartItem.id)
+        setCartItems(updatedItems)
+    }
+    const handleCheckout = () => {
+        navigate('/checkout')
+    }
     return (
         <div>
             {
@@ -61,7 +75,7 @@ const Basket = () => {
                                                                     Add to Favorites
                                                                 </button>
 
-                                                                <button type="button" className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
+                                                                <button onClick={() => handleRemoveItem(cartItem)} type="button" className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
                                                                     <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                                                     </svg>
@@ -194,7 +208,7 @@ const Basket = () => {
                                             <div className="space-y-2">
                                                 <dl className="flex items-center justify-between gap-4">
                                                     <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
-                                                    <dd className="text-base font-medium text-gray-900 dark:text-white">${OriginalPrice}</dd>
+                                                    <dd className="text-base font-medium text-gray-900 dark:text-white">${originalPrice}</dd>
                                                 </dl>
 
                                                 <dl className="flex items-center justify-between gap-4">
@@ -215,11 +229,12 @@ const Basket = () => {
 
                                             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                                                 <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                                                <dd className="text-base font-bold text-gray-900 dark:text-white">$8,191.00</dd>
+                                                <dd className="text-base font-bold text-gray-900 dark:text-white">${totalPrice}</dd>
                                             </dl>
                                         </div>
 
-                                        <a href="#" className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Checkout</a>
+                                        {/* <button className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Checkout</button> */}
+                                        <button onClick={handleCheckout} className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Proceed to Checkout</button>
 
                                         <div className="flex items-center justify-center gap-2">
                                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
@@ -238,7 +253,7 @@ const Basket = () => {
                                                 <label htmlFor="voucher" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Do you have a voucher or gift card? </label>
                                                 <input type="text" id="voucher" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="" required />
                                             </div>
-                                            <button type="submit" className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Apply Code</button>
+                                            <button className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Apply Code</button>
                                         </form>
                                     </div>
                                 </div>
@@ -250,7 +265,7 @@ const Basket = () => {
                         <div className="flex justify-between ">
                             <div>
                                 <h3 className="text-2xl mt-5">Your Cart</h3>
-                                <h3 className="mt-5 text-xl font-semibold">Looks like it's empty!</h3>
+                                <h3 className="mt-5 text-xl font-semibold">Looks like it’s empty!</h3>
                                 <p className="text-sm mt-3">Why not add something?</p>
                             </div>
                             <div className="mt-14">

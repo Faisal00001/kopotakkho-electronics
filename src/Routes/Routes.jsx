@@ -5,10 +5,12 @@ import Main from "../Layout/Main";
 import Basket from "../Pages/Basket/Basket";
 import Blogs from "../Pages/Blogs/Blogs";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
+import Checkout from "../Pages/Checkout/Checkout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import Registration from "../Pages/Registration/Registration";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: '/blogs',
                 element: <Blogs></Blogs>
+            },
+            {
+                path: '/checkout',
+                element: <PrivateRoute><Checkout></Checkout></PrivateRoute>
             }
         ]
     },

@@ -4,7 +4,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdShoppingCartCheckout } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
@@ -12,13 +12,15 @@ import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 const Login = () => {
     const axiosPublic = useAxiosPublic()
-    const { user } = useContext(AuthContext)
     const navigate = useNavigate()
+    const { setUser } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
     const [loginInformation, setLoginInformation] = useState({
         userName: '',
         password: ''
     })
+    const location = useLocation()
+    const from = location?.state?.from?.pathname || "/"
     const handleSubmit = (event) => {
         event.preventDefault()
         const form = event.target;
@@ -34,13 +36,18 @@ const Login = () => {
         axiosPublic.post('/customer-login/', formData)
             .then(res => {
                 if (res.data.bool === true) {
+                    const user = {
+                        user_name: res.data.user,
+                        id: res.data.id
+                    }
                     Swal.fire({
                         title: "Login Successful!",
                         icon: "success"
                     });
+                    setUser(user)
                     localStorage.setItem('user', JSON.stringify(user))
                     form.reset()
-                    navigate('/')
+                    navigate(from, { replace: true })
                 }
             })
             .catch(error => console.log(error))
