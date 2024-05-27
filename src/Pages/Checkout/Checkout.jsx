@@ -1,9 +1,7 @@
-import useOrders from "../../components/hooks/useOrders";
 
 const Checkout = () => {
 
-    const [orders] = useOrders()
-    console.log(orders)
+
     return (
         <div className="container mx-auto">
             <div className="font-[sans-serif] bg-white">

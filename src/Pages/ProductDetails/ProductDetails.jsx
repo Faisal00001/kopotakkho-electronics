@@ -52,9 +52,11 @@ const ProductDetails = () => {
         return "Loading"
     }
     const handleAddToCart = (product) => {
+        console.log('Product Detail Page', product)
         const isFound = cartItems.find(cartItem => cartItem.id === product.id)
         if (!isFound) {
-            const newCartItems = [...cartItems, product]
+            const newProduct = { ...product, quantity: 1, unitPrice: product.price };
+            const newCartItems = [...cartItems, newProduct]
             setCartItems(newCartItems)
             toast.success('Success! Your item has been added to the cart.')
         }

@@ -2,12 +2,45 @@ import { useContext, useEffect, useState } from "react";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
 const Basket = () => {
     const { cartItems, setCartItems } = useContext(AuthContext)
+    const [order_id, setOrderId] = useState(null)
     const [totalPrice, setTotalPrice] = useState(0)
-    const [originalPrice, setOriginalPrice] = useState()
+    const [originalPrice, setOriginalPrice] = useState(0)
+    const axiosPublic = useAxiosPublic()
+
+    // const initialQuantities = cartItems.reduce((acc, product) => {
+    //     acc[product.id] = 1
+    //     return acc;
+    // }, {})
+    console.log(cartItems)
+    // const prices = cartItems.reduce((acc, product) => {
+    //     acc[product.id] = product.price
+    //     return acc;
+    // }, {})
+    const [quantities, setQuantities] = useState({})
+    // Initialize quantities when cartItems change
+    const storedUser = localStorage.getItem('user');
+    const [customerId, setCustomerId] = useState(null)
+    useEffect(() => {
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            setCustomerId(parseInt(user.id))
+        }
+    }, [storedUser])
+
+
+
+    useEffect(() => {
+        const initialQuantities = cartItems.reduce((acc, product) => {
+            acc[product.id] = 1; // Initial quantity is set to 1
+            return acc;
+        }, {});
+        setQuantities(initialQuantities);
+    }, [cartItems]);
     const navigate = useNavigate()
     useEffect(() => {
         const originalPrice = cartItems.reduce((accumulator, currentValue) => {
@@ -20,9 +53,129 @@ const Basket = () => {
         const updatedItems = cartItems.filter(item => item.id !== cartItem.id)
         setCartItems(updatedItems)
     }
-    const handleCheckout = () => {
-        navigate('/checkout')
+    const getOrderId = () => {
+
+        const formData = new FormData();
+        formData.append('customer', customerId);
+        axiosPublic.post('/orders/', formData)
+            .then(res => {
+                setOrderId(res.data.id)
+                handleCheckout(res.data.id)
+            })
+            .catch(error => console.log(error.message))
     }
+    // const handleCheckout = async () => {
+    //     const order_id = getOrderId()
+    //     const cartItems = JSON.parse(localStorage.getItem('cartItems'))
+    //     console.log('Basket cart Items ', cartItems)
+    //     if (cartItems != null) {
+    //         cartItems.map((cart) => {
+    //             const formData = new FormData()
+    //             formData.append('order', order_id);
+    //             formData.append('product', cart.id);
+    //             formData.append('quantity', cart.quantity);
+    //             formData.append('price', cart.price);
+    //             formData.forEach((value, key) => {
+    //                 console.log(`${key}: ${value}`);
+    //             });
+    //             return axiosPublic.post('/order-items/', formData);
+
+
+    //         })
+    //         try {
+    //             // Wait for all post requests to complete
+    //             await Promise.all(postRequests);
+    //             // Clear the cart and navigate after all requests are successful
+    //             localStorage.removeItem('cartItems');
+    //             console.log('All items posted successfully');
+    //             // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
+    //         } catch (error) {
+    //             console.error('An error occurred while posting the cart items:', error);
+    //         }
+    //     }
+    //     // navigate('/checkout')
+    // }
+    const handleCheckout = async (order_id) => {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        console.log('Basket cart Items', cartItems);
+
+        if (cartItems != null) {
+            // Collect all the post requests as promises
+            const postRequests = cartItems.map(async (cart) => {
+                const formData = new FormData();
+                console.log(cart.id)
+                formData.append('order', order_id);
+                formData.append('product', cart.id);
+                formData.append('quantity', cart.quantity);
+                formData.append('price', cart.price);
+
+                formData.forEach((value, key) => {
+                    console.log(`${key}: ${value}`);
+                });
+                console.log('New Line');
+
+                // Return the axios post promise
+                return axiosPublic.post('/order-items/', formData)
+                    .catch(error => {
+                        if (error.response) {
+                            console.error('Server responded with:', error.response.data);
+                        } else {
+                            console.error('Error posting cart item:', cart, error);
+                        }
+                        throw error; // Re-throw the error to be caught in Promise.all
+                    });
+            });
+
+            try {
+                // Wait for all post requests to complete
+                await Promise.all(postRequests);
+                // Clear the cart and navigate after all requests are successful
+                localStorage.removeItem('cartItems');
+                console.log('All items posted successfully');
+                // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
+            } catch (error) {
+                console.error('An error occurred while posting the cart items:', error);
+            }
+        }
+    };
+
+    // const handleIncQuantity = (id) => {
+    //     setQuantities(prevQuantity => ({
+    //         ...prevQuantity,
+    //         [id]: prevQuantity[id] + 1
+
+    //     }))
+    // }
+    // const handleDecQuantity = (id) => {
+    //     setQuantities(prevQuantity => ({
+    //         ...prevQuantity,
+    //         [id]: prevQuantity[id] > 1 ? prevQuantity[id] - 1 : 1
+    //     }))
+    //     console.log('What', quantities[id])
+    //     updateCartItemPrice(id, quantities[id])
+    // }
+    // Update quantities and recalculate total price
+
+    const handleQuantityChange = (id, delta) => {
+        const updatedCartItems = cartItems.map(item => {
+            if (item.id === id) {
+                const newQuantity = Math.max(item.quantity + delta, 1);
+                const newPrice = newQuantity * item.unitPrice;
+                return { ...item, quantity: newQuantity, price: newPrice };
+            }
+            return item;
+        })
+        // .filter(item => item.quantity > 0); // Remove items with zero quantity
+
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    };
+    // const calculatePrice = (id) => {
+    //     setCartItems()
+    //     return quantities[id] * prices[id]
+    // }
+    // Update the price of the cart item based on the new quantity
+
     return (
         <div>
             {
@@ -47,13 +200,14 @@ const Basket = () => {
                                                         <label htmlFor="counter-input" className="sr-only">Choose quantity:</label>
                                                         <div className="flex items-center justify-between md:order-3 md:justify-end">
                                                             <div className="flex items-center">
-                                                                <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                                                <button
+                                                                    onClick={() => handleQuantityChange(cartItem.id, -1)} type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                                                     <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                                                                     </svg>
                                                                 </button>
-                                                                <input type="text" id="counter-input" data-input-counter className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="2" required />
-                                                                <button type="button" id="increment-button" data-input-counter-increment="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                                                <input type="text" id="counter-input" data-input-counter className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" value={cartItem.quantity} readOnly />
+                                                                <button onClick={() => handleQuantityChange(cartItem.id, 1)} type="button" id="increment-button" data-input-counter-increment="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                                                     <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                                                                     </svg>
@@ -234,7 +388,7 @@ const Basket = () => {
                                         </div>
 
                                         {/* <button className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Checkout</button> */}
-                                        <button onClick={handleCheckout} className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Proceed to Checkout</button>
+                                        <button onClick={getOrderId} className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Proceed to Checkout</button>
 
                                         <div className="flex items-center justify-center gap-2">
                                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
