@@ -1,7 +1,40 @@
+import { useState } from "react";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import useOrders from "../../components/hooks/useOrders";
 
 const Checkout = () => {
+    const axiosPublic = useAxiosPublic()
+    const [customerName, setCustomerName] = useState('');
+    const [customerEmail, setCustomerEmail] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
+    const [customerAddress, setCustomerAddress] = useState('');
+    const [customerPostcode, setCustomerPostcode] = useState('')
 
 
+    const [userOrders, loading] = useOrders()
+    if (loading) {
+        return "Loading"
+    }
+    const totalPrice = userOrders.data.reduce((acc, currentValue) => {
+        return currentValue.order.order_status ? 0 : acc + parseFloat(currentValue.price)
+    }, 0.0)
+    const handlePayment = async (event) => {
+        event.preventDefault()
+        try {
+            const response = await axiosPublic.post('/initiate/', {
+                amount: totalPrice,
+                customer_name: customerName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                customer_address: customerAddress,
+                customer_postcode: customerPostcode
+            });
+
+            window.location.href = response.data.GatewayPageURL;
+        } catch (error) {
+            console.error('Payment initiation failed:', error);
+        }
+    };
     return (
         <div className="container mx-auto">
             <div className="font-[sans-serif] bg-white">
@@ -11,25 +44,25 @@ const Checkout = () => {
                             <div className="text-center max-lg:hidden">
                                 <h2 className="text-3xl font-extrabold text-[#333] inline-block border-b-4 border-[#333] pb-1">Checkout</h2>
                             </div>
-                            <form className="lg:mt-12">
+                            <form onSubmit={handlePayment} className="lg:mt-12">
                                 <div>
                                     <h2 className="text-2xl font-extrabold text-[#333]">Shipping info</h2>
                                     <div className="grid grid-cols-2 gap-6 mt-8">
-                                        <input type="text" placeholder="Name"
+                                        <input required onChange={(e) => setCustomerName(e.target.value)} type="text" placeholder="Name"
                                             className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                        <input type="email" placeholder="Email address"
+                                        <input required onChange={(e) => setCustomerEmail(e.target.value)} type="email" placeholder="Email address"
                                             className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                        <input type="text" placeholder="Street address"
+                                        <input required onChange={(e) => setCustomerPhone(e.target.value)} type="text" placeholder="Phone number"
                                             className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                        <input type="text" placeholder="City"
+                                        <input required onChange={(e) => setCustomerAddress(e.target.value)} type="text" placeholder="Address"
                                             className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                        <input type="text" placeholder="State"
+                                        <input required onChange={(e) => setCustomerPostcode(e.target.value)} type="text" placeholder="Postcode"
                                             className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                        <input type="number" placeholder="Postal code"
-                                            className="px-2 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+
+
                                     </div>
                                 </div>
-                                <div className="mt-12">
+                                {/* <div className="mt-12">
                                     <h2 className="text-2xl font-extrabold text-[#333]">Payment method</h2>
                                     <div className="grid gap-4 sm:grid-cols-2 mt-8">
                                         <div className="flex items-center">
@@ -71,10 +104,10 @@ const Checkout = () => {
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="flex flex-wrap gap-4 mt-8">
                                     <button type="button" className="min-w-[150px] px-6 py-3.5 text-sm bg-gray-100 text-[#333] rounded-md hover:bg-gray-200">Back</button>
-                                    <button type="button" className="min-w-[150px] px-6 py-3.5 text-sm bg-[#333] text-white rounded-md hover:bg-[#111]">Confirm payment $240</button>
+                                    <button type="submit" className="min-w-[150px] px-6 py-3.5 text-sm bg-[#333] text-white rounded-md hover:bg-[#111]">Confirm payment ${totalPrice}</button>
                                 </div>
                             </form>
                         </div>
@@ -83,49 +116,26 @@ const Checkout = () => {
                                 <div className="p-8 lg:overflow-auto lg:h-[calc(100vh-60px)] max-lg:mb-8">
                                     <h2 className="text-2xl font-extrabold text-[#333]">Order Summary</h2>
                                     <div className="space-y-6 mt-10">
-                                        <div className="grid sm:grid-cols-2 items-start gap-6">
-                                            <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                                                <img src='https://readymadeui.com/images/product10.webp' className="w-full object-contain" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-base text-[#333]">Naruto: Split Sneakers</h3>
-                                                <ul className="text-xs text-[#333] space-y-2 mt-2">
-                                                    <li className="flex flex-wrap gap-4">Size <span className="ml-auto">37</span></li>
-                                                    <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">2</span></li>
-                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto">$40</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div className="grid sm:grid-cols-2 items-start gap-6">
-                                            <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                                                <img src='https://readymadeui.com/images/product11.webp' className="w-full object-contain" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-base text-[#333]">VelvetGlide Boots</h3>
-                                                <ul className="text-xs text-[#333] space-y-2 mt-2">
-                                                    <li>Size <span className="float-right">37</span></li>
-                                                    <li>Quantity <span className="float-right">2</span></li>
-                                                    <li>Total Price <span className="float-right">$40</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div className="grid sm:grid-cols-2 items-start gap-6">
-                                            <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                                                <img src='https://readymadeui.com/images/product14.webp' className="w-full object-contain" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-base text-[#333]">Echo Elegance</h3>
-                                                <ul className="text-xs text-[#333] space-y-2 mt-2">
-                                                    <li>Size <span className="float-right">37</span></li>
-                                                    <li>Quantity <span className="float-right">2</span></li>
-                                                    <li>Total Price <span className="float-right">$40</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        {
+                                            userOrders.data.map((order, index) => order.order.order_status ? '' : <div key={index} className="grid sm:grid-cols-2 items-start gap-6">
+                                                <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
+                                                    <img src={order.product.image} className="w-full object-contain" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-base text-[#333]">{order.product.title}</h3>
+                                                    <ul className="text-xs text-[#333] space-y-2 mt-2">
+
+                                                        <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{order.quantity}</span></li>
+                                                        <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto">${order.price}</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>)
+                                        }
+
                                     </div>
                                 </div>
                                 <div className="absolute left-0 bottom-0 bg-gray-200 w-full p-4">
-                                    <h4 className="flex flex-wrap gap-4 text-base text-[#333] font-bold">Total <span className="ml-auto">$240.00</span></h4>
+                                    <h4 className="flex flex-wrap gap-4 text-base text-[#333] font-bold">Total <span className="ml-auto">${totalPrice}</span></h4>
                                 </div>
                             </div>
                         </div>

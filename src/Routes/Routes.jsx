@@ -1,13 +1,16 @@
 import {
     createBrowserRouter,
 } from "react-router-dom";
+import Dashboard from "../Layout/Dashboard";
 import Main from "../Layout/Main";
 import Basket from "../Pages/Basket/Basket";
 import Blogs from "../Pages/Blogs/Blogs";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import Checkout from "../Pages/Checkout/Checkout";
+import YourAccount from "../Pages/Dashboard/YourAccount/YourAccount";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
+import PaymentSuccessful from "../Pages/PaymentSuccessful/PaymentSuccessful";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import Registration from "../Pages/Registration/Registration";
 import PrivateRoute from "./PrivateRoute";
@@ -48,9 +51,23 @@ const router = createBrowserRouter([
             {
                 path: '/checkout',
                 element: <PrivateRoute><Checkout></Checkout></PrivateRoute>
+            },
+            {
+                path: `/payment_status`,
+                element: <PrivateRoute><PaymentSuccessful></PaymentSuccessful></PrivateRoute>
             }
         ]
     },
+    {
+        path: 'dashboard',
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        children: [
+            {
+                path: 'yourAccount',
+                element: <YourAccount></YourAccount>
+            }
+        ]
+    }
 ]);
 
 

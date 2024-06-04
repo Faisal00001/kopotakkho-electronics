@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
@@ -16,7 +17,7 @@ const Basket = () => {
     //     acc[product.id] = 1
     //     return acc;
     // }, {})
-    console.log(cartItems)
+
     // const prices = cartItems.reduce((acc, product) => {
     //     acc[product.id] = product.price
     //     return acc;
@@ -34,18 +35,18 @@ const Basket = () => {
 
 
 
-    useEffect(() => {
-        const initialQuantities = cartItems.reduce((acc, product) => {
-            acc[product.id] = 1; // Initial quantity is set to 1
-            return acc;
-        }, {});
-        setQuantities(initialQuantities);
-    }, [cartItems]);
+    // useEffect(() => {
+    //     const initialQuantities = cartItems.reduce((acc, product) => {
+    //         acc[product.id] = 1; // Initial quantity is set to 1
+    //         return acc;
+    //     }, {});
+    //     setQuantities(initialQuantities);
+    // }, [cartItems]);
     const navigate = useNavigate()
     useEffect(() => {
         const originalPrice = cartItems.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.price
-        }, 0)
+            return accumulator + parseFloat(currentValue.price)
+        }, 0.0)
         setOriginalPrice(originalPrice)
         setTotalPrice(originalPrice)
     }, [cartItems])
@@ -53,17 +54,17 @@ const Basket = () => {
         const updatedItems = cartItems.filter(item => item.id !== cartItem.id)
         setCartItems(updatedItems)
     }
-    const getOrderId = () => {
+    // const getOrderId = () => {
 
-        const formData = new FormData();
-        formData.append('customer', customerId);
-        axiosPublic.post('/orders/', formData)
-            .then(res => {
-                setOrderId(res.data.id)
-                handleCheckout(res.data.id)
-            })
-            .catch(error => console.log(error.message))
-    }
+    //     const formData = new FormData();
+    //     formData.append('customer', customerId);
+    //     axiosPublic.post('/orders/', formData)
+    //         .then(res => {
+    //             setOrderId(res.data.id)
+    //             handleCheckout(res.data.id)
+    //         })
+    //         .catch(error => console.log(error.message))
+    // }
     // const handleCheckout = async () => {
     //     const order_id = getOrderId()
     //     const cartItems = JSON.parse(localStorage.getItem('cartItems'))
@@ -95,43 +96,38 @@ const Basket = () => {
     //     }
     //     // navigate('/checkout')
     // }
-    const handleCheckout = async (order_id) => {
+    const handleCheckout = async () => {
+        const formData = new FormData();
+        formData.append('customer', customerId);
+        const orderIdResponse = await axiosPublic.post('/orders/', formData)
+        const order_id = orderIdResponse.data.id
+        localStorage.setItem('order_id', order_id)
         const cartItems = JSON.parse(localStorage.getItem('cartItems'));
         console.log('Basket cart Items', cartItems);
-
         if (cartItems != null) {
             // Collect all the post requests as promises
             const postRequests = cartItems.map(async (cart) => {
                 const formData = new FormData();
-                console.log(cart.id)
                 formData.append('order', order_id);
                 formData.append('product', cart.id);
                 formData.append('quantity', cart.quantity);
                 formData.append('price', cart.price);
-
-                formData.forEach((value, key) => {
-                    console.log(`${key}: ${value}`);
-                });
-                console.log('New Line');
-
                 // Return the axios post promise
                 return axiosPublic.post('/order-items/', formData)
-                    .catch(error => {
-                        if (error.response) {
-                            console.error('Server responded with:', error.response.data);
-                        } else {
-                            console.error('Error posting cart item:', cart, error);
-                        }
-                        throw error; // Re-throw the error to be caught in Promise.all
-                    });
+
             });
 
             try {
                 // Wait for all post requests to complete
                 await Promise.all(postRequests);
                 // Clear the cart and navigate after all requests are successful
-                localStorage.removeItem('cartItems');
-                console.log('All items posted successfully');
+                setCartItems([])
+                Swal.fire({
+                    title: "Order Confirmed!",
+                    text: "Thank you!",
+                    icon: "success"
+                });
+                navigate('/checkout')
                 // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
             } catch (error) {
                 console.error('An error occurred while posting the cart items:', error);
@@ -168,7 +164,7 @@ const Basket = () => {
         // .filter(item => item.quantity > 0); // Remove items with zero quantity
 
         setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        // localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
     // const calculatePrice = (id) => {
     //     setCartItems()
@@ -388,7 +384,7 @@ const Basket = () => {
                                         </div>
 
                                         {/* <button className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Checkout</button> */}
-                                        <button onClick={getOrderId} className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Proceed to Checkout</button>
+                                        <button onClick={handleCheckout} className="flex w-full bg-blue-700 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800">Proceed to Checkout</button>
 
                                         <div className="flex items-center justify-center gap-2">
                                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>

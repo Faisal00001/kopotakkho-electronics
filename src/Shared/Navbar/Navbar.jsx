@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { FaChevronDown, FaRegWindowRestore, FaShoppingCart } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
+import { VscAccount } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
@@ -10,6 +12,7 @@ const Navbar = () => {
     const storedUser = localStorage.getItem('user');
     const [firstName, setFirstName] = useState('')
     const { cartItems } = useContext(AuthContext)
+
     useEffect(() => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
@@ -50,17 +53,66 @@ const Navbar = () => {
                                     <div className="text-white group-hover:text-yellow-400 text-xs">Stores</div>
                                 </li>
 
+                                {
+                                    storedUser ?
+                                        <div>
+                                            <div className="dropdown relative">
+                                                <div tabIndex={0} role="button" className=" m-1">
+                                                    <div className="flex gap-2 relative text-white hover:text-yellow-400 cursor-pointer items-center">
+                                                        <div>
+                                                            <MdAccountCircle className="text-xl lg:text-3xl" />
+                                                        </div>
+                                                        <div className="text-xs">
+                                                            <div>
+                                                                {firstName}
+                                                            </div>
 
-                                <Link to={'/login'} className="flex gap-2 text-white hover:text-yellow-400 cursor-pointer items-center">
-                                    <div>
-                                        <MdAccountCircle className="text-xl lg:text-3xl" />
-                                    </div>
-                                    <div className="text-xs">
-                                        {
-                                            storedUser ? `${firstName}` : 'Account'
-                                        }
-                                    </div>
-                                </Link>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <ul tabIndex={0} className="dropdown-content z-[1] menu  w-48 top-4">
+                                                    <div className="py-3 shadow-lg">
+                                                        <div className="w-4 h-4 left-3 absolute mt-1 bg-white rotate-45"></div>
+                                                    </div>
+                                                    <div className="bg-white shadow-2xl">
+
+                                                        <Link to={'/dashboard/yourAccount'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                            <div>
+                                                                <VscAccount className="text-slate-700 text-xl" />
+                                                            </div>
+                                                            <div>
+                                                                <h3 className="text-black  ">Your Account</h3>
+                                                            </div>
+                                                        </Link>
+                                                        <hr />
+                                                        <div className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                            <div>
+                                                                <IoIosLogOut className="text-slate-700 text-xl" />
+                                                            </div>
+                                                            <div>
+                                                                <h3 className="text-black  ">Sign Out</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+
+                                        </div> : <Link to={'/login'} className="flex gap-2 relative text-white hover:text-yellow-400 cursor-pointer items-center">
+                                            <div>
+                                                <MdAccountCircle className="text-xl lg:text-3xl" />
+                                            </div>
+                                            <div className="text-xs">
+                                                <div>
+                                                    Account
+                                                </div>
+
+
+                                            </div>
+                                        </Link>
+
+                                }
 
 
 
