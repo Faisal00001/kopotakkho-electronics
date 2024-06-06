@@ -35,7 +35,7 @@ const YourAccount = () => {
                 </div>
                 <div className="container mx-auto mt-8 mb-20">
                     <div className="grid grid-cols-3 gap-5">
-                        <div className="border border-slate-400 rounded transition-transform transform hover:-translate-y-2 hover:border-blue-800 hover:shadow-2xl hover:cursor-pointer">
+                        <Link to={'/dashboard/orderHistory'} className="border border-slate-400 rounded transition-transform transform hover:-translate-y-2 hover:border-blue-800 hover:shadow-2xl hover:cursor-pointer">
                             <div className="my-7 ml-7 mr-3 flex flex-col h-[250px]">
                                 <div className="flex gap-2 items-center">
                                     <div>
@@ -59,7 +59,7 @@ const YourAccount = () => {
                                     </div>
                                 </Link>
                             </div>
-                        </div>
+                        </Link>
                         <div className="border border-slate-400 rounded transition-transform transform hover:-translate-y-2 hover:border-blue-800 hover:shadow-2xl hover:cursor-pointer">
                             <div className="my-7 ml-7 mr-3 flex flex-col h-[250px]">
                                 <div className="flex gap-2 items-center">

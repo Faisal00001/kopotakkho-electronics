@@ -7,6 +7,8 @@ import Basket from "../Pages/Basket/Basket";
 import Blogs from "../Pages/Blogs/Blogs";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import Checkout from "../Pages/Checkout/Checkout";
+import OrderHistory from "../Pages/Dashboard/OrderHistory/OrderHistory";
+import PersonalDetails from "../Pages/Dashboard/PersonalDetails/PersonalDetails";
 import YourAccount from "../Pages/Dashboard/YourAccount/YourAccount";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
             {
                 path: 'yourAccount',
                 element: <YourAccount></YourAccount>
+            },
+            {
+                path: 'orderHistory',
+                element: <OrderHistory></OrderHistory>
+            },
+            {
+                path: 'personalDetails',
+                element: <PersonalDetails></PersonalDetails>
             }
         ]
     }

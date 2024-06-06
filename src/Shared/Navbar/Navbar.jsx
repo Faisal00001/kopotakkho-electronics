@@ -56,7 +56,7 @@ const Navbar = () => {
                                 {
                                     storedUser ?
                                         <div>
-                                            <div className="dropdown relative">
+                                            <div className="dropdown dropdown-end relative">
                                                 <div tabIndex={0} role="button" className=" m-1">
                                                     <div className="flex gap-2 relative text-white hover:text-yellow-400 cursor-pointer items-center">
                                                         <div>
@@ -74,11 +74,11 @@ const Navbar = () => {
 
                                                 <ul tabIndex={0} className="dropdown-content z-[1] menu  w-48 top-4">
                                                     <div className="py-3 shadow-lg">
-                                                        <div className="w-4 h-4 left-3 absolute mt-1 bg-white rotate-45"></div>
+                                                        <div className="w-4 h-4 right-3 absolute mt-1 bg-white rotate-45"></div>
                                                     </div>
                                                     <div className="bg-white shadow-2xl">
 
-                                                        <Link to={'/dashboard/yourAccount'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                        <Link to={'/dashboard/orderHistory'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
                                                             <div>
                                                                 <VscAccount className="text-slate-700 text-xl" />
                                                             </div>
