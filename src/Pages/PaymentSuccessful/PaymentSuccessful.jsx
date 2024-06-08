@@ -5,16 +5,14 @@ import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
 const PaymentSuccessful = () => {
-    const { isLogin } = useContext(AuthContext)
+   
     const location = useLocation();
     const axiosPublic = useAxiosPublic()
     const [transaction_id, setTransaction_id] = useState('')
     const [status, setStatus] = useState('')
     const order_id = localStorage.getItem('order_id')
     // Function to get query parameters from the URL
-    if (isLogin) {
-        console.log(true)
-    }
+    
 
     useEffect(() => {
         const getQueryParams = () => {

@@ -9,12 +9,10 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import ProductDetailsSlider from "../../components/ProductDetailsSlider/ProductDetailsSlider";
 
 
-
-
 // import required modules
 
 const ProductDetails = () => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const [product, setProduct] = useState(null)
     const { id } = useParams()
@@ -51,6 +49,7 @@ const ProductDetails = () => {
     if (isLoading) {
         return "Loading"
     }
+
     const handleAddToCart = (product) => {
         console.log('Product Detail Page', product)
         const isFound = cartItems.find(cartItem => cartItem.id === product.id)
@@ -78,6 +77,7 @@ const ProductDetails = () => {
 
                             <div className="w-[600px]">
                                 <ProductDetailsSlider product={product} ></ProductDetailsSlider>
+
                             </div>
 
                         </div>
@@ -145,6 +145,10 @@ const ProductDetails = () => {
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div className="my-10">
+                <hr />
             </div>
 
         </div>

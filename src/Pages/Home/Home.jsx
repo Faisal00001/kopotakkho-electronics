@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Banner from "../../components/Banner/Banner";
 import OurHottestOffer from "../../components/OurHottestOffer/OurHottestOffer";
+import ProductImageGallery from "../../components/ProductImageGallery/ProductImageGallery";
 import ShopByCategory from "../../components/ShopByCategory/ShopByCategory";
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
             <Banner></Banner>
             <OurHottestOffer></OurHottestOffer>
             <ShopByCategory></ShopByCategory>
+            <ProductImageGallery></ProductImageGallery>
 
         </div>
     );
