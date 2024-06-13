@@ -1,22 +1,23 @@
 import ImageGallery from "react-image-gallery";
-const ProductImageGallery = () => {
-    const images = [
-        {
-            original: "https://picsum.photos/id/1018/1000/600/",
-            thumbnail: "https://picsum.photos/id/1018/250/150/",
-        },
-        {
-            original: "https://picsum.photos/id/1015/1000/600/",
-            thumbnail: "https://picsum.photos/id/1015/250/150/",
-        },
-        {
-            original: "https://picsum.photos/id/1019/1000/600/",
-            thumbnail: "https://picsum.photos/id/1019/250/150/",
-        },
-    ];
+//  import "~react-image-gallery/styles/scss/image-gallery.scss";
+import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
+// import "~react-image-gallery/styles/css/image-gallery.css";
+const ProductImageGallery = ({product}) => {
+    const imageBaseUrl='http://127.0.0.1:8000/'
+    console.log(product.product_image)
+    const images=[]
+    for (const item of product.product_image) {
+        const modifyItem=`${imageBaseUrl}${item}`
+        let obj = {
+            original: modifyItem,
+            thumbnail: modifyItem
+        }
+        images.push(obj)
+    }
+    
     return (
         <div>
-            <ImageGallery items={images} />
+            <ImageGallery items={images}  showPlayButton={false}/>
         </div>
     );
 };

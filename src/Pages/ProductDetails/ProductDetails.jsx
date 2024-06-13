@@ -7,6 +7,7 @@ import { RiDiscountPercentLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import ProductDetailsSlider from "../../components/ProductDetailsSlider/ProductDetailsSlider";
+import ProductImageGallery from "../../components/ProductImageGallery/ProductImageGallery";
 
 
 // import required modules
@@ -76,7 +77,7 @@ const ProductDetails = () => {
                         <div className="flex-1">
 
                             <div className="w-[600px]">
-                                <ProductDetailsSlider product={product} ></ProductDetailsSlider>
+                            <ProductImageGallery product={product}></ProductImageGallery>
 
                             </div>
 

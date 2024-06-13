@@ -101,7 +101,7 @@ const Basket = () => {
         formData.append('customer', customerId);
         const orderIdResponse = await axiosPublic.post('/orders/', formData)
         const order_id = orderIdResponse.data.id
-        localStorage.setItem('order_id', order_id)
+        // localStorage.setItem('order_id', order_id)
         const cartItems = JSON.parse(localStorage.getItem('cartItems'));
         console.log('Basket cart Items', cartItems);
         if (cartItems != null) {
@@ -127,7 +127,7 @@ const Basket = () => {
                     text: "Thank you!",
                     icon: "success"
                 });
-                navigate('/checkout')
+                navigate('/dashboard/orderHistory')
                 // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
             } catch (error) {
                 console.error('An error occurred while posting the cart items:', error);

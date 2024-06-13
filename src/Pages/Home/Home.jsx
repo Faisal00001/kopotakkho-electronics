@@ -15,7 +15,7 @@ const Home = () => {
             <Banner></Banner>
             <OurHottestOffer></OurHottestOffer>
             <ShopByCategory></ShopByCategory>
-            <ProductImageGallery></ProductImageGallery>
+            
 
         </div>
     );
