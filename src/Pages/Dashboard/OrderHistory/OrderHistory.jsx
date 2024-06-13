@@ -94,50 +94,86 @@ const OrderHistory = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                ordersByOrderId ? ordersByOrderId.map((order, index, orders) =>
-                                    <tr key={order.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="p-4">
-                                            <img src={order.product.image} className="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch" />
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                            {order.product.title}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                            {order.quantity}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                            ${order.price}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+
+                            {/* {
+                                ordersByOrderId.map((order, index, orders) => <div key={order.id}>
+                                       {
+                                        orders.d
+                                       }
+                                </div>)
+                            } */}
+                            {/* Modification */}
+
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td className="p-4">
+                                    {
+                                        ordersByOrderId.map((order, index, orders) =>
+
+
+                                            <div key={order.id}>
+                                                {index > 0 && orders[index - 1].order.id !== order.order.id && <div className="border-2 my-10 border-red-500 "></div>}
+                                                <img key={order.id} src={order.product.image} className="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch" />
+                                            </div>
+                                        )
+
+                                    }
+
+                                </td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {
+                                        ordersByOrderId.map((order, index, orders) => <p className="py-10" key={order.id}>{order.product.title}</p>)
+                                    }
+
+                                </td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {
+                                        ordersByOrderId.map((order, index, orders) => <p className="py-10" key={order.id}>{order.quantity}</p>)
+                                    }
+                                </td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {
+                                        ordersByOrderId.map((order, index, orders) => <p className="py-10" key={order.id}> ${order.price}</p>)
+                                    }
+
+                                </td>
+                                <td className="px-6 py-4 ">
+                                    {
+                                        ordersByOrderId.map(order => <p key={order.id} className="font-medium text-red-600 dark:text-red-500 hover:underline py-10">Remove</p>)
+                                    }
+
+                                </td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {
+                                        ordersByOrderId.map((order => <div key={order.id}>
                                             {order?.order?.order_status ? <div>
                                                 <div className="flex gap-x-1 items-center">
                                                     <FaCheck className=" text-green-700" />
                                                     Delivered
                                                 </div>
-                                            </div> : <div>
-                                                <div className="flex gap-x-1 items-center">
+                                            </div> : <div className="py-10">
+                                                <div className="flex gap-x-1 items-center ">
                                                     <span className="loading loading-spinner text-red-500 loading-sm"></span>
                                                     Pending
 
                                                 </div>
                                             </div>}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900 ">
-                                            {
+                                        </div>))
+                                    }
 
+                                </td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 ">
+                                    {
+                                        ordersByOrderId.map((order, index, orders) => <div key={order.id}>
+                                            {
                                                 orders.findIndex(o => o.order.id === order.order.id) === index &&
                                                 (
                                                     !order.order.order_status ?
-                                                        (
-                                                            <button onClick={() => paymentHandler(order)} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
-                                                                <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
-                                                                <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Buy Product</span>
-                                                            </button>
-                                                        )
+                                                        <div className="py-20"> <button onClick={() => paymentHandler(order)} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
+                                                            <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
+                                                            <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Buy Product</span>
+                                                        </button>
+                                                        </div>
+
                                                         : (
                                                             <button disabled className="relative inline-flex  items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-slate-300 rounded hover:bg-slate-300 group">
 
@@ -146,19 +182,23 @@ const OrderHistory = () => {
                                                         )
 
                                                 )
-
                                             }
 
-                                            {/* <button onClick={() => paymentHandler(order)} className="bg-green-500 btn px-6 hover:bg-blue-500">Buy Product</button> */}
-                                        </td>
-                                    </tr>) : ''
-                            }
+                                        </div>)
+                                    }
+
+
+                                    {/* <button onClick={() => paymentHandler(order)} className="bg-green-500 btn px-6 hover:bg-blue-500">Buy Product</button> */}
+                                </td>
+                            </tr>
+
+
                         </tbody>
                     </table>
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 };
 
