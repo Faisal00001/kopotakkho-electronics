@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
+import { GoChecklist } from "react-icons/go";
 
 const Dashboard = () => {
     const location = useLocation()
@@ -12,6 +13,12 @@ const Dashboard = () => {
     useEffect(() => {
         if (location.pathname === '/dashboard/orderHistory') {
             setPathName('Order History')
+        }
+        if (location.pathname === '/dashboard/myWishlist') {
+            setPathName('My Wishlist')
+        }
+        if (location.pathname === '/dashboard/personalDetails') {
+            setPathName('Personal Details')
         }
     }, [location.pathname])
 
@@ -62,6 +69,14 @@ const Dashboard = () => {
                                     <div className="flex gap-2 items-center">
                                         <FaRegUserCircle className="text-2xl"></FaRegUserCircle>
                                         <h3>Personal Details</h3>
+                                    </div></NavLink>
+                                <NavLink to="/dashboard/myWishlist" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <GoChecklist className="text-2xl"></GoChecklist>
+                                        <h3>My Wishlist</h3>
                                     </div></NavLink>
 
                             </ul>

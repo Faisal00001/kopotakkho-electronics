@@ -16,6 +16,9 @@ import PaymentSuccessful from "../Pages/PaymentSuccessful/PaymentSuccessful";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import Registration from "../Pages/Registration/Registration";
 import PrivateRoute from "./PrivateRoute";
+import PaymentFail from "../Pages/PaymentFail/PaymentFail";
+import MyWishlist from "../Pages/Dashboard/MyWishlist/MyWishlist";
+import Invoice from "../components/Invoice/Invoice";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +60,14 @@ const router = createBrowserRouter([
             {
                 path: `/payment_status`,
                 element: <PrivateRoute><PaymentSuccessful></PaymentSuccessful></PrivateRoute>
+            },
+            {
+                path: '/paymentFail',
+                element: <PrivateRoute><PaymentFail></PaymentFail></PrivateRoute>
+            },
+            {
+                path: '/invoice',
+                element: <Invoice></Invoice>
             }
         ]
     },
@@ -75,6 +86,10 @@ const router = createBrowserRouter([
             {
                 path: 'personalDetails',
                 element: <PersonalDetails></PersonalDetails>
+            },
+            {
+                path: 'myWishlist',
+                element: <MyWishlist></MyWishlist>
             }
         ]
     }

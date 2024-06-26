@@ -123,8 +123,8 @@ const Basket = () => {
                 // Clear the cart and navigate after all requests are successful
                 setCartItems([])
                 Swal.fire({
-                    title: "Order Confirmed!",
-                    text: "Thank you!",
+                    title: "Order Placed!",
+                    text: "Pay Now Please!",
                     icon: "success"
                 });
                 navigate('/dashboard/orderHistory')

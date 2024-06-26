@@ -4,15 +4,17 @@ import { IoIosLogOut } from "react-icons/io";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 
 
 const Navbar = () => {
     const storedUser = localStorage.getItem('user');
     const [firstName, setFirstName] = useState('')
     const { cartItems } = useContext(AuthContext)
-
+    const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
     useEffect(() => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
@@ -20,7 +22,21 @@ const Navbar = () => {
 
         }
     }, [storedUser])
+    const handleLogout = () => {
+        axiosPublic.post('/logout/')
+            .then(res => {
+                console.log(res)
+                if (res.status === 200) {
 
+                    localStorage.clear()
+                    navigate('/login')
+                }
+                else {
+                    console.error('Logout failed');
+                }
+            })
+            .catch(error => console.log(error))
+    }
     return (
         <div className="sticky top-0 z-50">
             <div className="navbar bg-[#0046be] pl-5 ">
@@ -87,7 +103,7 @@ const Navbar = () => {
                                                             </div>
                                                         </Link>
                                                         <hr />
-                                                        <div className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                        <div onClick={handleLogout} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
                                                             <div>
                                                                 <IoIosLogOut className="text-slate-700 text-xl" />
                                                             </div>
