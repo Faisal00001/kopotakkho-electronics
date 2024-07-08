@@ -130,10 +130,18 @@ const Login = () => {
                                         <p className="text-sm">Your order history is a click away.</p>
                                     </div>
                                 </div>
-                                <div className="mt-5 pl-8 w-[67%]">
+                                <div className="mt-5 pl-8">
                                     <Link to={'/registration'} className="flex  items-center gap-1">
                                         <div>
-                                            <p className="text-blue-800 hover:underline font-bold text-sm">Create your account</p>
+                                            <p className="text-blue-800 hover:underline font-bold text-sm">Create your account as customer</p>
+                                        </div>
+                                        <div>
+                                            <FaAngleRight />
+                                        </div>
+                                    </Link>
+                                    <Link to={'/registrationSeller'} className="flex mt-5 items-center gap-1">
+                                        <div>
+                                            <p className="text-blue-800 hover:underline font-bold text-sm">Create your account as seller</p>
                                         </div>
                                         <div>
                                             <FaAngleRight />

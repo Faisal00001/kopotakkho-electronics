@@ -19,6 +19,8 @@ import PrivateRoute from "./PrivateRoute";
 import PaymentFail from "../Pages/PaymentFail/PaymentFail";
 import MyWishlist from "../Pages/Dashboard/MyWishlist/MyWishlist";
 import Invoice from "../components/Invoice/Invoice";
+import Profile from "../Pages/Dashboard/Profile/Profile";
+import RegistrationSeller from "../Pages/RegistrationSeller/RegistrationSeller";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: '/registration',
                 element: <Registration></Registration>
+            },
+            {
+                path: '/registrationSeller',
+                element: <RegistrationSeller></RegistrationSeller>
             },
             {
                 path: '/productDetails/:id',
@@ -90,6 +96,10 @@ const router = createBrowserRouter([
             {
                 path: 'myWishlist',
                 element: <MyWishlist></MyWishlist>
+            },
+            {
+                path: 'profile',
+                element: <Profile></Profile>
             }
         ]
     }

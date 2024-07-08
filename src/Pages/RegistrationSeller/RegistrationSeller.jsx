@@ -1,68 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { CiLock } from "react-icons/ci";
 import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdShoppingCartCheckout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { AuthContext } from "../../Provider/AuthProvider";
-import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 
-const Registration = () => {
-    const axiosPublic = useAxiosPublic()
+const RegistrationSeller = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
-    const [checked, setChecked] = useState(false)
-    const navigate = useNavigate()
-    const { setUser } = useContext(AuthContext)
-    console.log(setUser)
-    const handleChecked = () => {
-        setChecked(!checked)
-    }
-    const handleRegistration = (event) => {
-        event.preventDefault()
-        const form = event.target
-        const userFirstName = form.firstName.value
-        const userLastName = form.lastName.value
-        const user_name = form.userName.value
-        const userPhoneNumber = form.phoneNumber.value
-        const userEmail = form.email.value
-        const userPassword = form.password.value
-
-        const formData = new FormData();
-        formData.append('first_name', userFirstName);
-        formData.append('last_name', userLastName);
-        formData.append('username', user_name);
-        formData.append('email', userEmail);
-        formData.append('phone', userPhoneNumber);
-        formData.append('password', userPassword);
-
-        axiosPublic.post('/customer-register/', formData)
-            .then(res => {
-                console.log(res.data.bool)
-                if (res.data.bool === true) {
-                    Swal.fire({
-                        title: "Registration Successful!",
-                        text: "Please login to continue!",
-                        icon: "success"
-                    });
-                    // const user_information = {
-                    //     firstName: userFirstName,
-                    //     lastName: userLastName,
-                    //     user_name: user_name,
-                    //     email: userEmail
-
-                    // };
-                    // setUser(user_information)
-                    form.reset()
-                    navigate('/login')
-                }
-            })
-            .catch(error => setErrorMessage(error))
-    }
     return (
         <div>
             <nav className="bg-[#0046be] pl-5 py-2">
@@ -81,10 +28,10 @@ const Registration = () => {
                 <div className="container mx-auto">
                     <div className="flex justify-around">
                         <div>
-                            <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Create an account as Customer</h3>
+                            <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Create an account as Seller</h3>
 
 
-                            <form onSubmit={handleRegistration} className="max-w-sm mt-5 pb-20">
+                            <form className="max-w-sm mt-5 pb-20">
                                 <div className="mb-5">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">First Name</label>
                                     <input name="firstName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
@@ -121,7 +68,7 @@ const Registration = () => {
                                     </div>
                                 </div>
                                 <div className="flex my-5">
-                                    <input checked={checked} onChange={handleChecked} type="checkbox" value="" className="w-4 h-4 mt-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:outline-none" />
+                                    <input type="checkbox" value="" className="w-4 h-4 mt-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:outline-none" />
                                     <label htmlFor="checked-checkbox" className="ms-2 text-sm text-gray-900">Sign up for our newsletter to stay in the loop about hot deals, new products, and more. Don’t worry, you can unsubscribe at any time.</label>
                                 </div>
                                 <div>
@@ -223,4 +170,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default RegistrationSeller;

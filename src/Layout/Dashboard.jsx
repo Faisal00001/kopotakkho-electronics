@@ -6,6 +6,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import { GoChecklist } from "react-icons/go";
+import { ImProfile } from "react-icons/im";
 
 const Dashboard = () => {
     const location = useLocation()
@@ -19,6 +20,9 @@ const Dashboard = () => {
         }
         if (location.pathname === '/dashboard/personalDetails') {
             setPathName('Personal Details')
+        }
+        if (location.pathname === '/dashboard/profile') {
+            setPathName('Profile')
         }
     }, [location.pathname])
 
@@ -54,14 +58,23 @@ const Dashboard = () => {
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu  w-80 min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
+                                <NavLink to="/dashboard/profile" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <ImProfile className="text-2xl"></ImProfile>
+                                        <h3>Profile</h3>
+                                    </div></NavLink>
                                 <NavLink to="/dashboard/orderHistory" className={({ isActive, isPending }) =>
-                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2"
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
                                     <div className="flex gap-2 items-center">
                                         <IoIosTimer className="text-2xl"></IoIosTimer>
                                         <h3>Order History</h3>
                                     </div></NavLink>
+
                                 <NavLink to="/dashboard/personalDetails" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
                                 }>

@@ -115,18 +115,25 @@ const Navbar = () => {
                                                 </ul>
                                             </div>
 
-                                        </div> : <Link to={'/login'} className="flex gap-2 relative text-white hover:text-yellow-400 cursor-pointer items-center">
+                                        </div> : <div className="flex gap-2 relative text-white hover:text-yellow-400 cursor-pointer items-center">
                                             <div>
                                                 <MdAccountCircle className="text-xl lg:text-3xl" />
                                             </div>
-                                            <div className="text-xs">
+                                            {/* <div className="text-xs">
                                                 <div>
                                                     Account
                                                 </div>
 
 
+                                            </div> */}
+                                            <div className="dropdown dropdown-end">
+                                                <div tabIndex={0} role="button" className="m-1 text-sm">Account</div>
+                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded z-[1] w-48 p-2 shadow-xl">
+                                                    <Link to={'/login'} className="text-black py-2 px-2 hover:bg-slate-800 hover:text-white rounded">Login as customer</Link>
+                                                    <Link to={'/login'} className="text-black py-2 px-2 hover:bg-slate-800 hover:text-white rounded">Login as seller</Link>
+                                                </ul>
                                             </div>
-                                        </Link>
+                                        </div>
 
                                 }
 

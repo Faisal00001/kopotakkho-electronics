@@ -1,5 +1,5 @@
 import { FaCheck } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+
 import useOrders from "../../../components/hooks/useOrders";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 
 
 const OrderHistory = () => {
-    const navigate = useNavigate()
+
     const axiosPublic = useAxiosPublic()
     const [userOrders, loading, , currentPage, setCurrentPage, totalPage, setTotalPage] = useOrders()
     console.log(userOrders)
@@ -35,10 +35,7 @@ const OrderHistory = () => {
     }
 
     // console.log(singleOrderByOrderId)
-    const handlePaymentForAllProducts = () => {
-        const combineOfAllOrdersId = [];
 
-    }
     const paymentHandler = async (order) => {
         localStorage.setItem('order_id', order.order.id)
         try {
@@ -173,11 +170,15 @@ const OrderHistory = () => {
                                     <td className="px-6 py-4 font-semibold text-gray-900">
                                         <div>
                                             {!orders[0].order.order_status ? (
+                                                // onClick={() => paymentHandler(orders[0])}
                                                 <div className="py-20">
-                                                    <button onClick={() => paymentHandler(orders[0])} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
-                                                        <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
-                                                        <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Payment</span>
-                                                    </button>
+                                                    <div className="dropdown dropdown-left">
+                                                        <div tabIndex={0} role="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Payment Option</div>
+                                                        <ul tabIndex={0} className="dropdown-content menu bg-red-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                            <li onClick={() => paymentHandler(orders[0])}><a>Mobile Banking</a></li>
+                                                            <li><a>Cash On delivery</a></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             ) : (
                                                 <button disabled className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-slate-300 rounded hover:bg-slate-300 group">
@@ -244,10 +245,17 @@ const OrderHistory = () => {
                                         <div>
                                             {!order.order.order_status ? (
                                                 <div>
-                                                    <button onClick={() => paymentHandler(order)} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
+                                                    {/* <button onClick={() => paymentHandler(order)} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
                                                         <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
                                                         <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Payment</span>
-                                                    </button>
+                                                    </button> */}
+                                                    <div className="dropdown dropdown-left">
+                                                        <div tabIndex={0} role="button" className="m-1 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Payment Option</div>
+                                                        <ul tabIndex={0} className="dropdown-content menu bg-red-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                            <li onClick={() => paymentHandler(order)}><a>Mobile Banking</a></li>
+                                                            <li><a>Cash on Delivery</a></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             ) : (
                                                 <button disabled className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-slate-300 rounded hover:bg-slate-300 group">
