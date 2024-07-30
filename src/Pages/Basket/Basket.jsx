@@ -4,13 +4,24 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import axios from "axios";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 
 const Basket = () => {
+    const { user } = useContext(AuthContext)
     const { cartItems, setCartItems } = useContext(AuthContext)
     const [order_id, setOrderId] = useState(null)
     const [totalPrice, setTotalPrice] = useState(0)
     const [originalPrice, setOriginalPrice] = useState(0)
+    // const [productWishList, setProductInWishList] = useState(() => {
+    //     const wishListStatus = cartItems.reduce((acc, product) => {
+    //         acc[product.id] = product.status = false
+
+    //     }, {})
+    //     return wishListStatus
+    // })
     const axiosPublic = useAxiosPublic()
 
     // const initialQuantities = cartItems.reduce((acc, product) => {
@@ -171,7 +182,70 @@ const Basket = () => {
     //     return quantities[id] * prices[id]
     // }
     // Update the price of the cart item based on the new quantity
+    const handleAddToWishList = async (cartItem) => {
+        if (!user) {
+            console.log('User not present');
+            return; // Exit the function early if user is not present
+        }
 
+        try {
+            const wishListStatus = await checkProductInWishList(cartItem);
+            console.log('Status of the wishlist', wishListStatus);
+            if (wishListStatus) {
+                return; // Exit the function if the item is already in the wishlist
+            }
+
+            const customerId = user.id;
+            const formData = new FormData();
+            formData.append('customer', customerId);
+            formData.append('product', cartItem.id);
+
+            const response = await axiosPublic.post('/wishlist/', formData);
+            console.log(response);
+            setCartItems(cartItems.map(item => item.id === cartItem.id ? { ...item, wishListStatus: true } : item)); // Update wishlist status on success
+            toast.success("Item added in the wishlist")
+
+        } catch (error) {
+            console.error('Error saving to wishlist:', error);
+        }
+    }
+    console.log('Cart Items', cartItems)
+    const checkProductInWishList = async (productData) => {
+        console.log('Hello is this working')
+        if (!user) {
+            return "Loading"
+        }
+        const customerId = user.id
+        const formData = new FormData();
+        formData.append('customer', customerId);
+        formData.append('product', productData.id);
+        try {
+            const res = await axiosPublic.post('check-in-wishlist/', formData)
+            if (res.data.bool === true) {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        catch (error) {
+            console.log('Error finding item in wishlist ', error)
+        }
+
+        // axiosPublic.post('check-in-wishlist/', formData)
+        //     .then(res => {
+        //         if (res.data.bool === true) {
+        //             return true
+
+        //         }
+        //         else {
+        //             return false
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.log('Error checking wishlist ', error)
+        //     })
+    }
     return (
         <div>
             {
@@ -218,10 +292,14 @@ const Basket = () => {
                                                             <Link className="text-base font-medium text-gray-900 hover:underline dark:text-white">{cartItem.detail.slice(0, 150)}...</Link>
 
                                                             <div className="flex items-center gap-4">
-                                                                <button type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
-                                                                    <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                                                                    </svg>
+                                                                <button onClick={() => handleAddToWishList(cartItem)} type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
+                                                                    <span className="mr-2">
+
+                                                                        {
+                                                                            cartItem.wishListStatus ? <FaHeart className="text-xl text-red-500" /> : <FaRegHeart className="text-xl" />
+                                                                        }
+                                                                    </span>
+
                                                                     Add to Favorites
                                                                 </button>
 

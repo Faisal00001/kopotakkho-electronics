@@ -7,6 +7,7 @@ import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import { GoChecklist } from "react-icons/go";
 import { ImProfile } from "react-icons/im";
+import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
     const location = useLocation()
@@ -102,6 +103,8 @@ const Dashboard = () => {
                 </div>
             </div>
             <Footer></Footer>
+            <Toaster position="top-center"
+                reverseOrder={false} />
         </div>
     );
 };

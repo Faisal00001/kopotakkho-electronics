@@ -4,6 +4,7 @@ import useCategories from "../hooks/useCategories";
 
 const ShopByCategory = () => {
     const [categories, loading] = useCategories()
+    console.log(categories)
     if (loading) {
         return "Loading"
     }

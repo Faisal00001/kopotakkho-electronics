@@ -21,6 +21,9 @@ import MyWishlist from "../Pages/Dashboard/MyWishlist/MyWishlist";
 import Invoice from "../components/Invoice/Invoice";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import RegistrationSeller from "../Pages/RegistrationSeller/RegistrationSeller";
+import SellerLogin from "../Pages/SellerLogin/SellerLogin";
+import SellerDashboard from "../Layout/SellerDashboard";
+import AddProduct from "../Pages/SellerDashboard/AddProduct/AddProduct";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path: '/sellerLogin',
+                element: <SellerLogin></SellerLogin>
             },
             {
                 path: '/registration',
@@ -100,6 +107,16 @@ const router = createBrowserRouter([
             {
                 path: 'profile',
                 element: <Profile></Profile>
+            }
+        ]
+    },
+    {
+        path: 'sellerDashboard',
+        element: <PrivateRoute> <SellerDashboard></SellerDashboard> </PrivateRoute>,
+        children: [
+            {
+                path: 'addProduct',
+                element: <AddProduct></AddProduct>
             }
         ]
     }

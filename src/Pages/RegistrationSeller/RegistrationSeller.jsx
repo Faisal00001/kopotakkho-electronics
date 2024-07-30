@@ -5,11 +5,57 @@ import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdShoppingCartCheckout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 
 const RegistrationSeller = () => {
     const [showPassword, setShowPassword] = useState(false)
+    const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
+    const handleSellerRegistration = (event) => {
+        event.preventDefault()
+        const form = event.target
+        const sellerFirstName = form.firstName.value
+        const sellerLastName = form.lastName.value
+        const seller_name = form.userName.value
+        const sellerPhoneNumber = form.phoneNumber.value
+        const sellerEmail = form.email.value
+        const sellerAddress = form.address.value
+        const sellerPassword = form.password.value
+        const formData = new FormData();
+        formData.append('first_name', sellerFirstName);
+        formData.append('last_name', sellerLastName);
+        formData.append('username', seller_name);
+        formData.append('email', sellerEmail);
+        formData.append('phone', sellerPhoneNumber);
+        formData.append('address', sellerAddress);
+        formData.append('password', sellerPassword);
+
+        axiosPublic.post('/vendor-register/', formData)
+            .then(res => {
+                console.log(res.data.bool)
+                if (res.data.bool === true) {
+                    Swal.fire({
+                        title: "Registration Successful!",
+                        text: "Please login to continue!",
+                        icon: "success"
+                    });
+                    // const user_information = {
+                    //     firstName: userFirstName,
+                    //     lastName: userLastName,
+                    //     user_name: user_name,
+                    //     email: userEmail
+
+                    // };
+                    // setUser(user_information)
+                    form.reset()
+                    navigate('/sellerLogin')
+                }
+            })
+            .catch(error => console.log(error))
+    }
     return (
         <div>
             <nav className="bg-[#0046be] pl-5 py-2">
@@ -31,7 +77,7 @@ const RegistrationSeller = () => {
                             <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Create an account as Seller</h3>
 
 
-                            <form className="max-w-sm mt-5 pb-20">
+                            <form onSubmit={handleSellerRegistration} className="max-w-sm mt-5 pb-20">
                                 <div className="mb-5">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">First Name</label>
                                     <input name="firstName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
@@ -50,6 +96,11 @@ const RegistrationSeller = () => {
                                 <div className="mb-5">
                                     <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
                                     <input name="phoneNumber" type="number" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900">Enter your Address</label>
+                                    <input name="address" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">

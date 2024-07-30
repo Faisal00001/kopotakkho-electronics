@@ -13,23 +13,24 @@ const Navbar = () => {
     const storedUser = localStorage.getItem('user');
     const [firstName, setFirstName] = useState('')
     const { cartItems } = useContext(AuthContext)
+    const [user, setUser] = useState({})
     const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
     useEffect(() => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
+            setUser(JSON.parse(storedUser))
             setFirstName(user.user_name)
-
         }
     }, [storedUser])
     const handleLogout = () => {
-        axiosPublic.post('/logout/')
+        axiosPublic.post('/customer-logout/')
             .then(res => {
                 console.log(res)
                 if (res.status === 200) {
 
                     localStorage.clear()
-                    navigate('/login')
+                    navigate('/')
                 }
                 else {
                     console.error('Logout failed');
@@ -37,6 +38,7 @@ const Navbar = () => {
             })
             .catch(error => console.log(error))
     }
+    console.log(user)
     return (
         <div className="sticky top-0 z-50">
             <div className="navbar bg-[#0046be] pl-5 ">
@@ -93,15 +95,26 @@ const Navbar = () => {
                                                         <div className="w-4 h-4 right-3 absolute mt-1 bg-white rotate-45"></div>
                                                     </div>
                                                     <div className="bg-white shadow-2xl">
-
-                                                        <Link to={'/dashboard/orderHistory'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
-                                                            <div>
-                                                                <VscAccount className="text-slate-700 text-xl" />
-                                                            </div>
-                                                            <div>
-                                                                <h3 className="text-black  ">Your Account</h3>
-                                                            </div>
-                                                        </Link>
+                                                        {
+                                                            user.isSeller && <Link to={'/sellerDashboard'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                                <div>
+                                                                    <VscAccount className="text-slate-700 text-xl" />
+                                                                </div>
+                                                                <div>
+                                                                    <h3 className="text-black  ">Your Account</h3>
+                                                                </div>
+                                                            </Link>
+                                                        }
+                                                        {
+                                                            user.isCustomer && <Link to={'/dashboard/orderHistory'} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
+                                                                <div>
+                                                                    <VscAccount className="text-slate-700 text-xl" />
+                                                                </div>
+                                                                <div>
+                                                                    <h3 className="text-black  ">Your Account</h3>
+                                                                </div>
+                                                            </Link>
+                                                        }
                                                         <hr />
                                                         <div onClick={handleLogout} className="flex gap-2 pl-5 items-center py-5 cursor-pointer">
                                                             <div>
@@ -130,7 +143,7 @@ const Navbar = () => {
                                                 <div tabIndex={0} role="button" className="m-1 text-sm">Account</div>
                                                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded z-[1] w-48 p-2 shadow-xl">
                                                     <Link to={'/login'} className="text-black py-2 px-2 hover:bg-slate-800 hover:text-white rounded">Login as customer</Link>
-                                                    <Link to={'/login'} className="text-black py-2 px-2 hover:bg-slate-800 hover:text-white rounded">Login as seller</Link>
+                                                    <Link to={'/sellerLogin'} className="text-black py-2 px-2 hover:bg-slate-800 hover:text-white rounded">Login as seller</Link>
                                                 </ul>
                                             </div>
                                         </div>

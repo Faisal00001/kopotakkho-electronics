@@ -2,22 +2,22 @@ import ImageGallery from "react-image-gallery";
 //  import "~react-image-gallery/styles/scss/image-gallery.scss";
 import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 // import "~react-image-gallery/styles/css/image-gallery.css";
-const ProductImageGallery = ({product}) => {
-    const imageBaseUrl='http://127.0.0.1:8000/'
+const ProductImageGallery = ({ product }) => {
+    const imageBaseUrl = 'http://127.0.0.1:8000/'
     console.log(product.product_image)
-    const images=[]
+    const images = []
     for (const item of product.product_image) {
-        const modifyItem=`${imageBaseUrl}${item}`
+        const modifyItem = `${imageBaseUrl}${item}`
         let obj = {
             original: modifyItem,
             thumbnail: modifyItem
         }
         images.push(obj)
     }
-    
+
     return (
         <div>
-            <ImageGallery items={images}  showPlayButton={false}/>
+            <ImageGallery items={images} showPlayButton={false} />
         </div>
     );
 };

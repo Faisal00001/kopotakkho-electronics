@@ -40,15 +40,19 @@ const OrderHistory = () => {
         localStorage.setItem('order_id', order.order.id)
         try {
             const response = await axiosPublic.post('/initiate/', {
+                order_id: order.order.id,
                 amount: order.price,
-                customer_name: "Faisal Osman",
-                customer_email: "faisalosman798@gmail.com",
-                customer_phone: '01790203616',
-                customer_address: 'Baridhara',
-                customer_postcode: '1207'
+                // customer_name: "Faisal Osman",
+                // customer_email: "faisalosman798@gmail.com",
+                // customer_phone: '01790203616',
+                // customer_address: 'Baridhara',
+                // customer_address_id: 10,
+                // customer_postcode: '1207'
             });
-
+            console.log(response.data)
+            // window.location.href = response.data.GatewayPageURL;
             window.location.href = response.data.GatewayPageURL;
+
         } catch (error) {
             console.error('Payment initiation failed:', error);
         }

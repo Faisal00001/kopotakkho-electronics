@@ -38,7 +38,8 @@ const Login = () => {
                 if (res.data.bool === true) {
                     const user = {
                         user_name: res.data.user,
-                        id: res.data.id
+                        id: res.data.id,
+                        isCustomer: true,
                     }
                     Swal.fire({
                         title: "Login Successful!",

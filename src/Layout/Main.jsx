@@ -9,7 +9,7 @@ const Main = () => {
     return (
         <div>
             {
-                location.pathname === '/login' || location.pathname === '/registration' || location.pathname === '/invoice' ? '' : <Navbar></Navbar>
+                location.pathname === '/login' || location.pathname === '/sellerLogin' || location.pathname === '/registration' || location.pathname === '/registrationSeller' || location.pathname === '/invoice' ? '' : <Navbar></Navbar>
             }
 
             <div className={`${location.pathname === '/invoice' && 'bg-[#f1f1f1] min-h-screen'}`}>
@@ -19,7 +19,7 @@ const Main = () => {
                 location.pathname === '/invoice' ? '' : <Footer></Footer>
             }
 
-            <Toaster position="top-right"
+            <Toaster position="top-center"
                 reverseOrder={false} />
         </div>
     );

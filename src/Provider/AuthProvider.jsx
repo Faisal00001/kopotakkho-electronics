@@ -10,6 +10,14 @@ const AuthProvider = ({ children }) => {
         return savedItems ? JSON.parse(savedItems) : []
     })
     useEffect(() => {
+        // Check if user is present in localStorage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+        setLoadingUser(false);
+    }, []);
+    useEffect(() => {
         // Update localStorage whenever cartItems changes
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
@@ -22,6 +30,7 @@ const AuthProvider = ({ children }) => {
         setCartItems,
         isLogin
     }
+    
     return (
         <AuthContext.Provider value={authInfo}>
             {
