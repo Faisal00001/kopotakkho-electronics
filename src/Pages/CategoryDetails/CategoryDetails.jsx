@@ -18,7 +18,7 @@ const CategoryDetails = () => {
     if (loading) {
         return "Loading"
     }
-    const categoryName = categories.data.find(category => category.id === idInt)
+    const categoryName = categories.data?.find(category => category.id === idInt)
     const categoryWiseProducts = products?.data.filter(product =>
         product.category === idInt
     )

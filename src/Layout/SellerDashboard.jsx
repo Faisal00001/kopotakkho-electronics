@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
-import { MdAssignmentAdd, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdAssignmentAdd, MdListAlt, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { IoIosTimer } from "react-icons/io";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaClipboardList, FaRegUserCircle } from "react-icons/fa";
 import { GoChecklist } from "react-icons/go";
 import Footer from "../Shared/Footer/Footer";
 import { Toaster } from "react-hot-toast";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 
 const SellerDashboard = () => {
@@ -66,33 +67,38 @@ const SellerDashboard = () => {
                                     <div className="flex gap-2 items-center">
                                         <MdAssignmentAdd className="text-2xl" />
 
-                                        <h3>Add Prodcut</h3>
+                                        <h3>Add Product</h3>
                                     </div></NavLink>
-                                <NavLink to="/dashboard/orderHistory" className={({ isActive, isPending }) =>
+                                <NavLink to="/sellerDashboard/changePassword" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
                                     <div className="flex gap-2 items-center">
-                                        <IoIosTimer className="text-2xl"></IoIosTimer>
-                                        <h3>Order History</h3>
+                                        <RiLockPasswordLine className="text-2xl" />
+
+                                        <h3>Change Password</h3>
                                     </div></NavLink>
 
-                                <NavLink to="/dashboard/personalDetails" className={({ isActive, isPending }) =>
-                                    isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
+
+                                <NavLink to="/sellerDashboard/wishList" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
                                     <div className="flex gap-2 items-center">
-                                        <FaRegUserCircle className="text-2xl"></FaRegUserCircle>
-                                        <h3>Personal Details</h3>
+                                        <GoChecklist className="text-2xl" />
+
+                                        <h3>My WishList</h3>
                                     </div></NavLink>
-                                <NavLink to="/dashboard/myWishlist" className={({ isActive, isPending }) =>
-                                    isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
+                                <NavLink to="/sellerDashboard/orders" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
                                     <div className="flex gap-2 items-center">
-                                        <GoChecklist className="text-2xl"></GoChecklist>
-                                        <h3>My Wishlist</h3>
+                                        <MdListAlt className="text-2xl" />
+
+                                        <h3>My Orders</h3>
                                     </div></NavLink>
+
 
                             </ul>
 

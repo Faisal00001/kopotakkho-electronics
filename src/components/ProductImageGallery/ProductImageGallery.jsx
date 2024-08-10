@@ -3,18 +3,19 @@ import ImageGallery from "react-image-gallery";
 import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 // import "~react-image-gallery/styles/css/image-gallery.css";
 const ProductImageGallery = ({ product }) => {
-    const imageBaseUrl = 'http://127.0.0.1:8000/'
-    console.log(product.product_image)
+    // const imageBaseUrl = 'http://127.0.0.1:8000/'
+    console.log('Galley 1', product.product_image)
     const images = []
     for (const item of product.product_image) {
-        const modifyItem = `${imageBaseUrl}${item}`
+
+        const modifyItem = `${item.image}`
         let obj = {
             original: modifyItem,
             thumbnail: modifyItem
         }
         images.push(obj)
     }
-
+    console.log('Image gallery', images)
     return (
         <div>
             <ImageGallery items={images} showPlayButton={false} />

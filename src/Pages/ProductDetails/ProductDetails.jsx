@@ -55,8 +55,9 @@ const ProductDetails = () => {
     if (loading) {
         return "Loading"
     }
-    const tag_list_products = product.tag_list.flatMap(tag => {
-        return products.data.filter(p => p.tag_list.includes(tag) && p.id !== product.id);
+    console.log('Undefined', product.image)
+    const tag_list_products = product.tags.split(',').flatMap(tag => {
+        return products.data.filter(p => p.tags.split(',').includes(tag) && p.id !== product.id);
     });
     // console.log('My products', tag_list_products)
     const unique_tag_list_products = Array.from(new Set(tag_list_products));

@@ -24,6 +24,9 @@ import RegistrationSeller from "../Pages/RegistrationSeller/RegistrationSeller";
 import SellerLogin from "../Pages/SellerLogin/SellerLogin";
 import SellerDashboard from "../Layout/SellerDashboard";
 import AddProduct from "../Pages/SellerDashboard/AddProduct/AddProduct";
+import ChangePassword from "../Pages/SellerDashboard/ChangePassword/ChangePassword";
+import SellerWishList from "../Pages/SellerDashboard/SellerWishList/SellerWishList";
+import SellerOrders from "../Pages/SellerDashboard/SellerOrders/SellerOrders";
 
 const router = createBrowserRouter([
     {
@@ -117,6 +120,18 @@ const router = createBrowserRouter([
             {
                 path: 'addProduct',
                 element: <AddProduct></AddProduct>
+            },
+            {
+                path: 'changePassword',
+                element: <ChangePassword></ChangePassword>
+            },
+            {
+                path: 'wishList',
+                element: <SellerWishList></SellerWishList>
+            },
+            {
+                path: 'orders',
+                element: <SellerOrders></SellerOrders>
             }
         ]
     }
