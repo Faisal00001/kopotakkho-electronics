@@ -8,6 +8,7 @@ import Navbar from "../Shared/Navbar/Navbar";
 import { GoChecklist } from "react-icons/go";
 import { ImProfile } from "react-icons/im";
 import { Toaster } from "react-hot-toast";
+import { CgPassword } from "react-icons/cg";
 
 const Dashboard = () => {
     const location = useLocation()
@@ -91,6 +92,14 @@ const Dashboard = () => {
                                     <div className="flex gap-2 items-center">
                                         <GoChecklist className="text-2xl"></GoChecklist>
                                         <h3>My Wishlist</h3>
+                                    </div></NavLink>
+                                <NavLink to="/dashboard/userChangePassword" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <CgPassword className="text-2xl"></CgPassword>
+                                        <h3>Change Password</h3>
                                     </div></NavLink>
 
                             </ul>

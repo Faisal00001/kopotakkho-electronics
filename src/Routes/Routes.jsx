@@ -27,6 +27,8 @@ import AddProduct from "../Pages/SellerDashboard/AddProduct/AddProduct";
 import ChangePassword from "../Pages/SellerDashboard/ChangePassword/ChangePassword";
 import SellerWishList from "../Pages/SellerDashboard/SellerWishList/SellerWishList";
 import SellerOrders from "../Pages/SellerDashboard/SellerOrders/SellerOrders";
+import ProductQuestion from "../Pages/ProductQuestion/ProductQuestion";
+import UserChangePassword from "../Pages/Dashboard/UserChangePassword/UserChangePassword";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: '/productDetails/:id',
                 element: <ProductDetails></ProductDetails>
+            },
+            {
+                path: '/question',
+                element: <ProductQuestion></ProductQuestion>
             },
             {
                 path: '/basket',
@@ -110,6 +116,10 @@ const router = createBrowserRouter([
             {
                 path: 'profile',
                 element: <Profile></Profile>
+            },
+            {
+                path: 'userChangePassword',
+                element: <UserChangePassword></UserChangePassword>
             }
         ]
     },

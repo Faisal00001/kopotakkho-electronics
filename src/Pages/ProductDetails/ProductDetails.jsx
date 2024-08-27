@@ -9,6 +9,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import ProductDetailsSlider from "../../components/ProductDetailsSlider/ProductDetailsSlider";
 import ProductImageGallery from "../../components/ProductImageGallery/ProductImageGallery";
 import useProducts from "../../components/hooks/useProducts";
+import ProductOverview from "../../components/ProductOverview/ProductOverview";
 
 
 // import required modules
@@ -59,7 +60,7 @@ const ProductDetails = () => {
     const tag_list_products = product.tags.split(',').flatMap(tag => {
         return products.data.filter(p => p.tags.split(',').includes(tag) && p.id !== product.id);
     });
-    // console.log('My products', tag_list_products)
+
     const unique_tag_list_products = Array.from(new Set(tag_list_products));
 
 
@@ -85,16 +86,16 @@ const ProductDetails = () => {
                     <h3 className="text-sm">Product Details</h3>
                 </div>
                 <div className="mt-20">
-                    <div className="flex gap-10">
+                    <div className="flex flex-col md:flex-row gap-10">
                         <div className="flex-1">
 
-                            <div className="w-[600px]">
+                            <div className="px-5 md:px-0 md:w-[600px]">
                                 <ProductImageGallery product={product}></ProductImageGallery>
 
                             </div>
 
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 px-5 md:px-0">
                             <p className="text-xl font-semibold">{product?.title}</p>
                             <p className="mt-3 text-sm">{product?.detail}</p>
                             <div className="flex gap-2 mt-2 items-center">
@@ -165,7 +166,15 @@ const ProductDetails = () => {
             </div>
             <div className="flex px-10">
                 <div className="w-[70%]">
-                    <h3>Hello</h3>
+                    <div className="flex gap-x-8">
+                        <button className="btn btn-active bg-white">Specification</button>
+                        <button className="btn btn-active bg-white">Description</button>
+                        <button className="btn btn-active bg-white">Questions</button>
+                        <button className="btn btn-active bg-white">Reviews</button>
+                    </div>
+                    <div>
+                        <ProductOverview productIdInt={productIdInt}></ProductOverview>
+                    </div>
                 </div>
                 <div className="w-[30%]">
                     <div className="hidden xl:mt-8 xl:block">

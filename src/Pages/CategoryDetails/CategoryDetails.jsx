@@ -27,11 +27,11 @@ const CategoryDetails = () => {
     return (
         <div>
             <div className="container mx-auto mt-5 mb-10">
-                <div className="flex gap-1">
+                <div className="flex gap-1 pl-5 md:pl-0">
                     <Link to={'/'} className="text-blue-800 text-sm hover:underline flex items-center gap-2">Home <FaChevronRight className="text-slate-600 text-xs" /> </Link>
                     <h3 className="text-sm">{categoryName.title}</h3>
                 </div>
-                <h3 className="text-3xl mt-5 font-medium">{categoryName.title}</h3>
+                <h3 className="text-3xl pl-5 md:pl-0 mt-5 font-medium">{categoryName.title}</h3>
 
             </div>
             <div className="flex justify-center items-center" style={
@@ -42,14 +42,14 @@ const CategoryDetails = () => {
                     height: '70vh'
                 }
             }>
-                <div className="flex justify-center items-center gap-5">
-                    <div className="w-[50%] flex justify-center">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-5">
+                    <div className="w-full md:w-[50%] flex justify-center">
                         <div className="w-[85%]">
                             <img src={image1} alt="" />
                         </div>
                     </div>
-                    <div className="w-[50%]">
-                        <h3 className="text-3xl font-bold">Bring the cinematic <br /> experience home.</h3>
+                    <div className="w-full md:w-[50%] pl-6 md:pl-0">
+                        <h3 className="text-2xl md:text-3xl font-bold">Bring the cinematic <br /> experience home.</h3>
                         <p className="mt-5 font-light">Shop TVs, home theatre and audio, accessories, and more.</p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const CategoryDetails = () => {
                 <div>
                     <div className="mt-20">
                         <div className="grid grid-cols-5 divide-x-2">
-                            <div className="col-span-1">
+                            <div className="col-span-1 hidden md:block">
                                 <div onClick={() => setShowCategoriesOptions(!showCategoriesOptions)} className={`flex items-center justify-between pr-2  cursor-pointer hover:text-blue-800`}>
                                     <h3 className="font-medium text-sm select-none">Categories</h3>
                                     {
@@ -94,10 +94,41 @@ const CategoryDetails = () => {
                                 </div>
                                 <hr className="mt-4" />
                             </div>
-                            <div className="col-span-4 pl-5">
+                            <div className="col-span-5 md:col-span-4 px-5 md:pl-5">
                                 <div className="bg-[#ECECEC] rounded-md flex justify-between items-center px-5 py-6">
                                     <div>
-                                        <p className="text-sm">{categoryWiseProducts.length} results</p>
+                                        <p className="hidden md:block text-sm">{categoryWiseProducts.length} results</p>
+                                        <div className="flex gap-5 items-center">
+                                            <div className="flex items-center gap-3">
+                                                <input type="checkbox" className="toggle toggle-sm" defaultChecked />
+                                                <div>
+                                                    <p className="text-sm">In Stock</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <input type="checkbox" className="toggle toggle-sm" defaultChecked />
+                                                <div>
+                                                    <p className="text-sm">Best buy only</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-5 items-center mt-3">
+                                            <div className="dropdown">
+                                                <div tabIndex={0} role="button" className="btn m-1 border-2 bg-white border-blue-500 hover:bg-white hover:border-blue-500 px-10 font-normal">Filter</div>
+                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                    <li><a>Item 1</a></li>
+                                                    <li><a>Item 2</a></li>
+                                                </ul>
+                                            </div>
+                                            <div className="dropdown">
+                                                <div tabIndex={0} role="button" className="btn m-1 border-2 border-blue-500 bg-white px-10 hover:bg-white hover:border-blue-500 font-normal">Best match</div>
+                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                    <li><a>Item 1</a></li>
+                                                    <li><a>Item 2</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div>
                                         <div className="relative">
