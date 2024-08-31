@@ -4,6 +4,9 @@ import useOrders from "../../../components/hooks/useOrders";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
+import useCustomerAddressList from "../../../components/hooks/useCustomerAddressList";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 const OrderHistory = () => {
@@ -13,6 +16,8 @@ const OrderHistory = () => {
     console.log(userOrders)
     const [ordersByOrderId, setOrdersByOrderId] = useState([])
     const [singleOrderByOrderId, setSingleOrderByOrderId] = useState([])
+    const [customerAddressList, isCustomerListLoading] = useCustomerAddressList()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (loading) {
@@ -30,8 +35,19 @@ const OrderHistory = () => {
         setOrdersByOrderId(multiOrderUsingOneOrder_id)
         setSingleOrderByOrderId(singleOrderUsingSingleOrder_id)
     }, [userOrders.data, loading])
+    if (isCustomerListLoading) {
+        return ''
+    }
     if (loading) {
         return "Loading"
+    }
+
+    const isDefaultAddressPresent = customerAddressList?.data.some(item => {
+        return item?.default_address
+    })
+
+    if (!isDefaultAddressPresent) {
+        navigate('/dashboard/customerAddress')
     }
 
     // console.log(singleOrderByOrderId)

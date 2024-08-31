@@ -29,6 +29,10 @@ import SellerWishList from "../Pages/SellerDashboard/SellerWishList/SellerWishLi
 import SellerOrders from "../Pages/SellerDashboard/SellerOrders/SellerOrders";
 import ProductQuestion from "../Pages/ProductQuestion/ProductQuestion";
 import UserChangePassword from "../Pages/Dashboard/UserChangePassword/UserChangePassword";
+import CustomerAddress from "../Pages/Dashboard/CustomerAddress/CustomerAddress";
+import AddCustomerAddress from "../Pages/Dashboard/AddCustomerAddress/AddCustomerAddress";
+import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
+
 
 const router = createBrowserRouter([
     {
@@ -90,6 +94,10 @@ const router = createBrowserRouter([
             {
                 path: '/invoice',
                 element: <Invoice></Invoice>
+            },
+            {
+                path: '/forgetPassword',
+                element: <ForgetPassword></ForgetPassword>
             }
         ]
     },
@@ -120,6 +128,14 @@ const router = createBrowserRouter([
             {
                 path: 'userChangePassword',
                 element: <UserChangePassword></UserChangePassword>
+            },
+            {
+                path: 'customerAddress',
+                element: <CustomerAddress></CustomerAddress>
+            },
+            {
+                path: 'addCustomerAddress',
+                element: <AddCustomerAddress></AddCustomerAddress>
             }
         ]
     },

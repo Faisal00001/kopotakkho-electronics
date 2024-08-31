@@ -89,7 +89,7 @@ const SellerLogin = () => {
 
                                 <div className="flex gap-5 items-center">
                                     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none  font-medium rounded text-sm w-full sm:w-auto px-14 py-4 text-center">Sign In</button>
-                                    <Link className="text-sm font-bold text-blue-800 hover:underline">Forget Password?</Link>
+                                    <Link to={'/forgetPassword'} className="text-sm font-bold text-blue-800 hover:underline">Forget Password?</Link>
                                 </div>
                             </form>
                         </div>

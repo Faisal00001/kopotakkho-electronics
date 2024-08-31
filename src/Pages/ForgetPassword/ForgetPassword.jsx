@@ -1,8 +1,9 @@
-import { useState } from "react";
-import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import { useState } from "react";
 
-const UserChangePassword = () => {
+
+const ForgetPassword = () => {
     const axiosPublic = useAxiosPublic()
     const user = JSON.parse(localStorage.getItem('user'))
     const customerId = user.id
@@ -21,8 +22,6 @@ const UserChangePassword = () => {
     }
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(passwordData.password)
-        console.log(passwordData.confirm_password)
         if (passwordData.password !== passwordData.confirmPassword) {
             console.log('True')
             setConfirmError(true);
@@ -45,28 +44,8 @@ const UserChangePassword = () => {
         }
 
     }
-    // const handleSubmit = (event) => {
-    //     event.preventDefault()
-    //     if (passwordData.password !== passwordData.confirm_password) {
-    //         setConfirmError(true);
-    //     }
-    //     else {
-    //         console.log('Heelo')
-    //         setConfirmError(false)
-    //         const formData = new FormData();
-    //         formData.append('password', passwordData.password);
-    //         axiosPublic.post(`/customer-change-password/${customerId}/`, formData)
-    //             .then(() => {
-    //                 alert("Password changed successfully");
-    //             })
-    //             .catch(error => console.log('Error occur'))
-    //     }
-    // }
-    console.log(passwordData)
     return (
         <div>
-
-
             <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
 
                 <div className="mb-5">
@@ -86,10 +65,8 @@ const UserChangePassword = () => {
 
                 <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
-
-
         </div>
     );
 };
 
-export default UserChangePassword;
+export default ForgetPassword;

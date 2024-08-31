@@ -9,6 +9,7 @@ import { GoChecklist } from "react-icons/go";
 import { ImProfile } from "react-icons/im";
 import { Toaster } from "react-hot-toast";
 import { CgPassword } from "react-icons/cg";
+import { FaMapLocationDot } from "react-icons/fa6";
 
 const Dashboard = () => {
     const location = useLocation()
@@ -100,6 +101,14 @@ const Dashboard = () => {
                                     <div className="flex gap-2 items-center">
                                         <CgPassword className="text-2xl"></CgPassword>
                                         <h3>Change Password</h3>
+                                    </div></NavLink>
+                                <NavLink to="/dashboard/customerAddress" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 text-white py-3 px-2 rounded-sm font-semibold" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <FaMapLocationDot className="text-2xl"></FaMapLocationDot>
+                                        <h3>Adress</h3>
                                     </div></NavLink>
 
                             </ul>
