@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.34.2",
     "axios": "^1.6.8",
+    "framer-motion": "^11.3.31",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "react": "^18.2.0",

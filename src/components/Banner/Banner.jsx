@@ -5,6 +5,11 @@ import image3 from "../../assets/images/banner/image3.jpg";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+// test purpose
+
+import spaceCity from "../../assets/images/banner/city1.png"
+import planet from "../../assets/images/banner/planet1.png"
+
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,16 +18,23 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 
 // import required modules
 const Banner = () => {
+    const [isFliped, setIsFliped] = useState(false)
+    const [isAnimating, setIsAnimating] = useState(false)
+    const handleFliped = () => {
+        setIsFliped(!isFliped)
+        setIsAnimating(true)
+    }
     return (
         <div className="container mx-auto mt-10 m-24">
             <div className="hidden lg:block">
                 <div className="flex gap-5 items-center">
-                    <div className="bg-blue-800 rounded w-1/2 h-[600px]">
+                    {/* <div className="bg-blue-800 rounded w-1/2 h-[600px]">
                         <img className="w-[50%] mx-auto mt-5 h-[230px]" src={image1} alt="" />
                         <h3 className="text-5xl mt-5 text-center font-semibold text-slate-50 bg-red-500 py-5 px-10">Top Deals</h3>
                         <h3 className="text-4xl text-slate-50 mt-5 font-bold text-center px-5">Don't miss out on this week's hottest deals</h3>
@@ -30,6 +42,30 @@ const Banner = () => {
                             <button className="px-8 py-4 mt-10  bg-white text-blue-800 rounded text-sm font-semibold">Shop Now</button>
                         </div>
 
+                    </div> */}
+                    <div className="flex items-center justify-center">
+                        <div className="flip-card w-[600px] h-[600px] rounded-md" onMouseEnter={handleFliped}>
+                            <motion.div
+                                className="flip-card-inner w-[100%] h-[100%]"
+                                initial={false}
+                                animate={{ rotateY: isFliped ? 180 : 360 }}
+                                transition={{ duration: 0.6, animationDirection: "normal" }}
+                                onAnimationComplete={() => setIsAnimating(false)}
+                            >
+                                <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
+                                    backgroundImage: `url(${spaceCity})`
+                                }}>
+                                    <h1 className="text-2xl font-bold">Sky</h1>
+                                    <p>Lorem ipsum dolor sit amet consectetur</p>
+                                </div>
+                                <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
+                                    backgroundImage: `url(${planet})`
+                                }}>
+                                    <h1 className="text-2xl font-bold">Maize</h1>
+                                    <p>Lorem ipsum dolor sit amet consectetur</p>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                     <div className="w-[50%] h-[600px]">
                         <div className="flex">

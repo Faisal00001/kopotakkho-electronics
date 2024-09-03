@@ -9,6 +9,7 @@ import { GoChecklist } from "react-icons/go";
 import Footer from "../Shared/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { FaUsersLine } from "react-icons/fa6";
 
 
 const SellerDashboard = () => {
@@ -97,6 +98,15 @@ const SellerDashboard = () => {
                                         <MdListAlt className="text-2xl" />
 
                                         <h3>My Orders</h3>
+                                    </div></NavLink>
+                                <NavLink to="/sellerDashboard/sellerCustomers" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <FaUsersLine className="text-2xl" />
+
+                                        <h3>Customers</h3>
                                     </div></NavLink>
 
 

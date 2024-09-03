@@ -32,6 +32,8 @@ import UserChangePassword from "../Pages/Dashboard/UserChangePassword/UserChange
 import CustomerAddress from "../Pages/Dashboard/CustomerAddress/CustomerAddress";
 import AddCustomerAddress from "../Pages/Dashboard/AddCustomerAddress/AddCustomerAddress";
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
+import SellerCustomers from "../Pages/SellerDashboard/SellerCustomers/SellerCustomers";
+import SellerCustomerOrders from "../Pages/SellerDashboard/SellerCustomerOrders/SellerCustomerOrders";
 
 
 const router = createBrowserRouter([
@@ -158,6 +160,14 @@ const router = createBrowserRouter([
             {
                 path: 'orders',
                 element: <SellerOrders></SellerOrders>
+            },
+            {
+                path: 'sellerCustomers',
+                element: <SellerCustomers></SellerCustomers>
+            },
+            {
+                path: 'sellerCustomerOrders/:id',
+                element: <SellerCustomerOrders></SellerCustomerOrders>
             }
         ]
     }
