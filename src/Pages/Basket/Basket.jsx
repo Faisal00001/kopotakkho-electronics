@@ -7,9 +7,13 @@ import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 import axios from "axios";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../components/hooks/useAxiosSecure";
 
 
 const Basket = () => {
+    const axiosSecure = useAxiosSecure()
+    const parsedUser = JSON.parse(localStorage.getItem('user'))
+    const token = parsedUser.access_token
     const { user } = useContext(AuthContext)
     const { cartItems, setCartItems } = useContext(AuthContext)
     const [order_id, setOrderId] = useState(null)
@@ -23,6 +27,7 @@ const Basket = () => {
     //     return wishListStatus
     // })
     const axiosPublic = useAxiosPublic()
+
 
     // const initialQuantities = cartItems.reduce((acc, product) => {
     //     acc[product.id] = 1
@@ -110,8 +115,14 @@ const Basket = () => {
     const handleCheckout = async () => {
         const formData = new FormData();
         formData.append('customer', customerId);
-        const orderIdResponse = await axiosPublic.post('/orders/', formData)
+        const orderIdResponse = await axiosPublic.post('/submit-order/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
         const order_id = orderIdResponse.data.id
+        console.log('Order id ki', order_id)
         // localStorage.setItem('order_id', order_id)
         const cartItems = JSON.parse(localStorage.getItem('cartItems'));
         console.log('Basket cart Items', cartItems);
@@ -124,7 +135,12 @@ const Basket = () => {
                 formData.append('quantity', cart.quantity);
                 formData.append('price', cart.price);
                 // Return the axios post promise
-                return axiosPublic.post('/order-items/', formData)
+                return axiosPublic.post('/order-items/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
 
             });
 

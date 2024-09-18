@@ -18,12 +18,12 @@ const AddProduct = () => {
 
     const imageInputRef = useRef(null);
     const multipleImagesInputRef = useRef(null);
-
+    const token = vendor.access_token
     const [productData, setProductData] = useState({
         'category': '',
         'vendor': vendor.id,
         'title': '',
-        'slug': '',
+        // 'slug': '',
         'detail': '',
         'price': '',
         'usd_price': '',
@@ -32,6 +32,7 @@ const AddProduct = () => {
         'demo_url': '',
         'product_file': '',
         'publish_status': false,
+        'hot_deal': false,
     });
     // useEffect(() => {
     //     setProductData({
@@ -187,13 +188,15 @@ const AddProduct = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        console.log(token)
+
         try {
             // Prepare the main product data
             const formData = new FormData();
             formData.append('vendor', productData.vendor);
             formData.append('category', productData.category);
             formData.append('title', productData.title);
-            formData.append('slug', productData.slug);
+            // formData.append('slug', productData.slug);
             formData.append('detail', productData.detail);
             formData.append('price', productData.price);
             formData.append('usd_price', productData.usd_price);
@@ -206,13 +209,14 @@ const AddProduct = () => {
             // Submit the product data
             const res = await axiosPublic.post('/products/', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
                 }
             });
-
+            console.log('Check response ', res)
             if (res.data.bool === false) {
                 setFormError(true);
-                setErrorMsg(res.data.msg || 'Oops... Something went wrong!');
+                setErrorMsg(res.data.msg || 'Oops... Something went wrong! hehe');
                 setSuccessMsg('');
                 return; // Exit the function early since there's an error
             }
@@ -222,7 +226,7 @@ const AddProduct = () => {
                 'category': '',
                 'vendor': '',
                 'title': '',
-                'slug': '',
+                // 'slug': '',
                 'detail': '',
                 'price': '',
                 'usd_price': '',
@@ -232,6 +236,7 @@ const AddProduct = () => {
                 'product_file': '',
                 'product_image': '',
                 'publish_status': false,
+                'hot_deal': false,
             });
             setFormError(false);
             setErrorMsg('');
@@ -248,7 +253,12 @@ const AddProduct = () => {
                 imageFormData.append('product', res.data.id);
                 imageFormData.append('image', item);
 
-                return axiosPublic.post('/product-imgs/', imageFormData)
+                return axiosPublic.post('/product-imgs/', imageFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(response => {
                         console.log('Hello from here too');
                         console.log(response);
@@ -271,7 +281,7 @@ const AddProduct = () => {
         }
     };
 
-    console.log(ProductImgs)
+    console.log(productData)
     return (
         <div>
 
@@ -285,7 +295,7 @@ const AddProduct = () => {
                 }
                 <div className="mb-5">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name='category' value={productData.category} onChange={inputHandler}>
+                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name='category' value={productData.category} onChange={inputHandler} required>
                         <option value={""}>Choose a category</option>
                         {
                             categories.data.map((item, index) =>
@@ -301,11 +311,11 @@ const AddProduct = () => {
                     <input type="text" value={productData.title} name="title" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
 
                 </div>
-                <div className="mb-5">
+                {/* <div className="mb-5">
                     <label htmlFor="slug" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
                     <input type="text" value={productData.slug} name="slug" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
 
-                </div>
+                </div> */}
                 <div className="mb-5">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
                     <input type="text" value={productData.price} name="price" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
@@ -347,6 +357,12 @@ const AddProduct = () => {
                         <input name='publish_status' checked={productData.publish_status} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
                     </div>
                     <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Publish</label>
+                </div>
+                <div className="flex items-start mb-5">
+                    <div className="flex items-center h-5">
+                        <input name='hot_deal' checked={productData.hot_deal} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                    </div>
+                    <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hot Deal</label>
                 </div>
                 <button onClick={handleSubmit} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Product</button>
             </form>

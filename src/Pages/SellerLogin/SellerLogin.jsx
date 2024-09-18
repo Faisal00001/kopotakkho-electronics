@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 
 const SellerLogin = () => {
@@ -26,13 +27,18 @@ const SellerLogin = () => {
         const formData = new FormData()
         formData.append('username', seller_name)
         formData.append('password', sellerPassword)
-        axiosPublic.post('/vendor-login/', formData)
+        axiosPublic.post('/vendor-login/', formData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(res => {
                 if (res.data.bool === true) {
                     const user = {
                         user_name: res.data.user,
                         id: res.data.id,
-                        isSeller: true
+                        isSeller: true,
+                        access_token: res.data.access_token
                     }
                     Swal.fire({
                         title: "Login Successful!",
@@ -42,6 +48,9 @@ const SellerLogin = () => {
                     localStorage.setItem('user', JSON.stringify(user))
                     form.reset()
                     navigate(from, { replace: true })
+                }
+                else {
+                    toast.error('Invalid user name or password')
                 }
             })
             .catch(error => console.log(error))

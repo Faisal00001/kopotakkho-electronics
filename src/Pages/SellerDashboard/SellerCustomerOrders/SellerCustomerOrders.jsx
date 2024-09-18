@@ -8,7 +8,7 @@ const SellerCustomersOrders = () => {
     const customer_id = parseInt(id)
     const axiosPublic = useAxiosPublic()
     const [customerOrders, setCustomerOrders] = useState([])
-    console.log(customer_id)
+    console.log('Customer id', customer_id)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     useEffect(() => {
@@ -41,18 +41,19 @@ const SellerCustomersOrders = () => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                Customer name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
                                 Product
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Category
+                                Customer name
                             </th>
+
                             <th scope="col" className="px-6 py-3">
                                 Price
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-center">
                                 Action
                             </th>
                         </tr>
@@ -60,6 +61,21 @@ const SellerCustomersOrders = () => {
                     <tbody>
                         {
                             customerOrders.data.map((item, index) => <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <td className="py-5">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <div className="avatar">
+                                            <div className="h-20 w-32">
+                                                <img
+                                                    src={item.product.image}
+                                                    alt="Product Image" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="font-bold">{item.product.title}</div>
+
+                                        </div>
+                                    </div>
+                                </td>
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <span className="mr-2">
                                         {
@@ -72,20 +88,25 @@ const SellerCustomersOrders = () => {
                                         }
                                     </span>
                                 </th>
+
                                 <td className="px-6 py-4">
                                     {
-                                        item.product.title
+                                        item.price + " BDT"
+
                                     }
                                 </td>
                                 <td className="px-6 py-4">
-                                    Laptop
+                                    Completed
                                 </td>
-                                <td className="px-6 py-4">
-                                    $2999
+                                <td className="px-6 py-3">
+                                    <select className="select select-info w-full max-w-xs">
+                                        <option disabled selected>Change status</option>
+                                        <option>Auto</option>
+                                        <option>Dark mode</option>
+                                        <option>Light mode</option>
+                                    </select>
                                 </td>
-                                <td className="px-6 py-4">
-                                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                </td>
+
                             </tr>)
                         }
 

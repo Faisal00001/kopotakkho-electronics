@@ -10,15 +10,15 @@ const SellerCustomers = () => {
     if (loading) {
         return "Loading"
     }
-    const uniqueCustomer = customersList?.data.filter((item, index, self) => {
-        return index === self.findIndex((t) => t.order.customer.phone === item.order.customer.phone)
-    })
+    // const uniqueCustomer = customersList?.data.filter((item, index, self) => {
+    //     return index === self.findIndex((t) => t.order.customer.phone === item.order.customer.phone)
+    // })
     const handleOrders = (item) => {
         console.log(item.order)
         navigate(`/sellerDashboard/sellerCustomerOrders/${item.order.customer.customer_id}`)
     }
     console.log('Tra', customersList.data)
-    console.log('Uniq', uniqueCustomer)
+    // console.log('Uniq', uniqueCustomer)
     return (
         <div>
 
@@ -43,18 +43,18 @@ const SellerCustomers = () => {
                     </thead>
                     <tbody>
                         {
-                            uniqueCustomer?.map((item, index) => <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            customersList.data?.map((item, index) => <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <span className="mr-2"> {
-                                        item?.order?.customer?.first_name
+                                        item?.user?.first_name
                                     }</span>
-                                    <span>{item?.order?.customer?.last_name}</span>
+                                    <span>{item?.user?.last_name}</span>
                                 </th>
                                 <td className="px-6 py-4">
-                                    {item?.order?.customer?.email}
+                                    {item?.user?.email}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item?.order?.customer?.phone}
+                                    {item?.phone}
                                 </td>
 
                                 <td className="px-6 py-4">

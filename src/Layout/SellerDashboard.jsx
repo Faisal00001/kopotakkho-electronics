@@ -97,7 +97,7 @@ const SellerDashboard = () => {
                                     <div className="flex gap-2 items-center">
                                         <MdListAlt className="text-2xl" />
 
-                                        <h3>My Orders</h3>
+                                        <h3>Orders</h3>
                                     </div></NavLink>
                                 <NavLink to="/sellerDashboard/sellerCustomers" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"

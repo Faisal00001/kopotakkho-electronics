@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
@@ -33,13 +34,18 @@ const Login = () => {
         const formData = new FormData()
         formData.append('username', user_name)
         formData.append('password', userPassword)
-        axiosPublic.post('/customer-login/', formData)
+        axiosPublic.post('/customer-login/', formData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(res => {
                 if (res.data.bool === true) {
                     const user = {
                         user_name: res.data.user,
                         id: res.data.id,
                         isCustomer: true,
+                        access_token: res.data.access_token
                     }
                     Swal.fire({
                         title: "Login Successful!",
@@ -49,6 +55,9 @@ const Login = () => {
                     localStorage.setItem('user', JSON.stringify(user))
                     form.reset()
                     navigate(from, { replace: true })
+                }
+                else {
+                    toast.error('Worng user name or password. Plese try again')
                 }
             })
             .catch(error => console.log(error))
