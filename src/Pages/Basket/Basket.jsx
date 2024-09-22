@@ -112,55 +112,60 @@ const Basket = () => {
     //     }
     //     // navigate('/checkout')
     // }
-    const handleCheckout = async () => {
-        const formData = new FormData();
-        formData.append('customer', customerId);
-        const orderIdResponse = await axiosPublic.post('/submit-order/', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const order_id = orderIdResponse.data.id
-        console.log('Order id ki', order_id)
-        // localStorage.setItem('order_id', order_id)
-        const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-        console.log('Basket cart Items', cartItems);
-        if (cartItems != null) {
-            // Collect all the post requests as promises
-            const postRequests = cartItems.map(async (cart) => {
-                const formData = new FormData();
-                formData.append('order', order_id);
-                formData.append('product', cart.id);
-                formData.append('quantity', cart.quantity);
-                formData.append('price', cart.price);
-                // Return the axios post promise
-                return axiosPublic.post('/order-items/', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
+    console.log(totalPrice)
+    const handleCheckout = () => {
 
-            });
+        navigate('/confirmOrder', { state: { totalPrice: totalPrice } })
+    }
+    // const handleCheckout = async () => {
+    //     const formData = new FormData();
+    //     formData.append('customer', customerId);
+    //     const orderIdResponse = await axiosPublic.post('/submit-order/', formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //     const order_id = orderIdResponse.data.id
+    //     console.log('Order id ki', order_id)
+    //     // localStorage.setItem('order_id', order_id)
+    //     const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    //     console.log('Basket cart Items', cartItems);
+    //     if (cartItems != null) {
+    //         // Collect all the post requests as promises
+    //         const postRequests = cartItems.map(async (cart) => {
+    //             const formData = new FormData();
+    //             formData.append('order', order_id);
+    //             formData.append('product', cart.id);
+    //             formData.append('quantity', cart.quantity);
+    //             formData.append('price', 8);
+    //             // Return the axios post promise
+    //             return axiosPublic.post('/order-items/', formData, {
+    //                 headers: {
+    //                     'Content-Type': 'multipart/form-data',
+    //                     'Authorization': `Bearer ${token}`
+    //                 }
+    //             })
 
-            try {
-                // Wait for all post requests to complete
-                await Promise.all(postRequests);
-                // Clear the cart and navigate after all requests are successful
-                setCartItems([])
-                Swal.fire({
-                    title: "Order Placed!",
-                    text: "Pay Now Please!",
-                    icon: "success"
-                });
-                navigate('/dashboard/orderHistory')
-                // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
-            } catch (error) {
-                console.error('An error occurred while posting the cart items:', error);
-            }
-        }
-    };
+    //         });
+
+    //         try {
+    //             // Wait for all post requests to complete
+    //             await Promise.all(postRequests);
+    //             // Clear the cart and navigate after all requests are successful
+    //             setCartItems([])
+    //             Swal.fire({
+    //                 title: "Order Placed!",
+    //                 text: "Pay Now Please!",
+    //                 icon: "success"
+    //             });
+    //             navigate('/dashboard/orderHistory')
+    //             // navigate('/checkout'); // Uncomment if you have a navigate function or use appropriate navigation logic
+    //         } catch (error) {
+    //             console.error('An error occurred while posting the cart items:', error);
+    //         }
+    //     }
+    // };
 
     // const handleIncQuantity = (id) => {
     //     setQuantities(prevQuantity => ({

@@ -13,7 +13,7 @@ const OrderHistory = () => {
 
     const axiosPublic = useAxiosPublic()
     const [userOrders, loading, , currentPage, setCurrentPage, totalPage, setTotalPage] = useOrders()
-    console.log(userOrders)
+    console.log('Customer order', userOrders)
     const [ordersByOrderId, setOrdersByOrderId] = useState([])
     const [singleOrderByOrderId, setSingleOrderByOrderId] = useState([])
     const [customerAddressList, isCustomerListLoading] = useCustomerAddressList()
@@ -24,14 +24,15 @@ const OrderHistory = () => {
             return
         }
         const orderMap = userOrders.data.reduce((acc, order) => {
-            if (!acc[order.order.id]) {
-                acc[order.order.id] = []
+            if (!acc[order.id]) {
+                acc[order.id] = []
             }
-            acc[order.order.id].push(order)
+            acc[order.id].push(order)
             return acc
         }, {})
-        const multiOrderUsingOneOrder_id = userOrders.data.filter(order => orderMap[order.order.id].length > 1)
-        const singleOrderUsingSingleOrder_id = userOrders.data.filter(order => orderMap[order.order.id].length === 1)
+        console.log('Here is order map', orderMap)
+        const multiOrderUsingOneOrder_id = userOrders.data.filter(order => orderMap[order.id].length > 1)
+        const singleOrderUsingSingleOrder_id = userOrders.data.filter(order => orderMap[order.id].length === 1)
         setOrdersByOrderId(multiOrderUsingOneOrder_id)
         setSingleOrderByOrderId(singleOrderUsingSingleOrder_id)
     }, [userOrders.data, loading])
@@ -77,16 +78,12 @@ const OrderHistory = () => {
         window.scrollTo(0, 0);
         setCurrentPage(page)
     }
+    console.log('Order multiple ', ordersByOrderId)
+    console.log('Order single ', singleOrderByOrderId)
+    // console.log('Muli order using same oid', ordersByOrderId)
     return (
         <div className="flex relative flex-col justify-center">
             <h3 className="text-center mb-10 font-bold text-3xl">Order History</h3>
-            {/* <div className="absolute top-1 right-6">
-                <button onClick={handlePaymentForAllProducts} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
-                    <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
-                    <span className="relative w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white text-sm">Buy All Products</span>
-                </button>
-            </div> */}
-
             <div>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -111,21 +108,14 @@ const OrderHistory = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Status
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                {/* <th scope="col" className="px-6 py-3">
                                     Pay
-                                </th>
+                                </th> */}
                             </tr>
                         </thead>
                         <tbody>
 
-                            {/* {
-                                ordersByOrderId.map((order, index, orders) => <div key={order.id}>
-                                       {
-                                        orders.d
-                                       }
-                                </div>)
-                            } */}
-                            {/* Modification */}
+
 
 
                             {Object.entries(
@@ -163,17 +153,17 @@ const OrderHistory = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         {orders.map(order => (
-                                            <p key={order.id} className="font-medium text-red-600 dark:text-red-500 hover:underline py-10">Remove</p>
+                                            <p key={order.id} className="font-medium text-red-600 dark:text-red-500 hover:underline py-10 cursor-pointer">Add Review</p>
                                         ))}
                                     </td>
                                     <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                         {orders.map(order => (
                                             <div key={order.id}>
-                                                {order?.order?.order_status ? (
+                                                {order.order_status === 'Confirm' ? (
                                                     <div className="py-10">
                                                         <div className="flex gap-x-1 items-center">
                                                             <FaCheck className="text-green-700" />
-                                                            Delivered
+                                                            Confirmed
                                                         </div>
                                                     </div>
                                                 ) : (
@@ -187,7 +177,7 @@ const OrderHistory = () => {
                                             </div>
                                         ))}
                                     </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900">
+                                    {/* <td className="px-6 py-4 font-semibold text-gray-900">
                                         <div>
                                             {!orders[0].order.order_status ? (
                                                 // onClick={() => paymentHandler(orders[0])}
@@ -206,7 +196,7 @@ const OrderHistory = () => {
                                                 </button>
                                             )}
                                         </div>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             ))}
                             {/* Single order with single order id */}

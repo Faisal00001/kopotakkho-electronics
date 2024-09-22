@@ -2,12 +2,14 @@ import toast from "react-hot-toast";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 
 
 const AddCustomerAddress = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user.id
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const navigate = useNavigate()
     const [addressForm, setAddressForm] = useState({
         address: '',
@@ -29,7 +31,7 @@ const AddCustomerAddress = () => {
         formData.append('city', addressForm.city);
         formData.append('post', addressForm.post);
         formData.append('customer', addressForm.customer);
-        axiosPublic.post('/address/', formData)
+        axiosSecure.post('/address/', formData)
             .then(res => {
                 if (res.status !== 201) {
                     toast.error('Something wrong')

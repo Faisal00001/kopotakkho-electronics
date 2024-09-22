@@ -34,6 +34,7 @@ import AddCustomerAddress from "../Pages/Dashboard/AddCustomerAddress/AddCustome
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import SellerCustomers from "../Pages/SellerDashboard/SellerCustomers/SellerCustomers";
 import SellerCustomerOrders from "../Pages/SellerDashboard/SellerCustomerOrders/SellerCustomerOrders";
+import ConfirmOrder from "../Pages/ConfirmOrder/ConfirmOrder";
 
 
 const router = createBrowserRouter([
@@ -100,6 +101,11 @@ const router = createBrowserRouter([
             {
                 path: '/forgetPassword',
                 element: <ForgetPassword></ForgetPassword>
+            }
+            ,
+            {
+                path: 'confirmOrder',
+                element: <ConfirmOrder></ConfirmOrder>
             }
         ]
     },

@@ -1,24 +1,55 @@
 import { useState } from "react";
-import useOrders from "../../../components/hooks/useOrders";
+
 import useSellerOrders from "../../../components/hooks/useSellerOrders";
 import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { GiConfirmed } from "react-icons/gi";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { TbTruckDelivery } from "react-icons/tb";
+import { TiCancel } from "react-icons/ti";
+
 
 const SellerOrders = () => {
     const axiosSecure = useAxiosSecure()
-    const [sellerOrders, loading] = useSellerOrders()
-    const [selectedOrderStatus, setSelectedOrderStatus] = useState('');
-    const [selectedOrderId, setSelectedOrderId] = useState('')
+    // const baseUrl = 'http://127.0.0.1:8000/api';
+
+
+    const [sellerOrders, loading, refetch] = useSellerOrders()
+    const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
+    // const [selectedOrderId, setSelectedOrderId] = useState('')
     if (loading) {
         return "Loading"
     }
     const changeOrderStatus = (event, order_id) => {
         // console.log(order_id)
+
         const status = event.target.value
-        console.log(order_id)
-        setSelectedOrderStatus(event.target.value)
+
+
+        // fetch(`${baseUrl}/order-modify/${order_id}/`, {
+        //     method: 'PATCH',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify({ order_status: status }),
+        // })
+        axiosSecure.patch(`/order-modify/${order_id}/`, { order_status: status })
+            .then(res => {
+                if (res.status === 200) {
+                    toast.success('Order status updated successfully')
+                    refetch()
+                }
+            })
+            .catch(error => console.log(error))
+        setSelectedOrderStatus((prevStatuses) => ({
+            ...prevStatuses,
+            [order_id]: status,
+        }));
 
     }
-    console.log(selectedOrderStatus)
+    // console.log(selectedOrderStatus)
     return (
         <div>
 
@@ -101,12 +132,27 @@ const SellerOrders = () => {
                                                     <div className="font-semibold text-gray-900">
                                                         Pending
                                                     </div>
-                                                </div> : "Deliver"
+                                                </div> : order.order_status === 'Confirm' ? <> <div className="flex items-center gap-2">
+                                                    <GiConfirmed className="text-2xl text-green-400" />
+                                                    <div>
+                                                        Confirmed
+                                                    </div>
+                                                </div> </> : order.order_status === 'Cancelled' ? <div className="flex items-center gap-2">
+                                                    <TiCancel className="text-3xl text-red-400" />
+                                                    <div>
+                                                        Cancelled
+                                                    </div>
+                                                </div> : <div className="flex items-center gap-2">
+                                                    <TbTruckDelivery className="text-3xl text-green-400" />
+                                                    <div>
+                                                        Delivered
+                                                    </div>
+                                                </div>
                                             }
                                         </td>
                                         <td className="px-6 py-4">
-                                            <select value={selectedOrderStatus} onChange={(e) => changeOrderStatus(e, order.order)} className="select select-accent w-full max-w-xs">
-                                                <option value={''} disabled>Change Status</option>
+                                            <select value={selectedOrderStatus[order.order] || ''} onChange={(e) => changeOrderStatus(e, order.order)} className="select select-accent w-full max-w-xs">
+                                                <option selected value={''} disabled>Change Status</option>
                                                 <option value="Confirm">Confirm</option>
                                                 <option value="Delivered">Delivered</option>
                                                 <option value="Cancelled">Cancelled</option>
