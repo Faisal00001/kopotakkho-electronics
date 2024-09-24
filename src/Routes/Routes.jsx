@@ -35,6 +35,10 @@ import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import SellerCustomers from "../Pages/SellerDashboard/SellerCustomers/SellerCustomers";
 import SellerCustomerOrders from "../Pages/SellerDashboard/SellerCustomerOrders/SellerCustomerOrders";
 import ConfirmOrder from "../Pages/ConfirmOrder/ConfirmOrder";
+import AddCustomerReview from "../Pages/Dashboard/AddCustomerReview/AddCustomerReview";
+import SellerReport from "../Pages/SellerDashboard/SellerReport/SellerReport";
+import UpdateProduct from "../Pages/SellerDashboard/UpdateProduct/UpdateProduct";
+import UpdateProductDetails from "../Pages/SellerDashboard/UpdateProductDetails/UpdateProductDetails";
 
 
 const router = createBrowserRouter([
@@ -107,6 +111,7 @@ const router = createBrowserRouter([
                 path: 'confirmOrder',
                 element: <ConfirmOrder></ConfirmOrder>
             }
+
         ]
     },
     {
@@ -144,6 +149,10 @@ const router = createBrowserRouter([
             {
                 path: 'addCustomerAddress',
                 element: <AddCustomerAddress></AddCustomerAddress>
+            },
+            {
+                path: 'addCustomerReview/:pid',
+                element: <AddCustomerReview></AddCustomerReview>
             }
         ]
     },
@@ -174,6 +183,18 @@ const router = createBrowserRouter([
             {
                 path: 'sellerCustomerOrders/:id',
                 element: <SellerCustomerOrders></SellerCustomerOrders>
+            },
+            {
+                path: 'sellerReport',
+                element: <SellerReport></SellerReport>
+            },
+            {
+                path: 'updateProduct',
+                element: <UpdateProduct></UpdateProduct>
+            },
+            {
+                path: 'updateProductDetails/:id',
+                element: <UpdateProductDetails></UpdateProductDetails>
             }
         ]
     }

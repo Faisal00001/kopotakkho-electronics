@@ -5,7 +5,7 @@ import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
 import useCustomerAddressList from "../../../components/hooks/useCustomerAddressList";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
@@ -78,6 +78,14 @@ const OrderHistory = () => {
         window.scrollTo(0, 0);
         setCurrentPage(page)
     }
+    const formatDateTime = (dateTime) => {
+        const date = new Date(dateTime);
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const formattedDate = date.toLocaleDateString(undefined, options);
+        const formattedTime = date.toLocaleTimeString(undefined, timeOptions);
+        return `${formattedDate} ${formattedTime}`;
+    };
     console.log('Order multiple ', ordersByOrderId)
     console.log('Order single ', singleOrderByOrderId)
     // console.log('Muli order using same oid', ordersByOrderId)
@@ -108,6 +116,9 @@ const OrderHistory = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Status
                                 </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Date
+                                </th>
                                 {/* <th scope="col" className="px-6 py-3">
                                     Pay
                                 </th> */}
@@ -118,91 +129,9 @@ const OrderHistory = () => {
 
 
 
-                            {Object.entries(
-                                ordersByOrderId.reduce((acc, order) => {
-                                    const orderId = order.order.id;
-                                    if (!acc[orderId]) {
-                                        acc[orderId] = [];
-                                    }
-                                    acc[orderId].push(order);
-                                    return acc;
-                                }, {})
-                            ).map(([orderId, orders]) => (
-                                <tr key={orderId} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td className="p-4">
-                                        {orders.map(order => (
-                                            <div key={order.id}>
-                                                <img src={order.product.image} className="w-16 md:w-32 max-w-full max-h-full" alt={order.product.title} />
-                                            </div>
-                                        ))}
-                                    </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                        {orders.map(order => (
-                                            <p className="py-10" key={order.id}>{order.product.title}</p>
-                                        ))}
-                                    </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                        {orders.map(order => (
-                                            <p className="py-10" key={order.id}>{order.quantity}</p>
-                                        ))}
-                                    </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                        {orders.map(order => (
-                                            <p className="py-10" key={order.id}>${order.price}</p>
-                                        ))}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {orders.map(order => (
-                                            <p key={order.id} className="font-medium text-red-600 dark:text-red-500 hover:underline py-10 cursor-pointer">Add Review</p>
-                                        ))}
-                                    </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                        {orders.map(order => (
-                                            <div key={order.id}>
-                                                {order.order_status === 'Confirm' ? (
-                                                    <div className="py-10">
-                                                        <div className="flex gap-x-1 items-center">
-                                                            <FaCheck className="text-green-700" />
-                                                            Confirmed
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="py-10">
-                                                        <div className="flex gap-x-1 items-center">
-                                                            <span className="loading loading-spinner text-red-500 loading-sm"></span>
-                                                            Pending
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </td>
-                                    {/* <td className="px-6 py-4 font-semibold text-gray-900">
-                                        <div>
-                                            {!orders[0].order.order_status ? (
-                                                // onClick={() => paymentHandler(orders[0])}
-                                                <div className="py-20">
-                                                    <div className="dropdown dropdown-left">
-                                                        <div tabIndex={0} role="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Payment Option</div>
-                                                        <ul tabIndex={0} className="dropdown-content menu bg-red-100 rounded-box z-[1] w-52 p-2 shadow">
-                                                            <li onClick={() => paymentHandler(orders[0])}><a>Mobile Banking</a></li>
-                                                            <li><a>Cash On delivery</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <button disabled className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-slate-300 rounded hover:bg-slate-300 group">
-                                                    <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Done</span>
-                                                </button>
-                                            )}
-                                        </div>
-                                    </td> */}
-                                </tr>
-                            ))}
-                            {/* Single order with single order id */}
 
                             {
-                                singleOrderByOrderId.map((order, index) => <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                userOrders.data.map((order, index) => <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td className="p-4">
 
                                         <div key={order.id}>
@@ -227,17 +156,17 @@ const OrderHistory = () => {
                                     </td>
                                     <td className="px-6 py-4">
 
-                                        <p className="font-medium text-red-600 dark:text-red-500 hover:underline py-10">Remove</p>
+                                        <Link to={`/dashboard/addCustomerReview/${order.product.id}`} className="font-medium text-red-600  hover:underline py-10 cursor-pointer">Add Review</Link>
 
                                     </td>
                                     <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
 
                                         <div key={order.id}>
-                                            {order?.order?.order_status ? (
+                                            {order?.order_status === 'Confirm' ? (
                                                 <div>
                                                     <div className="flex gap-x-1 items-center">
                                                         <FaCheck className="text-green-700" />
-                                                        Delivered
+                                                        Confirmed
                                                     </div>
                                                 </div>
                                             ) : (
@@ -251,29 +180,16 @@ const OrderHistory = () => {
                                         </div>
 
                                     </td>
-                                    <td className="px-6 py-4 font-semibold text-gray-900">
-                                        <div>
-                                            {!order.order.order_status ? (
-                                                <div>
-                                                    {/* <button onClick={() => paymentHandler(order)} className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-black rounded hover:bg-black group">
-                                                        <span className="w-48 h-48 rounded rotate-[-40deg] bg-red-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
-                                                        <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Payment</span>
-                                                    </button> */}
-                                                    <div className="dropdown dropdown-left">
-                                                        <div tabIndex={0} role="button" className="m-1 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Payment Option</div>
-                                                        <ul tabIndex={0} className="dropdown-content menu bg-red-100 rounded-box z-[1] w-52 p-2 shadow">
-                                                            <li onClick={() => paymentHandler(order)}><a>Mobile Banking</a></li>
-                                                            <li><a>Cash on Delivery</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <button disabled className="relative inline-flex items-center justify-start px-5 py-2 overflow-hidden font-medium transition-all bg-slate-300 rounded hover:bg-slate-300 group">
-                                                    <span className="relative text-sm w-full text-left text-white transition-colors duration-300 ease-in-out group-hover:text-white">Done</span>
-                                                </button>
-                                            )}
-                                        </div>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+
+                                        <p className="py-10">
+                                            {
+                                                formatDateTime(order.order_time)
+                                            }
+                                        </p>
+
                                     </td>
+
                                 </tr>)
                             }
 

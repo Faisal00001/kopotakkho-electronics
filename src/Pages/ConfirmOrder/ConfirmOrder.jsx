@@ -50,7 +50,7 @@ const ConfirmOrder = () => {
                     localStorage.removeItem('cartData');
                     Swal.fire({
                         title: "Order Placed!",
-                        text: "Pay Now Please!",
+                        text: "Thank you!",
                         icon: "success"
                     });
                     navigate('/')

@@ -197,6 +197,7 @@ const AddProduct = () => {
             formData.append('category', productData.category);
             formData.append('title', productData.title);
             // formData.append('slug', productData.slug);
+            formData.append('hot_deal', productData.hot_deal)
             formData.append('detail', productData.detail);
             formData.append('price', productData.price);
             formData.append('usd_price', productData.usd_price);

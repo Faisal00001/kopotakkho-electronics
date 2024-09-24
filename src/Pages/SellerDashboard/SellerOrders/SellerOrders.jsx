@@ -21,20 +21,9 @@ const SellerOrders = () => {
         return "Loading"
     }
     const changeOrderStatus = (event, order_id) => {
-        // console.log(order_id)
+
 
         const status = event.target.value
-
-
-        // fetch(`${baseUrl}/order-modify/${order_id}/`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify({ order_status: status }),
-        // })
         axiosSecure.patch(`/order-modify/${order_id}/`, { order_status: status })
             .then(res => {
                 if (res.status === 200) {
@@ -49,7 +38,7 @@ const SellerOrders = () => {
         }));
 
     }
-    // console.log(selectedOrderStatus)
+    console.log('Seller orders', sellerOrders.data)
     return (
         <div>
 

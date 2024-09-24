@@ -10,6 +10,8 @@ import Footer from "../Shared/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaUsersLine } from "react-icons/fa6";
+import { BiSolidReport } from "react-icons/bi";
+import { GrDocumentUpdate } from "react-icons/gr";
 
 
 const SellerDashboard = () => {
@@ -107,6 +109,24 @@ const SellerDashboard = () => {
                                         <FaUsersLine className="text-2xl" />
 
                                         <h3>Customers</h3>
+                                    </div></NavLink>
+                                <NavLink to="/sellerDashboard/sellerReport" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <BiSolidReport className="text-2xl" />
+
+                                        <h3>Reports</h3>
+                                    </div></NavLink>
+                                <NavLink to="/sellerDashboard/updateProduct" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <GrDocumentUpdate className="text-2xl" />
+
+                                        <h3>Update product</h3>
                                     </div></NavLink>
 
 
