@@ -14,8 +14,10 @@ const SellerCustomers = () => {
     //     return index === self.findIndex((t) => t.order.customer.phone === item.order.customer.phone)
     // })
     const handleOrders = (item) => {
-        console.log(item.order)
-        navigate(`/sellerDashboard/sellerCustomerOrders/${item.order.customer.customer_id}`)
+        const customer_id = item?.id
+        navigate(`/sellerDashboard/sellerCustomerProducts/${customer_id}`)
+        // console.log(item.user)
+        // navigate(`/sellerDashboard/sellerCustomerOrders/${item.order.customer.customer_id}`)
     }
     console.log('Tra', customersList.data)
     // console.log('Uniq', uniqueCustomer)

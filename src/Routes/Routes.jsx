@@ -39,6 +39,8 @@ import AddCustomerReview from "../Pages/Dashboard/AddCustomerReview/AddCustomerR
 import SellerReport from "../Pages/SellerDashboard/SellerReport/SellerReport";
 import UpdateProduct from "../Pages/SellerDashboard/UpdateProduct/UpdateProduct";
 import UpdateProductDetails from "../Pages/SellerDashboard/UpdateProductDetails/UpdateProductDetails";
+import SellerCustomerProducts from "../Pages/SellerDashboard/SellerCustomerProducts/SellerCustomerProducts";
+import SellerProfile from "../Pages/SellerDashboard/SellerProfile/SellerProfile";
 
 
 const router = createBrowserRouter([
@@ -195,6 +197,14 @@ const router = createBrowserRouter([
             {
                 path: 'updateProductDetails/:id',
                 element: <UpdateProductDetails></UpdateProductDetails>
+            },
+            {
+                path: 'sellerCustomerProducts/:customer_id',
+                element: <SellerCustomerProducts></SellerCustomerProducts>
+            },
+            {
+                path: 'sellerProfile',
+                element: <SellerProfile></SellerProfile>
             }
         ]
     }

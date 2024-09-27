@@ -12,6 +12,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaUsersLine } from "react-icons/fa6";
 import { BiSolidReport } from "react-icons/bi";
 import { GrDocumentUpdate } from "react-icons/gr";
+import { CgProfile } from "react-icons/cg";
 
 
 const SellerDashboard = () => {
@@ -63,6 +64,24 @@ const SellerDashboard = () => {
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu  w-80 min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
+                                <NavLink to="/sellerDashboard/sellerProfile" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <CgProfile className="text-2xl" />
+
+                                        <h3>Profile</h3>
+                                    </div></NavLink>
+                                <NavLink to="/sellerDashboard/sellerProducts" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <MdAssignmentAdd className="text-2xl" />
+
+                                        <h3>My Products</h3>
+                                    </div></NavLink>
                                 <NavLink to="/sellerDashboard/addProduct" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
