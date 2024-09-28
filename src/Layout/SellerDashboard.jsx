@@ -102,7 +102,7 @@ const SellerDashboard = () => {
                                     </div></NavLink>
 
 
-                                <NavLink to="/sellerDashboard/wishList" className={({ isActive, isPending }) =>
+                                {/* <NavLink to="/sellerDashboard/wishList" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
@@ -110,7 +110,7 @@ const SellerDashboard = () => {
                                         <GoChecklist className="text-2xl" />
 
                                         <h3>My WishList</h3>
-                                    </div></NavLink>
+                                    </div></NavLink> */}
                                 <NavLink to="/sellerDashboard/orders" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
@@ -138,7 +138,7 @@ const SellerDashboard = () => {
 
                                         <h3>Reports</h3>
                                     </div></NavLink>
-                                <NavLink to="/sellerDashboard/updateProduct" className={({ isActive, isPending }) =>
+                                {/* <NavLink to="/sellerDashboard/updateProduct" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
@@ -146,7 +146,7 @@ const SellerDashboard = () => {
                                         <GrDocumentUpdate className="text-2xl" />
 
                                         <h3>Update product</h3>
-                                    </div></NavLink>
+                                    </div></NavLink> */}
 
 
                             </ul>

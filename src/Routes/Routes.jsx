@@ -41,6 +41,8 @@ import UpdateProduct from "../Pages/SellerDashboard/UpdateProduct/UpdateProduct"
 import UpdateProductDetails from "../Pages/SellerDashboard/UpdateProductDetails/UpdateProductDetails";
 import SellerCustomerProducts from "../Pages/SellerDashboard/SellerCustomerProducts/SellerCustomerProducts";
 import SellerProfile from "../Pages/SellerDashboard/SellerProfile/SellerProfile";
+import SellerProducts from "../Pages/SellerDashboard/SellerProducts/SellerProducts";
+import AddCoupon from "../Pages/SellerDashboard/AddCoupon/AddCoupon";
 
 
 const router = createBrowserRouter([
@@ -205,6 +207,14 @@ const router = createBrowserRouter([
             {
                 path: 'sellerProfile',
                 element: <SellerProfile></SellerProfile>
+            },
+            {
+                path: 'sellerProducts',
+                element: <SellerProducts></SellerProducts>
+            },
+            {
+                path: 'addCoupon/:product_id',
+                element: <AddCoupon></AddCoupon>
             }
         ]
     }
