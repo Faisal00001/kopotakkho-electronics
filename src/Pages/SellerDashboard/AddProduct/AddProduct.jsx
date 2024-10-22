@@ -187,9 +187,6 @@ const AddProduct = () => {
     // console.log('Image preview', imagePreview)
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        console.log(token)
-
         try {
             // Prepare the main product data
             const formData = new FormData();
@@ -214,7 +211,7 @@ const AddProduct = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            console.log('Check response ', res)
+
             if (res.data.bool === false) {
                 setFormError(true);
                 setErrorMsg(res.data.msg || 'Oops... Something went wrong! hehe');
@@ -246,7 +243,7 @@ const AddProduct = () => {
             setImagePreview(null);
             // imageInputRef.current.value = '';
             // multipleImagesInputRef.current.value = '';
-            console.log('hello from here');
+
 
             // Now, upload multiple images associated with the product
             const uploadPromises = ProductImgs.map(item => {
@@ -261,12 +258,11 @@ const AddProduct = () => {
                     }
                 })
                     .then(response => {
-                        console.log('Hello from here too');
-                        console.log(response);
+                        // console.log('Hello from here too');
+                        // console.log(response);
                         // toast.success('Image added successfully');
                     })
                     .catch(error => {
-                        console.error('Hello error from here too', error);
                         setFormError(true);
                         setErrorMsg('Oops... Something went wrong with image upload!');
                     });
@@ -282,7 +278,7 @@ const AddProduct = () => {
         }
     };
 
-    console.log(productData)
+
     return (
         <div>
 

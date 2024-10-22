@@ -1,7 +1,7 @@
 
 import toast from "react-hot-toast";
 // import { FaPlusCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import { useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
@@ -11,8 +11,10 @@ import { RiUserLocationFill } from "react-icons/ri";
 
 
 const CustomerAddress = () => {
+
     const navigate = useNavigate()
     const axiosPublic = useAxiosPublic()
+
     const handleAddAddress = () => {
         navigate('/dashboard/addCustomerAddress')
     }
@@ -40,6 +42,10 @@ const CustomerAddress = () => {
                 }
             })
             .catch(error => console.log(error))
+    }
+    const handleCheckout = () => {
+
+        navigate('/confirmOrder')
     }
     return (
         <div>
@@ -105,7 +111,11 @@ const CustomerAddress = () => {
                 }
             </div>
 
-
+            {
+                (customerAddressList?.data.length !== 0 && isDefaultAddressPresent) && <div className="mt-10 flex justify-center">
+                    <button onClick={handleCheckout} className="btn bg-blue-500 hover:bg-blue-500 text-white">Continue to pay</button>
+                </div>
+            }
         </div>
 
 

@@ -12,12 +12,15 @@ import useProducts from "../../components/hooks/useProducts";
 import ProductOverview from "../../components/ProductOverview/ProductOverview";
 
 
+
 // import required modules
 
 const ProductDetails = () => {
+
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const [product, setProduct] = useState(null)
+
     const { id } = useParams()
 
     const productIdInt = parseInt(id)
@@ -25,6 +28,7 @@ const ProductDetails = () => {
     const [products, loading] = useProducts()
 
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 // Start loading
@@ -56,7 +60,8 @@ const ProductDetails = () => {
     if (loading) {
         return "Loading"
     }
-    console.log('Undefined', product.image)
+
+
     const tag_list_products = product.tags.split(',').flatMap(tag => {
         return products.data.filter(p => p.tags.split(',').includes(tag) && p.id !== product.id);
     });
@@ -65,7 +70,7 @@ const ProductDetails = () => {
 
 
     const handleAddToCart = (product) => {
-        console.log('Product Detail Page', product)
+
         const isFound = cartItems.find(cartItem => cartItem.id === product.id)
         if (!isFound) {
             const newProduct = { ...product, quantity: 1, unitPrice: product.price, wishListStatus: false };
@@ -86,8 +91,8 @@ const ProductDetails = () => {
                     <h3 className="text-sm">Product Details</h3>
                 </div>
                 <div className="mt-20">
-                    <div className="flex flex-col md:flex-row gap-10">
-                        <div className="flex-1">
+                    <div className="flex flex-col lg:flex-row gap-10">
+                        <div className="flex-1 mx-auto">
 
                             <div className="px-5 md:px-0 md:w-[600px]">
                                 <ProductImageGallery product={product}></ProductImageGallery>
@@ -138,20 +143,20 @@ const ProductDetails = () => {
                             <hr className="my-5" />
                             <div className="bg-[#ECECEC]">
                                 <div className="py-7">
-                                    <div className="flex justify-center">
-                                        <button className="bg-blue-900 text-white text-sm font-medium py-4 px-20 rounded">Delivery</button>
-                                        <button className="text-blue-800 py-4 px-20 text-sm font-medium bg-white rounded">Pick Up</button>
+                                    <div className="flex flex-col gap-y-5 md:gap-y-0 md:flex-row justify-center px-5 md:px-0">
+                                        <button className="bg-blue-900 text-white text-sm font-medium py-4  px-10 md:px-20 rounded">Delivery</button>
+                                        <button className="text-blue-800 py-4 px-10 md:px-20 text-sm font-medium bg-white rounded">Pick Up</button>
                                     </div>
-                                    <div className="mt-8 flex gap-2 items-center pl-24">
+                                    <div className="mt-8 flex gap-2 items-center lg:pl-24 justify-center lg:justify-normal">
                                         <FaTruck className="text-2xl" />
                                         <p className="font-medium">Available to ship</p>
                                     </div>
-                                    <div className="pl-32 mt-5">
+                                    <div className="lg:pl-32 mt-5  text-center lg:text-left">
                                         <p className="text-sm">This will be delivered as early as May 15, 2024</p>
                                         <p className="mt-2 text-sm">Enjoy <span className="text-blue-800 font-semibold"> fast, free shipping</span> on <span className="font-semibold">most orders over $35.</span></p>
                                     </div>
-                                    <div onClick={() => handleAddToCart(product)} className="pl-32 mt-5">
-                                        <button className="text-black bg-yellow-500 hover:bg-yellow-400  font-medium rounded text-sm px-36 py-4 text-center">Add to Cart</button>
+                                    <div onClick={() => handleAddToCart(product)} className="lg:pl-32 mt-5 flex justify-center lg:justify-normal">
+                                        <button className="text-black bg-yellow-500 hover:bg-yellow-400  font-medium rounded text-sm px-10 md:px-36 py-4 text-center">Add to Cart</button>
                                     </div>
                                 </div>
 
@@ -164,9 +169,9 @@ const ProductDetails = () => {
             <div className="my-10">
                 <hr />
             </div>
-            <div className="flex px-10">
-                <div className="w-[70%]">
-                    <div className="flex gap-x-8">
+            <div className="flex flex-col lg:flex-row px-10">
+                <div className="lg:w-[70%]">
+                    <div className="flex flex-wrap gap-5 md:gap-0 md:flex-row md:gap-x-8">
                         <button className="btn btn-active bg-white">Specification</button>
                         <button className="btn btn-active bg-white">Description</button>
                         <button className="btn btn-active bg-white">Questions</button>
@@ -176,8 +181,8 @@ const ProductDetails = () => {
                         <ProductOverview productIdInt={productIdInt}></ProductOverview>
                     </div>
                 </div>
-                <div className="w-[30%]">
-                    <div className="hidden xl:mt-8 xl:block">
+                <div className="lg:w-[30%]">
+                    <div className="mt-10 xl:mt-8">
                         <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">People also bought</h3>
                         <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8">
                             {
@@ -206,7 +211,7 @@ const ProductDetails = () => {
                                             Add to favourites
                                             <div className="tooltip-arrow" data-popper-arrow></div>
                                         </div>
-                                        <button type="button" className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <button type="button" className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-3 md:px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg className="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4" />
                                             </svg>

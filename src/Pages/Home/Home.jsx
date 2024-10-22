@@ -6,16 +6,16 @@ import ProductImageGallery from "../../components/ProductImageGallery/ProductIma
 import ShopByCategory from "../../components/ShopByCategory/ShopByCategory";
 
 const Home = () => {
-    const { isLogin } = useContext(AuthContext)
-    if (isLogin) {
-        console.log(isLogin)
-    }
+    // const { isLogin } = useContext(AuthContext)
+    // if (isLogin) {
+    //     console.log(isLogin)
+    // }
     return (
         <div>
             <Banner></Banner>
             <OurHottestOffer></OurHottestOffer>
             <ShopByCategory></ShopByCategory>
-            
+
 
         </div>
     );

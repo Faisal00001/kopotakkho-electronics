@@ -43,6 +43,18 @@ import SellerCustomerProducts from "../Pages/SellerDashboard/SellerCustomerProdu
 import SellerProfile from "../Pages/SellerDashboard/SellerProfile/SellerProfile";
 import SellerProducts from "../Pages/SellerDashboard/SellerProducts/SellerProducts";
 import AddCoupon from "../Pages/SellerDashboard/AddCoupon/AddCoupon";
+import SearchResults from "../Pages/SearchResults/SearchResults";
+import AdminDashboard from "../Layout/AdminDashboard";
+
+import AdminLogin from "../Pages/AdminLogin/AdminLogin";
+import AdminAddCategory from "../Pages/AdminDashboard/AdminAddCategory/AdminAddCategory";
+import CustomerTotalOrders from "../Pages/AdminDashboard/CustomerTotalOrders/CustomerTotalOrders";
+import TotalVendors from "../Pages/AdminDashboard/TotalVendors/TotalVendors";
+import VendorAllOrders from "../Pages/AdminDashboard/VendorAllOrders/VendorAllOrders";
+import TotalCustomers from "../Pages/AdminDashboard/TotalCustomers/TotalCustomers";
+import AddProductSpecification from "../Pages/SellerDashboard/AddProductSpecification/AddProductSpecification";
+import AddSpecificationOnParticularProduct from "../Pages/SellerDashboard/AddSpecificationOnParticularProduct/AddSpecificationOnParticularProduct";
+
 
 
 const router = createBrowserRouter([
@@ -114,6 +126,14 @@ const router = createBrowserRouter([
             {
                 path: 'confirmOrder',
                 element: <ConfirmOrder></ConfirmOrder>
+            },
+            {
+                path: '/searchResults',
+                element: <SearchResults></SearchResults>
+            },
+            {
+                path: '/adminLogin',
+                element: <AdminLogin></AdminLogin>
             }
 
         ]
@@ -215,6 +235,44 @@ const router = createBrowserRouter([
             {
                 path: 'addCoupon/:product_id',
                 element: <AddCoupon></AddCoupon>
+            },
+            {
+                path: 'addProductSpecification',
+                element: <AddProductSpecification></AddProductSpecification>
+            },
+            {
+                path: 'addSpecificationOnParticularProduct/:id',
+                element: <AddSpecificationOnParticularProduct></AddSpecificationOnParticularProduct>
+            }
+        ]
+    },
+    {
+        path: 'adminDashboard',
+        element: <PrivateRoute> <AdminDashboard></AdminDashboard> </PrivateRoute>,
+        children: [
+            {
+                path: 'adminAddCategory',
+                element: <AdminAddCategory></AdminAddCategory>
+            },
+            {
+                path: 'customerTotalOrders',
+                element: <CustomerTotalOrders></CustomerTotalOrders>
+            },
+            {
+                path: 'totalVendors',
+                element: <TotalVendors></TotalVendors>
+            },
+            {
+                path: 'totalCustomers',
+                element: <TotalCustomers></TotalCustomers>
+            },
+            {
+                path: 'vendor_total_orders/:vendor_id',
+                element: <VendorAllOrders></VendorAllOrders>
+            },
+            {
+                path: 'customer_total_orders/:customer_id',
+                element: <CustomerTotalOrders></CustomerTotalOrders>
             }
         ]
     }

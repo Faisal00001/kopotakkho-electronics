@@ -45,7 +45,8 @@ const Login = () => {
                         user_name: res.data.user,
                         id: res.data.id,
                         isCustomer: true,
-                        access_token: res.data.access_token
+                        access_token: res.data.access_token,
+                        refresh_token: res.data.refresh_token
                     }
                     Swal.fire({
                         title: "Login Successful!",

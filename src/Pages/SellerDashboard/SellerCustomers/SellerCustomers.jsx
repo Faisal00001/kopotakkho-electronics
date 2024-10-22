@@ -1,15 +1,18 @@
-import { useState } from "react";
+
 import useVendorCustomerList from "../../../components/hooks/useVendorCustomerList";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 
 
 const SellerCustomers = () => {
-    const [customersList, loading] = useVendorCustomerList()
+    const axiosPublic = useAxiosPublic()
+    const [customersList, loading, refetch] = useVendorCustomerList()
     const navigate = useNavigate()
     // const [uniqueCustomer, setUniqueCustomer] = useState([])
     if (loading) {
         return "Loading"
     }
+
     // const uniqueCustomer = customersList?.data.filter((item, index, self) => {
     //     return index === self.findIndex((t) => t.order.customer.phone === item.order.customer.phone)
     // })
@@ -19,8 +22,33 @@ const SellerCustomers = () => {
         // console.log(item.user)
         // navigate(`/sellerDashboard/sellerCustomerOrders/${item.order.customer.customer_id}`)
     }
-    console.log('Tra', customersList.data)
     // console.log('Uniq', uniqueCustomer)
+    const showConfirm = (customer_id) => {
+        var _confirm = window.confirm('Are you sure to delete this Order?');
+        if (_confirm) {
+            // fetch(baseUrl + '/delete-customer-orders/' + customer_id + '/', {
+            //     method: 'DELETE'
+            // })
+            //     .then((response) => {
+            //         if (response.ok) {
+            //             fetchData(baseUrl + '/vendor/' + vendor_id + '/customers/');
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.error('Delete error:', error);
+            //     });
+            axiosPublic.delete(`/delete-customer-orders/${customer_id}/`)
+                .then((response) => {
+                    if (response.ok) {
+                        refetch()
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        }
+    };
     return (
         <div>
 
@@ -61,7 +89,7 @@ const SellerCustomers = () => {
 
                                 <td className="px-6 py-4">
                                     <button onClick={() => handleOrders(item)} className="btn mr-3 bg-blue-400 hover:bg-blue-400">Orders</button>
-                                    <button className="btn bg-red-400 hover:bg-red-400">Remove</button>
+                                    <button onClick={() => showConfirm(item.id)} className="btn bg-red-400 hover:bg-red-400">Remove</button>
                                 </td>
                             </tr>)
                         }

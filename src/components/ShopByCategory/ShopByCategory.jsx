@@ -1,12 +1,14 @@
 import CategoryCard from "../CategoryCard/CategoryCard";
 import useCategories from "../hooks/useCategories";
-
+import NoData from "../../assets/Data_not_found/Data_not_found.png"
 
 const ShopByCategory = () => {
     const [categories, loading] = useCategories()
-    console.log(categories)
+
     if (loading) {
-        return "Loading"
+        return <div className="flex justify-center">
+            <span className="loading loading-ring loading-lg"></span>
+        </div>
     }
 
     return (
@@ -15,7 +17,9 @@ const ShopByCategory = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5 lg:grid-cols-6 px-5 md:px-0">
                 {
 
-                    !categories.data ? 'Data not' :
+                    !categories.data ? <div className="flex justify-center items-center mt-10">
+                        <img src={NoData}></img>
+                    </div> :
                         categories?.data.map(category => <CategoryCard key={category.id} category={category}></CategoryCard>)
                 }
             </div>

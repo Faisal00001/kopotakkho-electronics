@@ -1,14 +1,48 @@
+import { useEffect, useState } from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { RiMessage2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const ProductOverview = ({ productIdInt }) => {
+    const axiosPublic = useAxiosPublic()
+    const [error, setError] = useState(null)
+    const [productSpecification, setProductSpecification] = useState(null)
+    const [productSpecificationLoading, setProductSpecificationLoading] = useState();
     const navigate = useNavigate()
-    console.log(productIdInt)
+    useEffect(() => {
+        const fetchProductSpecification = async () => {
+            try {
+                // Start loading
+                setProductSpecificationLoading(true);
+
+                // Make a GET request to the API endpoint
+                const response = await axiosPublic.get(`show-product-specifications/${productIdInt}/?format=json`);
+
+                // Extract the data from the response
+                const fetchedData = response.data;
+
+                // Update state with fetched data
+                setProductSpecification(fetchedData);
+            } catch (error) {
+                // Handle errors
+                setError(error.message);
+            } finally {
+                // Finish loading
+                setProductSpecificationLoading(false)
+            }
+        }
+        fetchProductSpecification()
+    }, [axiosPublic, productIdInt])
+    if (productSpecificationLoading) {
+        return "Loading"
+    }
     const handleQuestion = () => {
         navigate(`/question?pid=${productIdInt}`)
     }
+
+
     return (
         <div>
             <div className="max-w-[95%] mt-10 rounded-md border-2 border-slate-200 shadow-lg p-4">
@@ -16,74 +50,46 @@ const ProductOverview = ({ productIdInt }) => {
 
                 <div className="space-y-4">
                     {/* Processor Section */}
-                    <div>
-                        <h3 className="text-blue-800 font-semibold bg-gray-100 py-2 px-4 ">Processor</h3>
-                        <div className="text-sm">
-                            <div className="flex justify-between border-b border-gray-200 py-2 hover:bg-gray-100 px-2">
-                                <span>Processor Brand</span>
-                                <span >Intel</span>
+                    {
+                        productSpecification?.data.map((data, index) => <div key={index}>
+                            <h3 className="text-blue-800 font-semibold bg-gray-100 py-2 px-4 ">{data.title}</h3>
+                            <div className="text-sm">
+                                {/* Array of object required */}
+                                <div className="flex justify-between border-b border-gray-200 py-2 hover:bg-gray-100 px-2">
+                                    <span>{data.feature_name}</span>
+                                    <span >{data.feature_value}</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
+                                    <span>Processor Model</span>
+                                    <span >Core i3-1215U</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
+                                    <span>Generation</span>
+                                    <span>12th Gen</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
+                                    <span>Processor Frequency</span>
+                                    <span >up to 4.40 GHz</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
+                                    <span>Processor Core</span>
+                                    <span>6 (Performance-cores- 2 Efficient-cores- 4)</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
+                                    <span>Processor Thread</span>
+                                    <span>8</span>
+                                </div>
+                                <div className="flex justify-between py-2 px-2 hover:bg-gray-100 border-b border-gray-200">
+                                    <span>CPU Cache</span>
+                                    <span>10 MB</span>
+                                </div>
                             </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Model</span>
-                                <span >Core i3-1215U</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Generation</span>
-                                <span>12th Gen</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Frequency</span>
-                                <span >up to 4.40 GHz</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Core</span>
-                                <span>6 (Performance-cores- 2 Efficient-cores- 4)</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Thread</span>
-                                <span>8</span>
-                            </div>
-                            <div className="flex justify-between py-2 px-2 hover:bg-gray-100 border-b border-gray-200">
-                                <span>CPU Cache</span>
-                                <span>10 MB</span>
-                            </div>
-                        </div>
-                    </div>
+                        </div>)
+                    }
+
 
                     {/* Display Section */}
-                    <div>
-                        <h3 className="text-blue-800 font-semibold bg-gray-100 py-2 px-4 ">Display</h3>
-                        <div className="text-sm">
-                            <div className="flex justify-between border-b border-gray-200 py-2 hover:bg-gray-100 px-2">
-                                <span>Processor Brand</span>
-                                <span >Intel</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Model</span>
-                                <span >Core i3-1215U</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Generation</span>
-                                <span>12th Gen</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Frequency</span>
-                                <span >up to 4.40 GHz</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Core</span>
-                                <span>6 (Performance-cores- 2 Efficient-cores- 4)</span>
-                            </div>
-                            <div className="flex justify-between border-b border-gray-200 py-2 px-2 hover:bg-gray-100">
-                                <span>Processor Thread</span>
-                                <span>8</span>
-                            </div>
-                            <div className="flex justify-between py-2 px-2 hover:bg-gray-100 border-b border-gray-200">
-                                <span>CPU Cache</span>
-                                <span>10 MB</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div className="max-w-[95%] rounded-md border-2 border-slate-200 shadow-lg p-4 mt-10">

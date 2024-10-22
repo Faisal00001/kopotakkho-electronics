@@ -20,6 +20,7 @@ const RegistrationSeller = () => {
         const sellerFirstName = form.firstName.value
         const sellerLastName = form.lastName.value
         const seller_name = form.userName.value
+        const shop_name = form.shopName.value
         const sellerPhoneNumber = form.phoneNumber.value
         const sellerEmail = form.email.value
         const sellerAddress = form.address.value
@@ -32,6 +33,7 @@ const RegistrationSeller = () => {
         formData.append('phone', sellerPhoneNumber);
         formData.append('address', sellerAddress);
         formData.append('password', sellerPassword);
+        formData.append('shop_name', shop_name)
 
         axiosPublic.post('/vendor-register/', formData)
             .then(res => {
@@ -91,6 +93,11 @@ const RegistrationSeller = () => {
                                 <div className="mb-5">
                                     <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900">User Name</label>
                                     <input name="userName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="shopName" className="block mb-2 text-sm font-medium text-gray-900">Shop name</label>
+                                    <input name="shopName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
 
                                 </div>
                                 <div className="mb-5">

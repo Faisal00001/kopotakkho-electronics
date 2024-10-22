@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = ({ category }) => {
     const { id, title, category_image } = category
-    console.log(category)
     return (
         <div>
             <div className="rounded overflow-hidden">

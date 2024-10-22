@@ -19,6 +19,7 @@ const CategoryDetails = () => {
         return "Loading"
     }
     const categoryName = categories.data?.find(category => category.id === idInt)
+
     const categoryWiseProducts = products?.data.filter(product =>
         product.category === idInt
     )
@@ -45,7 +46,7 @@ const CategoryDetails = () => {
                 <div className="flex flex-col md:flex-row justify-center items-center gap-5">
                     <div className="w-full md:w-[50%] flex justify-center">
                         <div className="w-[85%]">
-                            <img src={image1} alt="" />
+                            <img src={categoryName.category_image} alt="" />
                         </div>
                     </div>
                     <div className="w-full md:w-[50%] pl-6 md:pl-0">

@@ -4,62 +4,55 @@ import { FaAngleRight } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdShoppingCartCheckout } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { AuthContext } from "../../Provider/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
-
-const SellerLogin = () => {
+const AdminLogin = () => {
     const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
     const { setUser } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
-    const location = useLocation()
-    const from = location?.state?.from?.pathname || "/"
-    const handleSubmit = (event) => {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+    const { username, password } = formData;
+    // Handle form change
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        const form = event.target;
-        const seller_name = form.userName.value
-        const sellerPassword = form.password.value
+        // Make sure the URL matches the Django URL pattern
+        try {
+            const response = await axiosPublic.post('/superuser-login/', {
+                username,
+                password
+            });
+            const user = {
 
-        const formData = new FormData()
-        formData.append('username', seller_name)
-        formData.append('password', sellerPassword)
-        axiosPublic.post('/vendor-login/', formData, {
-            headers: {
-                'Content-Type': 'application/json'
+                isAdmin: true,
+                access_token: response.data.access,
+                refresh_token: response.data.refresh
             }
-        })
-            .then(res => {
-                if (res.data.bool === true) {
-                    const user = {
-                        user_name: res.data.user,
-                        id: res.data.id,
-                        isSeller: true,
-                        access_token: res.data.access_token,
-                        refresh_token: res.data.refresh_token
 
-                    }
-                    Swal.fire({
-                        title: "Login Successful!",
-                        icon: "success"
-                    });
-                    setUser(user)
-                    localStorage.setItem('user', JSON.stringify(user))
-                    form.reset()
-                    navigate(from, { replace: true })
-                }
-                else {
-                    toast.error('Invalid user name or password')
-                }
-            })
-            .catch(error => console.log(error))
-
-
+            localStorage.setItem('user', JSON.stringify(user))
+            toast.success('Login Successfully')
+            navigate('/');
+        }
+        catch (error) {
+            console.log(error)
+        }
+        // Redirect to admin dashboard after successful login
 
     }
+    console.log('Username ', username)
+    console.log('Password ', password)
     return (
         <div>
             <nav className="bg-[#0046be] pl-5 py-2">
@@ -78,18 +71,19 @@ const SellerLogin = () => {
                 <div className="container mx-auto">
                     <div className="flex justify-around">
                         <div>
-                            <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Seller Sign In</h3>
+                            <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Sign In</h3>
 
 
                             <form onSubmit={handleSubmit} className="max-w-sm mt-5">
                                 <div className="mb-5">
                                     <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900">User Name</label>
-                                    <input name="userName" type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your user name" required />
+                                    <input name="username" onChange={handleChange} type="text" className="bg-gray-50 border-2 text-gray-900 text-sm rounded focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" placeholder="Enter your user name" required />
 
                                 </div>
                                 <div className="mb-5 relative">
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                    <input name="password" type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
+                                    <input name="password"
+                                        onChange={handleChange} type={`${showPassword ? 'text' : 'password'}`} id="password" className="bg-gray-50 border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-4 text-sm rounded focus:ring-blue-100 focus:border-blue-800 block w-full p-2.5" required />
                                     <div onClick={() => setShowPassword(!showPassword)} className="cursor-pointer select-none">
                                         {
                                             !showPassword ? <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Show</h3> : <h3 className="text-blue-800 font-bold text-xs absolute right-2 top-[60%]">Hide</h3>
@@ -181,4 +175,4 @@ const SellerLogin = () => {
     );
 };
 
-export default SellerLogin;
+export default AdminLogin;

@@ -4,6 +4,7 @@ import useGetWishLists from "../../../components/hooks/useGetWishLists";
 import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 
 const MyWishlist = () => {
@@ -33,27 +34,33 @@ const MyWishlist = () => {
             })
     }
     return (
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 ml-10">
             {
-                wishLists.data.map((wishList, index) => <div key={index} className="card bg-base-100 w-96 shadow-xl">
-                    <figure>
-                        <img
-                            src={wishList.product.image}
-                            alt="Wishlist product" />
-                    </figure>
-                    <div className="card-body">
-                        <h2 className="card-title hover:underline cursor-pointer">{wishList.product.title}</h2>
+                wishLists.data.map((wishList, index) =>
+                    <div key={index} className="card bg-base-100 w-96 border-[1px] border-gray-200 p-5">
+                        <figure>
+                            <img
+                                src={wishList.product.image}
+                                alt="Wishlist product" />
+                        </figure>
+                        <div className="card-body">
+                            <Link to={`/productDetails/${wishList.product.id}`}>
+                                <h2 className="card-title hover:underline cursor-pointer">{wishList.product.title}</h2>
+                            </Link>
 
-                        <div className="card-actions my-5 justify-end">
-                            <button onClick={() => handleRemoveItemFromWishList(wishList)} className="btn">
-                                <div className="flex items-center gap-3">
-                                    <MdDeleteOutline className="text-2xl" />
-                                    <span>Remove</span>
-                                </div>
-                            </button>
+
+                            <div className="card-actions my-5 justify-end">
+                                <button onClick={() => handleRemoveItemFromWishList(wishList)} className="btn bg-red-500 hover:bg-red-500 text-white">
+                                    <div className="flex items-center gap-3">
+                                        <MdDeleteOutline className="text-2xl" />
+                                        <span>Remove</span>
+                                    </div>
+                                </button>
+                                <Link to={`/productDetails/${wishList.product.id}`} className="btn bg-blue-500 hover:bg-blue-500 text-white">View Details</Link>
+                            </div>
                         </div>
                     </div>
-                </div>)
+                )
             }
 
         </div>

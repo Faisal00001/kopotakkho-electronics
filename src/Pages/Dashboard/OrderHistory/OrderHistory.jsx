@@ -13,7 +13,7 @@ const OrderHistory = () => {
 
     const axiosPublic = useAxiosPublic()
     const [userOrders, loading, , currentPage, setCurrentPage, totalPage, setTotalPage] = useOrders()
-    console.log('Customer order', userOrders)
+
     const [ordersByOrderId, setOrdersByOrderId] = useState([])
     const [singleOrderByOrderId, setSingleOrderByOrderId] = useState([])
     const [customerAddressList, isCustomerListLoading] = useCustomerAddressList()
@@ -30,7 +30,7 @@ const OrderHistory = () => {
             acc[order.id].push(order)
             return acc
         }, {})
-        console.log('Here is order map', orderMap)
+
         const multiOrderUsingOneOrder_id = userOrders.data.filter(order => orderMap[order.id].length > 1)
         const singleOrderUsingSingleOrder_id = userOrders.data.filter(order => orderMap[order.id].length === 1)
         setOrdersByOrderId(multiOrderUsingOneOrder_id)
@@ -86,8 +86,8 @@ const OrderHistory = () => {
         const formattedTime = date.toLocaleTimeString(undefined, timeOptions);
         return `${formattedDate} ${formattedTime}`;
     };
-    console.log('Order multiple ', ordersByOrderId)
-    console.log('Order single ', singleOrderByOrderId)
+    // console.log('Order multiple ', ordersByOrderId)
+    // console.log('Order single ', singleOrderByOrderId)
     // console.log('Muli order using same oid', ordersByOrderId)
     return (
         <div className="flex relative flex-col justify-center">

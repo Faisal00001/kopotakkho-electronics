@@ -67,8 +67,7 @@ const SellerReport = () => {
             }
         },
     };
-    console.log('Reports', reportData)
-    console.log(Data)
+
 
     return (
         <div>

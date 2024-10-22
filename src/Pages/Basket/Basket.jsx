@@ -12,8 +12,8 @@ import useAxiosSecure from "../../components/hooks/useAxiosSecure";
 
 const Basket = () => {
     const axiosSecure = useAxiosSecure()
-    const parsedUser = JSON.parse(localStorage.getItem('user'))
-    const token = parsedUser.access_token
+    // const parsedUser = JSON.parse(localStorage.getItem('user'))
+    // const token = parsedUser.access_token
     const { user } = useContext(AuthContext)
     const { cartItems, setCartItems } = useContext(AuthContext)
     const [order_id, setOrderId] = useState(null)
@@ -112,10 +112,10 @@ const Basket = () => {
     //     }
     //     // navigate('/checkout')
     // }
-    console.log(totalPrice)
-    const handleCheckout = () => {
 
-        navigate('/confirmOrder', { state: { totalPrice: totalPrice } })
+    const handleCheckout = () => {
+        localStorage.setItem('totalPrice', totalPrice)
+        navigate('/dashboard/CustomerAddress')
     }
     // const handleCheckout = async () => {
     //     const formData = new FormData();
@@ -211,7 +211,7 @@ const Basket = () => {
 
         try {
             const wishListStatus = await checkProductInWishList(cartItem);
-            console.log('Status of the wishlist', wishListStatus);
+
             if (wishListStatus) {
                 return; // Exit the function if the item is already in the wishlist
             }
@@ -221,8 +221,8 @@ const Basket = () => {
             formData.append('customer', customerId);
             formData.append('product', cartItem.id);
 
-            const response = await axiosPublic.post('/wishlist/', formData);
-            console.log(response);
+            const response = await axiosSecure.post('/wishlist/', formData);
+
             setCartItems(cartItems.map(item => item.id === cartItem.id ? { ...item, wishListStatus: true } : item)); // Update wishlist status on success
             toast.success("Item added in the wishlist")
 
@@ -230,7 +230,7 @@ const Basket = () => {
             console.error('Error saving to wishlist:', error);
         }
     }
-    console.log('Cart Items', cartItems)
+
     const checkProductInWishList = async (productData) => {
         console.log('Hello is this working')
         if (!user) {

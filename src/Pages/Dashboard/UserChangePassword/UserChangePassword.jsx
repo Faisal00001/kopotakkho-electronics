@@ -62,7 +62,6 @@ const UserChangePassword = () => {
     //             .catch(error => console.log('Error occur'))
     //     }
     // }
-    console.log(passwordData)
     return (
         <div>
 

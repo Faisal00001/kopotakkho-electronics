@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../components/hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useCustomerAddressList from "../../components/hooks/useCustomerAddressList";
 
 
 const ConfirmOrder = () => {
@@ -11,15 +12,12 @@ const ConfirmOrder = () => {
     const navigate = useNavigate()
     const [orderId, setOrderId] = useState('')
     const { cartItems, setCartItems } = useContext(AuthContext)
-    const location = useLocation()
-    const { totalPrice } = location.state || {}
-    console.log(totalPrice)
+    const totalPrice = parseFloat(localStorage.getItem('totalPrice'))
+
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
     const [selectedCourierService, setSelectedCourierService] = useState('')
     const user = JSON.parse(localStorage.getItem('user'))
-    console.log(cartItems)
-    console.log(selectedCourierService)
-    console.log(selectedPaymentMethod)
+
     const handleSubmitOrder = async () => {
         if (!selectedCourierService || !selectedPaymentMethod) {
             toast.error('Please select both a payment method and a courier service')
@@ -45,7 +43,7 @@ const ConfirmOrder = () => {
                 if (selectedPaymentMethod === 'mobile-banking') {
                     await initiateSSLCommerzPayment(response.data.id, totalPrice);
                 } else if (selectedPaymentMethod === 'cash-on-delivery') {
-                    alert("Your order has been placed for Cash on Delivery");
+                    toast.success('Your order has been placed for Cash on Delivery')
                     setCartItems([]);
                     localStorage.removeItem('cartData');
                     Swal.fire({

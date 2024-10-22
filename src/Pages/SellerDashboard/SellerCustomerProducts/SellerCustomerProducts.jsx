@@ -57,7 +57,7 @@ const SellerCustomerProducts = () => {
         }));
 
     }
-    console.log('Order Items', OrderItems)
+    console.log('seller orders', OrderItems)
     return (
         <div>
 
@@ -68,6 +68,9 @@ const SellerCustomerProducts = () => {
                         <tr>
                             <th scope="col" className="px-16 py-3">
                                 <span className="sr-only">Image</span>
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Order Id
                             </th>
                             {/* <th scope="col" className="px-6 py-3">
                                 Order ID
@@ -104,6 +107,11 @@ const SellerCustomerProducts = () => {
                                         order.order
                                     }
                                 </td> */}
+                                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {
+                                        order?.order
+                                    }
+                                </td>
                                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                     {
                                         order?.customer?.first_name

@@ -7,12 +7,6 @@ const axiosSecure = axios.create({
 });
 
 const useAxiosSecure = () => {
-    console.log('Hello from useAxiosSecure');
-    const user = localStorage.getItem('user');
-    const parsedUser = JSON.parse(user);
-    const token = parsedUser?.access_token;
-    console.log(token)
-
     axiosSecure.interceptors.request.use(function (config) {
         const user = localStorage.getItem('user');
 
@@ -22,7 +16,7 @@ const useAxiosSecure = () => {
 
             if (token) {
                 config.headers.authorization = `Bearer ${token}`;
-                console.log("Authorization Header:", config.headers.authorization);
+
             } else {
                 console.error("No token found");
                 // Optional: You could throw an error here if a token is required

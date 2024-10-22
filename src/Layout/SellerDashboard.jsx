@@ -138,6 +138,15 @@ const SellerDashboard = () => {
 
                                         <h3>Reports</h3>
                                     </div></NavLink>
+                                <NavLink to="/sellerDashboard/addProductSpecification" className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
+                                }>
+
+                                    <div className="flex gap-2 items-center">
+                                        <BiSolidReport className="text-2xl" />
+
+                                        <h3>Add Product Specification</h3>
+                                    </div></NavLink>
                                 {/* <NavLink to="/sellerDashboard/updateProduct" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
