@@ -178,7 +178,7 @@ const ProductDetails = () => {
                         <button className="btn btn-active bg-white">Reviews</button>
                     </div>
                     <div>
-                        <ProductOverview productIdInt={productIdInt}></ProductOverview>
+                        <ProductOverview product={product}></ProductOverview>
                     </div>
                 </div>
                 <div className="lg:w-[30%]">

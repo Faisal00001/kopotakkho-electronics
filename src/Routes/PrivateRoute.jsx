@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
     // const customerLoginRoute = user?.isCustomer === true ? true : false
     // const sellerLoginRoute = user?.isSeller === true ? true : false
     // let path = ''
-    const isCustomer = user?.user_name ? true : false
+    const isCustomer = user?.isCustomer ? true : false
     const isVendor = user?.isSeller ? true : false
     const isAdmin = user?.isAdmin ? true : false
     const location = useLocation()

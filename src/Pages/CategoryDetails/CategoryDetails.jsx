@@ -80,7 +80,7 @@ const CategoryDetails = () => {
                                         categories?.data.map(category => <MenuEntry key={category.id} option={category}></MenuEntry>)
                                     }
                                 </div>
-                                <hr className="my-4" />
+                                {/* <hr className="my-4" />
                                 <div onClick={() => setShowCategoriesOptions(!showCategoriesOptions)} className={`flex items-center justify-between pr-2 cursor-pointer hover:text-blue-800`}>
                                     <h3 className="font-medium text-sm select-none">Shipping and Pickup</h3>
 
@@ -93,6 +93,7 @@ const CategoryDetails = () => {
                                         categories?.data.map(category => <MenuEntry key={category.id} option={category}></MenuEntry>)
                                     }
                                 </div>
+                                <hr className="mt-4" /> */}
                                 <hr className="mt-4" />
                             </div>
                             <div className="col-span-5 md:col-span-4 px-5 md:pl-5">

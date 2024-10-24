@@ -8,8 +8,9 @@ const axiosInstance = axios.create({
 // Add a request interceptor to include the access token in headers
 axiosInstance.interceptors.request.use(
     (config) => {
+        const user = JSON.parse(localStorage.getItem("user"))
         // Get the access token from localStorage
-        const token = localStorage.getItem('access_token');
+        const token = user.access_token
         if (token) {
             // If token exists, set Authorization header
             config.headers['Authorization'] = `Bearer ${token}`;
@@ -35,7 +36,10 @@ axiosInstance.interceptors.response.use(
         // If the response status is 401 (Unauthorized) and this request hasn't been retried
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true; // Mark the request as retried
-            const refreshToken = localStorage.getItem('refresh_token'); // Get the refresh token from localStorage
+            const user = JSON.parse(localStorage.getItem("user"))
+            // Get the access token from localStorage
+            const refreshToken = user.refresh_token
+            // Get the refresh token from localStorage
 
             if (refreshToken) {
                 try {
@@ -46,7 +50,12 @@ axiosInstance.interceptors.response.use(
 
                     // Get the new access token from the response
                     const newAccessToken = response.data.access;
-                    localStorage.setItem('access_token', newAccessToken); // Save the new access token in localStorage
+                    const user = JSON.parse(localStorage.getItem("user"))
+                    // Set the new access token to the user object
+                    user.access_token = newAccessToken;
+
+                    // Store the updated user object back in localStorage
+                    localStorage.setItem('user', JSON.stringify(user)); // Save the new access token in localStorage
                     axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`; // Update axios headers
                     originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`; // Update original request headers
 
@@ -55,18 +64,20 @@ axiosInstance.interceptors.response.use(
                 } catch (refreshError) {
                     // Token refresh failed, remove tokens and redirect to login
                     console.error('Token refresh failed:', refreshError);
-                    localStorage.removeItem('access_token');
-                    localStorage.removeItem('refresh_token');
-                    localStorage.removeItem('vendor_login');
-                    window.location.href = '/seller-login/';
+                    localStorage.removeItem('user');
+                    // localStorage.removeItem('refresh_token');
+                    // localStorage.removeItem('vendor_login');
+                    // window.location.href = '/seller-login/';
+                    window.location.href = '/';
                     return Promise.reject(refreshError);
                 }
             } else {
                 // No refresh token available, log out the user
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('refresh_token');
-                localStorage.removeItem('vendor_login');
-                window.location.href = '/seller-login/';
+                localStorage.removeItem('user');
+                // localStorage.removeItem('refresh_token');
+                // localStorage.removeItem('vendor_login');
+                // window.location.href = '/seller-login/';
+                window.location.href = '/';
             }
         }
 

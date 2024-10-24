@@ -10,6 +10,7 @@ import useCustomerAddressList from "../../components/hooks/useCustomerAddressLis
 const ConfirmOrder = () => {
     const axiosSecure = useAxiosSecure()
     const navigate = useNavigate()
+
     const [orderId, setOrderId] = useState('')
     const { cartItems, setCartItems } = useContext(AuthContext)
     const totalPrice = parseFloat(localStorage.getItem('totalPrice'))
@@ -21,7 +22,10 @@ const ConfirmOrder = () => {
     const handleSubmitOrder = async () => {
         if (!selectedCourierService || !selectedPaymentMethod) {
             toast.error('Please select both a payment method and a courier service')
+            return
         }
+        // Show loading toast
+        const loadingToastId = toast.loading('Processing your order...');
         const orderData = {
             cart_items: cartItems.map(item => ({
                 product_id: item.id,
@@ -41,29 +45,34 @@ const ConfirmOrder = () => {
                 setOrderId(response.data.id);
 
                 if (selectedPaymentMethod === 'mobile-banking') {
+                    toast.dismiss(loadingToastId);
                     await initiateSSLCommerzPayment(response.data.id, totalPrice);
                 } else if (selectedPaymentMethod === 'cash-on-delivery') {
+                    toast.dismiss(loadingToastId);
                     toast.success('Your order has been placed for Cash on Delivery')
                     setCartItems([]);
-                    localStorage.removeItem('cartData');
-                    Swal.fire({
-                        title: "Order Placed!",
-                        text: "Thank you!",
-                        icon: "success"
-                    });
-                    navigate('/')
+                    localStorage.removeItem('cartItems');
+                    // Swal.fire({
+                    //     title: "Order Placed!",
+                    //     text: "Thank you!",
+                    //     icon: "success"
+                    // });
+                    navigate('/dashboard/orderHistory')
                 }
             }
         } catch (error) {
+            toast.dismiss(loadingToastId);
             console.error('Error submitting order:', error);
         }
     }
     const initiateSSLCommerzPayment = async (orderId, amount) => {
+        const paymentLoadingToastId = toast.loading('Redirecting to payment gateway...');
         try {
             const response = await axiosSecure.post(
                 `/initiate-payment/`,
                 { order_id: orderId, amount: amount },
             );
+            toast.dismiss(paymentLoadingToastId);
             window.location.href = response.data.GatewayPageURL;
             setCartItems([])
         } catch (error) {
@@ -116,7 +125,7 @@ const ConfirmOrder = () => {
 
                     </div>
                     <div className="flex items-center space-x-4">
-                        <button onClick={handleSubmitOrder} className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5">Confirm order</button>
+                        <button onClick={handleSubmitOrder} className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5">Confirm Order</button>
                         <Link to={'/'} className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Return to shopping</Link>
                     </div>
                 </div>

@@ -7,8 +7,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // test purpose
 
-import spaceCity from "../../assets/images/banner/city1.png"
-import planet from "../../assets/images/banner/planet1.png"
+import offer1 from "../../assets/special_offer/offer1.png"
+import offer2 from "../../assets/special_offer/offer2.png"
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -43,7 +44,7 @@ const Banner = () => {
                         </div>
 
                     </div> */}
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center cursor-pointer">
                         <div className="flip-card w-[600px] h-[600px] rounded-md" onMouseEnter={handleFliped}>
                             <motion.div
                                 className="flip-card-inner w-[100%] h-[100%]"
@@ -53,16 +54,16 @@ const Banner = () => {
                                 onAnimationComplete={() => setIsAnimating(false)}
                             >
                                 <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
-                                    backgroundImage: `url(${spaceCity})`
+                                    backgroundImage: `url(${offer1})`
                                 }}>
-                                    <h1 className="text-2xl font-bold">Sky</h1>
-                                    <p>Lorem ipsum dolor sit amet consectetur</p>
+                                    {/* <h1 className="text-2xl font-bold">Sky</h1>
+                                    <p>Lorem ipsum dolor sit amet consectetur</p> */}
                                 </div>
                                 <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
-                                    backgroundImage: `url(${planet})`
+                                    backgroundImage: `url(${offer2})`
                                 }}>
-                                    <h1 className="text-2xl font-bold">Maize</h1>
-                                    <p>Lorem ipsum dolor sit amet consectetur</p>
+                                    {/* <h1 className="text-2xl font-bold">Maize</h1> */}
+                                    {/* <p>Lorem ipsum dolor sit amet consectetur</p> */}
                                 </div>
                             </motion.div>
                         </div>
