@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
 
                     </div>
                     <div>
-                        <h3 className="font-semibold text-2xl">${price}</h3>
+                        <h3 className="font-semibold text-2xl">{price} BDT</h3>
                     </div>
                     <div className="flex gap-2 items-center mt-5">
                         <FaCheck className="text-green-500" />

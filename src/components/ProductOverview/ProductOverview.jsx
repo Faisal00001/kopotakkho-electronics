@@ -3,9 +3,12 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { RiMessage2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 
 const ProductOverview = ({ product }) => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const isCustomer = user?.isCustomer ? true : false
     // const axiosPublic = useAxiosPublic()
     // const [error, setError] = useState(null)
     // const [productSpecification, setProductSpecification] = useState(null)
@@ -40,10 +43,33 @@ const ProductOverview = ({ product }) => {
     // }
 
     const handleQuestion = (id) => {
-        navigate(`/question?pid=${id}`)
+        if (!isCustomer) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Login to Add Question",
+            });
+            return;
+        }
+        else {
+            navigate(`/question?pid=${id}`)
+        }
     }
-
-
+    const handleReview = (id) => {
+        if (!isCustomer) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Login to Add Review",
+            });
+            return;
+        }
+        else {
+            navigate(`/dashboard/addCustomerReview/${id}`)
+        }
+    }
+    const reviews = product?.product_ratings
+    console.log(reviews)
     return (
         <div>
             <div className="max-w-[95%] mt-10 rounded-md border-2 border-slate-200 shadow-lg p-4">
@@ -125,26 +151,54 @@ const ProductOverview = ({ product }) => {
             <div className="max-w-[95%] rounded-md border-2 border-slate-200 shadow-lg p-4 mt-10">
                 <div className="flex justify-between items-center border-b-[1px] border-gray-200 pb-8">
                     <div>
-                        <h3 className="font-semibold text-xl mb-3">Reviews (0)</h3>
+                        <h3 className="font-semibold text-xl mb-3">Reviews ({reviews?.length})</h3>
                         <p className="font-light text-sm">Get specific details about this product from customers who own it.</p>
                     </div>
                     <div>
-                        <button className="btn btn-outline btn-primary">Write a Review</button>
+                        <button onClick={() => handleReview(product.id)} className="btn btn-outline btn-primary">Write a Review</button>
                     </div>
 
                 </div>
                 <div className="my-24">
-                    <div className="flex justify-center">
-                        <div className="avatar placeholder">
-                            <div className="bg-gray-100 text-neutral-content w-20 rounded-full">
-                                <BiMessageAltDetail className="text-4xl text-blue-800" />
+                    {
+                        reviews.length > 0 ? <>
+                            <div className="flex items-center justify-start  bg-gray-100 p-10">
+                                <div className="bg-white p-8 rounded-lg shadow-lg  w-full">
+                                    <h2 className="text-3xl font-bold text-blue-600 mb-6 text-center">Customer Reviews</h2>
+                                    <div className="space-y-4"> {/* Reduced space between items */}
+                                        {reviews.map((review, index) => {
+                                            // Split the number and text for each review
+                                            const [number, text] = review.split(" - ", 2);
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center space-x-4 p-4 border-b last:border-0 border-gray-200"
+                                                >
+                                                    {/* Number badge */}
+                                                    <span className="bg-blue-500 text-white font-semibold py-1 px-3 rounded-full text-lg">
+                                                        Rating {number.trim()}
+                                                    </span>
+                                                    {/* Review text */}
+                                                    <p className="text-gray-700 text-base leading-relaxed">{text.trim()}</p>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
                             </div>
+                        </> : <><div className="flex justify-center">
+                            <div className="avatar placeholder">
+                                <div className="bg-gray-100 text-neutral-content w-20 rounded-full">
+                                    <BiMessageAltDetail className="text-4xl text-blue-800" />
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <p className="mt-4 text-sm text-center">This product has no reviews yet. Be the first one to write a review.</p>
-                    </div>
+                            <div>
+                                <p className="mt-4 text-sm text-center">This product has no reviews yet. Be the first one to write a review.</p>
+                            </div></>
+                    }
+
                 </div>
             </div>
         </div>

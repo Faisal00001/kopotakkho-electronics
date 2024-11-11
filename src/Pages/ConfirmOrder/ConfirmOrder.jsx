@@ -49,7 +49,12 @@ const ConfirmOrder = () => {
                     await initiateSSLCommerzPayment(response.data.id, totalPrice);
                 } else if (selectedPaymentMethod === 'cash-on-delivery') {
                     toast.dismiss(loadingToastId);
-                    toast.success('Your order has been placed for Cash on Delivery')
+                    // toast.success('Your order has been placed for Cash on Delivery')
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thank you...",
+                        text: "Your order placed successfully",
+                    });
                     setCartItems([]);
                     localStorage.removeItem('cartItems');
                     // Swal.fire({
@@ -96,7 +101,7 @@ const ConfirmOrder = () => {
 
                         <dl className="sm:flex items-center justify-between gap-4">
                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Total Price</dt>
-                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{totalPrice}</dd>
+                            <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{totalPrice} BDT</dd>
                         </dl>
                         <dl className="sm:flex items-center justify-between gap-4">
                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Courier Service</dt>
@@ -117,7 +122,7 @@ const ConfirmOrder = () => {
                             <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">Payment Method</dt>
                             <select value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)} className="select select-info w-full max-w-[250px]">
                                 <option disabled value={''}>Select payment method</option>
-                                <option value="paypal">PayPal</option>
+                                {/* <option value="paypal">PayPal</option> */}
                                 <option value="cash-on-delivery">Cash on Delivery</option>
                                 <option value="mobile-banking">Mobile Banking</option>
                             </select>

@@ -68,7 +68,7 @@ const SellerReport = () => {
         },
     };
 
-
+    console.log(Data)
     return (
         <div>
             <div className="min-h-screen bg-gray-100 flex ml-10">
@@ -94,19 +94,19 @@ const SellerReport = () => {
                             {/* Daily Report Card */}
                             <div className="p-4 bg-indigo-500 text-white rounded-lg shadow">
                                 <h4 className="text-lg font-medium">Daily Sales</h4>
-                                <p className="text-4xl font-bold mt-2">$1,200</p>
+                                <p className="text-4xl font-bold mt-2">1,200 BDT</p>
                                 <p className="text-sm opacity-75">Today</p>
                             </div>
                             {/* Monthly Report Card */}
                             <div className="p-4 bg-blue-500 text-white rounded-lg shadow">
                                 <h4 className="text-lg font-medium">Monthly Sales</h4>
-                                <p className="text-4xl font-bold mt-2">$25,000</p>
+                                <p className="text-4xl font-bold mt-2">25,000 BDT</p>
                                 <p className="text-sm opacity-75">This Month</p>
                             </div>
                             {/* Yearly Report Card */}
                             <div className="p-4 bg-green-500 text-white rounded-lg shadow">
                                 <h4 className="text-lg font-medium">Yearly Sales</h4>
-                                <p className="text-4xl font-bold mt-2">$300,000</p>
+                                <p className="text-4xl font-bold mt-2">300,000 BDT</p>
                                 <p className="text-sm opacity-75">This Year</p>
                             </div>
                         </div>

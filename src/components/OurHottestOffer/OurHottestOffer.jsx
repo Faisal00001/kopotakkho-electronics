@@ -12,16 +12,17 @@ const OurHottestOffer = () => {
         </div>
     }
     const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true)
+    console.log(hotOffersProduct)
     return (
         <div>
 
-            <h3 className="text-2xl font-bold text-center">Our hottest offers and more</h3>
+            <h3 className="text-2xl font-bold text-center mb-10">Our hottest offers and more</h3>
             {
                 products?.data?.length > 0 ? <>
                     <div className="container mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5">
                             {
-                                hotOffersProduct.map((product) =>
+                                hotOffersProduct.slice(0, 6).map((product) =>
                                     <ProductCard key={product.id} product={product}></ProductCard>
                                 )
                             }
@@ -32,6 +33,9 @@ const OurHottestOffer = () => {
                         <img className="w-1/2 h-1/2" src={NoData}></img>
                     </div>
             }
+            <div className="my-10 flex justify-center">
+                <Link to={`/hotDeal`} className="btn bg-blue-700 hover:bg-blue-700 text-white">Show More</Link>
+            </div>
         </div>
     );
 };

@@ -46,7 +46,7 @@ const AdminLogin = () => {
             navigate('/');
         }
         catch (error) {
-            console.log(error)
+            toast.error('Invalid user name or password')
         }
         // Redirect to admin dashboard after successful login
 

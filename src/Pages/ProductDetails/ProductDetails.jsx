@@ -1,21 +1,25 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaTruck } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import ProductDetailsSlider from "../../components/ProductDetailsSlider/ProductDetailsSlider";
 import ProductImageGallery from "../../components/ProductImageGallery/ProductImageGallery";
 import useProducts from "../../components/hooks/useProducts";
 import ProductOverview from "../../components/ProductOverview/ProductOverview";
+import Swal from "sweetalert2";
 
 
 
 // import required modules
 
 const ProductDetails = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const isSeller = user?.isSeller ? true : false
+
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -54,6 +58,9 @@ const ProductDetails = () => {
         // Call the fetchData function when the component mounts
         fetchData();
     }, [productIdInt]);
+
+
+
     if (isLoading) {
         return "Loading"
     }
@@ -70,7 +77,14 @@ const ProductDetails = () => {
 
 
     const handleAddToCart = (product) => {
-
+        if (isSeller) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Access denied!. Only customer can access.",
+            });
+            return;
+        }
         const isFound = cartItems.find(cartItem => cartItem.id === product.id)
         if (!isFound) {
             const newProduct = { ...product, quantity: 1, unitPrice: product.price, wishListStatus: false };
@@ -122,7 +136,7 @@ const ProductDetails = () => {
                                 <p className="text-sm font-medium">Sold and shipped by kappotakko Electronics</p>
                             </div>
                             <div className="mt-5">
-                                <h3 className="text-2xl font-bold">${product?.price}</h3>
+                                <h3 className="text-2xl font-bold">{product?.price} BDT</h3>
                             </div>
                             <div className="mt-5 flex justify-between">
                                 <div className="flex gap-2 items-center">
@@ -199,7 +213,7 @@ const ProductDetails = () => {
                                         {/* <p className="text-lg font-bold text-gray-900 dark:text-white">
                                             <span className="line-through"> $399,99 </span>
                                         </p> */}
-                                        <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">${product.price}</p>
+                                        <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">{product.price} BDT</p>
                                     </div>
                                     <div className="mt-6 flex items-center gap-2.5">
                                         <button data-tooltip-target="favourites-tooltip-1" type="button" className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">

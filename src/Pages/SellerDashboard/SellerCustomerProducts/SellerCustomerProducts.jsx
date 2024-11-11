@@ -126,7 +126,7 @@ const SellerCustomerProducts = () => {
                                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                     {
                                         order?.product.price
-                                    }
+                                    } <span className="ml-3">BDT</span>
                                 </td>
                                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                     {

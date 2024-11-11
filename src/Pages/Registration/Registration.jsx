@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 
 const Registration = () => {
@@ -60,8 +61,15 @@ const Registration = () => {
                     form.reset()
                     navigate('/login')
                 }
+                else {
+                    const { msg } = res.data
+                    toast.error(msg)
+                }
             })
-            .catch(error => setErrorMessage(error))
+            .catch(error => {
+                toast.error("Failed to register !")
+                setErrorMessage(error)
+            })
     }
     return (
         <div>

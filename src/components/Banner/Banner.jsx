@@ -21,16 +21,26 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { useState } from "react";
 import { motion } from "framer-motion";
+import useProducts from "../hooks/useProducts";
+import { Link, useNavigate } from "react-router-dom";
 
 
 // import required modules
 const Banner = () => {
+    const navigate = useNavigate()
     const [isFliped, setIsFliped] = useState(false)
     const [isAnimating, setIsAnimating] = useState(false)
     const handleFliped = () => {
         setIsFliped(!isFliped)
         setIsAnimating(true)
     }
+    const [products, loading] = useProducts()
+    if (loading) {
+        return <div className="flex justify-center">
+            <span className="loading loading-ring loading-lg"></span>
+        </div>
+    }
+    const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true)
     return (
         <div className="container mx-auto mt-10 m-24">
             <div className="hidden lg:block">
@@ -69,7 +79,29 @@ const Banner = () => {
                         </div>
                     </div>
                     <div className="w-[50%] h-[600px]">
-                        <div className="flex">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                            {
+                                hotOffersProduct.length > 0 ?
+                                    hotOffersProduct.slice(0, 4).map((product, index) => <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100">
+                                        <figure>
+                                            <img className="h-[167px]"
+                                                src={product.image}
+                                                alt="Shoes" />
+                                        </figure>
+                                        <div className="card-body">
+                                            <h2 className="card-title">{product.title}</h2>
+
+                                            <div className="card-actions justify-end">
+                                                <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-black text-white">View Details</Link>
+                                            </div>
+                                        </div>
+                                    </div>)
+
+                                    : "No data available"
+                            }
+
+                        </div>
+                        {/* <div className="flex">
                             <div className="flex-1 bg-blue-900 px-2 h-[290px] rounded rounded-r-none">
                                 <h3 className="text-2xl font-bold text-center text-slate-50 mt-3">Ultimate</h3>
                                 <h3 className="text-2xl font-bold text-center  text-yellow-300">Appliance Event</h3>
@@ -104,9 +136,14 @@ const Banner = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                     </div>
+                </div>
+                <div className="flex justify-center mt-10">
+                    <button onClick={() => {
+                        navigate('/hotDeal')
+                    }} className="btn bg-blue-700 hover:bg-blue-700 text-white">Show More</button>
                 </div>
             </div>
             <div className="block lg:hidden">

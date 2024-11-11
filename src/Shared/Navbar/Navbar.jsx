@@ -76,33 +76,35 @@ const Navbar = () => {
                                 onKeyDown={handleKeyDown}
                                 className="focus:outline-none w-auto lg:w-[500px] py-4 pl-3 hidden lg:block rounded-sm text-sm border border-gray-300"
                                 type="text"
-                                placeholder="Search products, categories, vendors..."
+                                placeholder="Search products, categories, seller..."
                             />
 
-                            {/* Search results */}
-                            {results.length > 0 && query !== '' && (
-                                <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10">
-                                    <ul>
-                                        {results.map((result) => (
-                                            <li key={result.id} className="p-2 hover:bg-gray-100">
-                                                <div onClick={() => handleLinkClickSearch(result.id)} className="flex items-center gap-2 cursor-pointer">
-                                                    {result.image && (
-                                                        <img
-                                                            src={result.image}
-                                                            alt={result.title}
-                                                            className="w-10 h-10 object-cover"
-                                                        />
-                                                    )}
-                                                    <div>
-                                                        <p className="font-medium">{result.title}</p>
-                                                        <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p>
+                            <div className="hidden lg:block">
+                                {/* Search results */}
+                                {results.length > 0 && query !== '' && (
+                                    <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                                        <ul>
+                                            {results.map((result) => (
+                                                <li key={result.id} className="p-2 hover:bg-gray-100">
+                                                    <div onClick={() => handleLinkClickSearch(result.id)} className="flex items-center gap-2 cursor-pointer">
+                                                        {result.image && (
+                                                            <img
+                                                                src={result.image}
+                                                                alt={result.title}
+                                                                className="w-10 h-10 object-cover"
+                                                            />
+                                                        )}
+                                                        <div>
+                                                            <p className="font-medium">{result.title}</p>
+                                                            <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -249,21 +251,50 @@ const Navbar = () => {
                     </div>
 
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>Item 1</a></li>
+                        <li><a>Order Status</a></li>
                         <li>
-                            <a>Parent</a>
-                            <ul className="p-2">
+                            <a>Business</a>
+                            {/* <ul className="p-2">
                                 <li><a>Submenu 1</a></li>
                                 <li><a>Submenu 2</a></li>
-                            </ul>
+                            </ul> */}
                         </li>
-                        <li><a>Item 3</a></li>
+                        <li><a>Blog</a></li>
+                        <li><a>Francais</a></li>
                     </ul>
                 </div>
                 <div className="ml-5 w-[70%] lg:w-auto">
                     <div className="relative ">
-                        <input className="focus:outline-none w-full lg:w-[300px] py-2 pl-3 block lg:hidden rounded-sm text-sm" type="text" placeholder="Search Here.." />
-                        <IoSearchSharp className="absolute block lg:hidden cursor-pointer text-blue-700 text-xl top-[25%] right-3" />
+                        <input value={query}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown} className="focus:outline-none w-full lg:w-[300px] py-2 pl-3 block lg:hidden rounded-sm text-sm" type="text" placeholder="Search Here.." />
+                        {/* <IoSearchSharp className="absolute block lg:hidden cursor-pointer text-blue-700 text-xl top-[25%] right-3" /> */}
+                        <div className="block lg:hidden">
+                            {/* Search results */}
+                            {results.length > 0 && query !== '' && (
+                                <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                                    <ul>
+                                        {results.map((result) => (
+                                            <li key={result.id} className="p-2 hover:bg-gray-100">
+                                                <div onClick={() => handleLinkClickSearch(result.id)} className="flex items-center gap-2 cursor-pointer">
+                                                    {result.image && (
+                                                        <img
+                                                            src={result.image}
+                                                            alt={result.title}
+                                                            className="w-10 h-10 object-cover"
+                                                        />
+                                                    )}
+                                                    <div>
+                                                        <p className="font-medium">{result.title}</p>
+                                                        <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
 
                     </div>
                 </div>

@@ -8,8 +8,6 @@ import axiosInstance from "../components/hooks/axiosInstance";
 export const AuthContext = createContext(null)
 const AuthProvider = ({ children }) => {
     const axiosSecure = useAxiosSecure()
-
-
     // const navigate = useNavigate()
     const [user, setUser] = useState(null)
     const isLogin = localStorage.getItem('user')
@@ -36,23 +34,29 @@ const AuthProvider = ({ children }) => {
 
         const refreshToken = user.refresh_token;
         const accessToken = user.access_token;
-
+        // console.log(refreshToken)
         if (refreshToken && accessToken) {
             try {
                 // Call the logout API
-                await axiosInstance.post('/logout/',
-                    { refresh_token: refreshToken },  // Request body
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`  // Include access token in headers
-                        }
-                    }
-                );
+                // await axiosInstance.post('/logout/',
+                //     { refresh_token: refreshToken },  // Request body
+                //     {
+                //         headers: {
+                //             'Authorization': `Bearer ${accessToken}`  // Include access token in headers
+                //         }
+                //     }
+                // );
+
+                // // Clear customer-related data
+                // localStorage.removeItem('user');
+                const response = await axiosInstance.post('/logout/', { refresh_token: refreshToken })
 
                 // Clear customer-related data
-                localStorage.removeItem('user');
+                if (response.status === 200) {
+                    localStorage.removeItem('user');
+                    window.location.href = '/';
+                }
 
-                window.location.href = '/';
             } catch (error) {
                 console.error("Customer logout failed:", error.response?.data || error.message);
             }

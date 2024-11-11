@@ -8,6 +8,7 @@ import { RiAccountCircleLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 
 const RegistrationSeller = () => {
@@ -55,8 +56,15 @@ const RegistrationSeller = () => {
                     form.reset()
                     navigate('/sellerLogin')
                 }
+                else {
+                    const { msg } = res.data
+                    toast.error(msg)
+                }
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                toast.error("Failed to register !")
+                console.log(error)
+            })
     }
     return (
         <div>

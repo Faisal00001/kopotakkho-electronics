@@ -151,7 +151,7 @@ const OrderHistory = () => {
                                     </td>
                                     <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
 
-                                        <p className="py-10">${order.price}</p>
+                                        <p className="py-10">{order.price} BDT</p>
 
                                     </td>
                                     <td className="px-6 py-4">

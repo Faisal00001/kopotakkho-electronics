@@ -127,7 +127,7 @@ const SellerOrders = () => {
                                             {/* Render prices for each product */}
                                             {orders.map((order, i) => (
                                                 <div key={i}>
-                                                    {order?.price}
+                                                    {order?.price} BDT
                                                 </div>
                                             ))}
                                         </td>

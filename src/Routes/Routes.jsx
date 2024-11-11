@@ -54,6 +54,8 @@ import VendorAllOrders from "../Pages/AdminDashboard/VendorAllOrders/VendorAllOr
 import TotalCustomers from "../Pages/AdminDashboard/TotalCustomers/TotalCustomers";
 import AddProductSpecification from "../Pages/SellerDashboard/AddProductSpecification/AddProductSpecification";
 import AddSpecificationOnParticularProduct from "../Pages/SellerDashboard/AddSpecificationOnParticularProduct/AddSpecificationOnParticularProduct";
+import HotDeal from "../Pages/HotDeal/HotDeal";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 
 
@@ -61,6 +63,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -134,8 +137,11 @@ const router = createBrowserRouter([
             {
                 path: '/adminLogin',
                 element: <AdminLogin></AdminLogin>
-            }
-
+            },
+            {
+                path: 'hotDeal',
+                element: <HotDeal></HotDeal>
+            },
         ]
     },
     {
