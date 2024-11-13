@@ -57,6 +57,7 @@ const ConfirmOrder = () => {
                     });
                     setCartItems([]);
                     localStorage.removeItem('cartItems');
+                    localStorage.removeItem('totalPrice');
                     // Swal.fire({
                     //     title: "Order Placed!",
                     //     text: "Thank you!",
@@ -79,7 +80,9 @@ const ConfirmOrder = () => {
             );
             toast.dismiss(paymentLoadingToastId);
             window.location.href = response.data.GatewayPageURL;
-            setCartItems([])
+            // setCartItems([])
+            localStorage.removeItem('cartItems');
+            localStorage.removeItem('totalPrice');
         } catch (error) {
             console.error('Error initiating SSLCommerz payment:', error);
         }

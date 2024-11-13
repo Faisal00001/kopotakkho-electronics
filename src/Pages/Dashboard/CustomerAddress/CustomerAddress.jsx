@@ -14,7 +14,7 @@ const CustomerAddress = () => {
 
     const navigate = useNavigate()
     const axiosPublic = useAxiosPublic()
-
+    const isTotalPriceAvailable = localStorage.getItem('totalPrice') !== null;
     const handleAddAddress = () => {
         navigate('/dashboard/addCustomerAddress')
     }
@@ -112,7 +112,7 @@ const CustomerAddress = () => {
             </div>
 
             {
-                (customerAddressList?.data.length !== 0 && isDefaultAddressPresent) && <div className="mt-10 flex justify-center">
+                (customerAddressList?.data.length !== 0 && isDefaultAddressPresent && isTotalPriceAvailable) && <div className="mt-10 flex justify-center">
                     <button onClick={handleCheckout} className="btn bg-blue-500 hover:bg-blue-500 text-white">Continue to pay</button>
                 </div>
             }

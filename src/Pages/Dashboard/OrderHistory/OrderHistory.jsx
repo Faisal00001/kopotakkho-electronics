@@ -89,6 +89,7 @@ const OrderHistory = () => {
     // console.log('Order multiple ', ordersByOrderId)
     // console.log('Order single ', singleOrderByOrderId)
     // console.log('Muli order using same oid', ordersByOrderId)
+
     return (
         <div className="flex relative flex-col justify-center">
             <h3 className="text-center mb-10 font-bold text-3xl">Order History</h3>
@@ -151,7 +152,9 @@ const OrderHistory = () => {
                                     </td>
                                     <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
 
-                                        <p className="py-10">{order.price} BDT</p>
+                                        <p className="py-10">{
+                                            parseFloat(order.price) * parseFloat(order.quantity)
+                                        } <span className="ml-2">BDT</span></p>
 
                                     </td>
                                     <td className="px-6 py-4">

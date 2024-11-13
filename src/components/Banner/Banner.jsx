@@ -82,20 +82,22 @@ const Banner = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                             {
                                 hotOffersProduct.length > 0 ?
-                                    hotOffersProduct.slice(0, 4).map((product, index) => <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100">
-                                        <figure>
-                                            <img className="h-[167px]"
-                                                src={product.image}
-                                                alt="Shoes" />
-                                        </figure>
-                                        <div className="card-body">
-                                            <h2 className="card-title">{product.title}</h2>
+                                    hotOffersProduct.slice(0, 4).map((product, index) =>
+                                        <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100">
+                                            <figure>
+                                                <img className="h-[167px]"
+                                                    src={product.image}
+                                                    alt="Shoes" />
+                                            </figure>
+                                            <div className="card-body">
+                                                <h2 className="card-title">{product.title}</h2>
 
-                                            <div className="card-actions justify-end">
-                                                <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-black text-white">View Details</Link>
+                                                <div className="card-actions justify-end">
+                                                    <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-black text-white">View Details</Link>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>)
+                                    )
 
                                     : "No data available"
                             }
@@ -185,66 +187,36 @@ const Banner = () => {
                             </div>
                         </div>
                     </SwiperSlide>
-                    <SwiperSlide className="px-5 md:px-0">
-                        <div className="bg-blue-800 rounded pb-10 md:pb-0 md:h-[600px]">
-                            <div className="flex flex-col-reverse md:flex-row items-center md:pt-[150px]">
-                                <div className="w-full md:w-[50%] mt-10 pl-10 pr-5">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-center text-slate-50 mt-3">Ultimate</h3>
-                                    <h3 className="text-2xl md:text-3xl font-bold text-center text-yellow-300">Appliance Event</h3>
-                                    <p className="text-slate-200 text-base text-center font-bold mt-2">Sponsored by <span className="text-slate-50">SAMSONG</span></p>
-                                    <p className="text-white mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident neque iusto nesciunt magni laboriosam repellendus impedit tempora </p>
-                                    <button className="bg-white py-3 px-5 text-sm rounded text-blue-800 font-semibold mt-6">
-                                        Shop Now
-                                    </button>
+                    {
+                        hotOffersProduct.length > 0 ? hotOffersProduct.slice(0, 4).map((product, index) => <SwiperSlide key={index} className="px-5 md:px-0">
+                            <div className="card card-compact border-[1px] border-gray-300 bg-base-100">
+                                <figure>
+                                    <img className="h-[167px]"
+                                        src={product.image}
+                                        alt="Shoes" />
+                                </figure>
+                                <div className="card-body">
+                                    <h2 className="card-title">{product.title}</h2>
 
+                                    <div className="card-actions justify-end">
+                                        <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-black text-white">View Details</Link>
+                                    </div>
                                 </div>
-                                <div className="w-[80%] md:w-[50%] mt-10 md:pr-5">
-                                    <img className="" src={image2} alt="" />
-                                </div>
-
                             </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide className="px-5 md:px-0">
-                        <div className="bg-slate-200 rounded pb-10 md:pb-0 md:h-[600px]">
-                            <div className="flex flex-col-reverse md:flex-row items-center md:pt-[150px]">
-                                <div className="w-full md:w-[50%] mt-10 pl-10 pr-5">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-black mt-3">Save up to 35% on select outdoor living essentials.</h3>
+
+                        </SwiperSlide>
+
+                        ) : "No data"
+                    }
 
 
-                                    <button className="bg-blue-800 py-3 px-5 text-sm rounded text-white font-semibold mt-6">
-                                        Shop Now
-                                    </button>
-
-                                </div>
-                                <div className="w-[80%] md:w-[50%] mt-10 md:pr-5">
-                                    <img className="" src={image2} alt="" />
-                                </div>
-
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide className="px-5 md:px-0">
-                        <div className="bg-gradient-to-r from-blue-500 to-blue-800 rounded pb-10 md:pb-0 md:h-[600px]">
-                            <div className="flex flex-col-reverse md:flex-row items-center md:pt-[150px]">
-                                <div className="w-full md:w-[50%] mt-10 pl-10 pr-5">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-black mt-3">Save up to 35% on select outdoor living essentials.</h3>
-
-
-                                    <button className="bg-white py-3 px-5 text-sm rounded text-blue-800 font-semibold mt-6">
-                                        Shop Now
-                                    </button>
-
-                                </div>
-                                <div className="w-[80%] md:w-[50%] mt-10 md:pr-5">
-                                    <img className="" src={image2} alt="" />
-                                </div>
-
-                            </div>
-                        </div>
-                    </SwiperSlide>
 
                 </Swiper>
+                <div className="flex justify-center mt-10">
+                    <button onClick={() => {
+                        navigate('/hotDeal')
+                    }} className="btn bg-blue-700 hover:bg-blue-700 text-white">Show More</button>
+                </div>
             </div>
         </div>
     );

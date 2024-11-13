@@ -206,7 +206,7 @@ const ProductDetails = () => {
 
                                     </div>
                                     <div>
-                                        <Link to={'/'} className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{product.title}</Link>
+                                        <Link to={`/productDetails/${product.id}`} className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{product.title}</Link>
                                         <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">{product.detail}</p>
                                     </div>
                                     <div>

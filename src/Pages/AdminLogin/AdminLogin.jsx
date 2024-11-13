@@ -69,7 +69,7 @@ const AdminLogin = () => {
             </div>
             <div className="bg-[#FAFAFA] mt-5 ">
                 <div className="container mx-auto">
-                    <div className="flex justify-around">
+                    <div className="flex justify-around flex-col md:flex-row px-5">
                         <div>
                             <h3 className="text-2xl md:text-4xl font-bold text-blue-700 pt-20">Sign In</h3>
 
@@ -92,7 +92,7 @@ const AdminLogin = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex gap-5 items-center">
+                                <div className="flex gap-5 items-center flex-col md:flex-row">
                                     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none  font-medium rounded text-sm w-full sm:w-auto px-14 py-4 text-center">Sign In</button>
                                     <Link to={'/forgetPassword'} className="text-sm font-bold text-blue-800 hover:underline">Forget Password?</Link>
                                 </div>

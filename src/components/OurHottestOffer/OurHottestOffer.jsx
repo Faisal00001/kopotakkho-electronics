@@ -12,7 +12,7 @@ const OurHottestOffer = () => {
         </div>
     }
     const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true)
-    console.log(hotOffersProduct)
+
     return (
         <div>
 
