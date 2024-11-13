@@ -11,7 +11,7 @@ import { TiCancel } from "react-icons/ti";
 
 const SellerOrders = () => {
     const axiosSecure = useAxiosSecure()
-    // const baseUrl = 'http://127.0.0.1:8000/api';
+    // const baseUrl = 'https://kopotakkhoelectronics.com/api';
 
 
     const [sellerOrders, loading, refetch] = useSellerOrders()

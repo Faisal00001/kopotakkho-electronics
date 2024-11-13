@@ -7,7 +7,7 @@ import axios from "axios";
 
 
 const PersonalDetails = () => {
-    const baseUrl = 'http://127.0.0.1:8000/api';
+    const baseUrl = 'https://kopotakkhoelectronics.com/api';
     const axiosSecure = useAxiosSecure()
     const customer = JSON.parse(localStorage.getItem('user'))
     const token = customer.access_token
