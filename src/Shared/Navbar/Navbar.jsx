@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import logo from "../../assets/Logo/logo.png"
 
 const Navbar = () => {
-    const baseUrl = 'https://kopotakkhoelectronics.com/api';
+    const baseUrl = 'http://94.72.116.88/api';
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const storedUser = localStorage.getItem('user');

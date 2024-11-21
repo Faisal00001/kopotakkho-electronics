@@ -3,7 +3,7 @@ import axios from "axios";
 // import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://kopotakkhoelectronics.com/api'
+    baseURL: 'http://94.72.116.88/api'
 });
 
 const useAxiosSecure = () => {

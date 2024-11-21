@@ -24,7 +24,7 @@ import { motion } from "framer-motion";
 import useProducts from "../hooks/useProducts";
 import { Link, useNavigate } from "react-router-dom";
 
-
+import NoData from "../../assets/Data_not_found/Data_not_found.png"
 // import required modules
 const Banner = () => {
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ const Banner = () => {
             <span className="loading loading-ring loading-lg"></span>
         </div>
     }
-    const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true)
+    const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true) || []
     return (
         <div className="container mx-auto mt-10 m-24">
             <div className="hidden lg:block">
@@ -81,27 +81,31 @@ const Banner = () => {
                     <div className="w-[50%] h-[600px]">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                             {
-                                hotOffersProduct.length > 0 ?
-                                    hotOffersProduct.slice(0, 4).map((product, index) =>
-                                        <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100">
-                                            <figure>
-                                                <img className="h-[167px]"
-                                                    src={product.image}
-                                                    alt="Shoes" />
+                                Array.isArray(hotOffersProduct) && hotOffersProduct.length > 0 ? (
+                                    hotOffersProduct.slice(0, 4).map((product, index) => (
+                                        <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100 shadow-lg transition-transform duration-300 hover:scale-105">
+                                            <figure className="overflow-hidden rounded-lg">
+                                                <img className="h-[167px] w-full object-cover transition-transform duration-500 hover:scale-110" src={product.image} alt={product.title} />
                                             </figure>
                                             <div className="card-body">
                                                 <h2 className="card-title">{product.title}</h2>
-
                                                 <div className="card-actions justify-end">
-                                                    <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-black text-white">View Details</Link>
+                                                    <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-gray-800 text-white">View Details</Link>
                                                 </div>
                                             </div>
                                         </div>
-                                    )
-
-                                    : "No data available"
+                                    ))
+                                ) : (
+                                    <div className="flex flex-col justify-center items-center mt-10 space-y-4 ml-10">
+                                        <img
+                                            className=" opacity-75 transition duration-300 hover:scale-105 shadow-md"
+                                            src={NoData}
+                                            alt="No data available"
+                                        />
+                                        <p className="text-gray-500 text-lg font-semibold">No products available at the moment</p>
+                                    </div>
+                                )
                             }
-
                         </div>
                         {/* <div className="flex">
                             <div className="flex-1 bg-blue-900 px-2 h-[290px] rounded rounded-r-none">

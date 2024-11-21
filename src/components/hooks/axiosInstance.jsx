@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance
 const axiosInstance = axios.create({
-    baseURL: 'https://kopotakkhoelectronics.com/api', // Base URL for your API
+    baseURL: 'http://94.72.116.88/api', // Base URL for your API
 });
 
 // Add a request interceptor to include the access token in headers
@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
             if (refreshToken) {
                 try {
                     // Attempt to refresh the access token
-                    const response = await axios.post('https://kopotakkhoelectronics.com/api/token/refresh/', {
+                    const response = await axios.post('http://94.72.116.88/api/token/refresh/', {
                         refresh: refreshToken,
                     });
 

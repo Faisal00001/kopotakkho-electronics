@@ -19,7 +19,7 @@ const ProductQuestion = () => {
                 setIsLoading(true);
 
                 // Make a GET request to the API endpoint
-                const response = await axios.get(`https://kopotakkhoelectronics.com/api/product/${productId}/?format=json`);
+                const response = await axios.get(`http://94.72.116.88/api/product/${productId}/?format=json`);
 
                 // Extract the data from the response
                 const fetchedData = response.data;
