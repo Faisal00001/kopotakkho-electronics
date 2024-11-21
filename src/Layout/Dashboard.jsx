@@ -57,7 +57,7 @@ const Dashboard = () => {
                             <label htmlFor="my-drawer-2" className="btn bg-blue-700 hover:bg-blue-700 text-white drawer-button lg:hidden">Click to open menus</label>
 
                         </div>
-                        <div className="drawer-side z-50">
+                        <div className="drawer-side z-50 lg:z-0">
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu  w-80 min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}

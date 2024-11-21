@@ -6,7 +6,7 @@ import axios from "axios";
 
 const UpdateProductDetails = () => {
 
-    const baseUrl = 'http://94.72.116.88/api';
+    const baseUrl = 'https://kopotakkhoelectronics.com/api';
     const vendor = JSON.parse(localStorage.getItem('user'));
     const token = vendor.access_token;
     const { id } = useParams();

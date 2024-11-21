@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 
 const VendorAllOrders = () => {
-    const baseUrl = 'http://94.72.116.88/api';
+    const baseUrl = 'https://kopotakkhoelectronics.com/api';
     const [orderItems, setOrderItems] = useState([]);
     const { vendor_id } = useParams();
     console.log(vendor_id)

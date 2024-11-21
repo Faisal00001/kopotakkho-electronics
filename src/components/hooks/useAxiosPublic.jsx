@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosPublic = axios.create({
-    // baseURL: 'http://94.72.116.88/api'
-    baseURL: 'http://94.72.116.88/api'
+    // baseURL: 'https://kopotakkhoelectronics.com/api'
+    baseURL: 'https://kopotakkhoelectronics.com/api'
 })
 
 const useAxiosPublic = () => {

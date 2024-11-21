@@ -3,7 +3,7 @@ import useAxiosPublic from './useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetWishLists = () => {
-    // http://94.72.116.88/api/customer/1/order-items/
+    // https://kopotakkhoelectronics.com/api/customer/1/order-items/
     const axiosPublic = useAxiosPublic()
     const user = JSON.parse(localStorage.getItem('user'))
     const customerId = user.id
