@@ -83,14 +83,14 @@ const Banner = () => {
                             {
                                 Array.isArray(hotOffersProduct) && hotOffersProduct.length > 0 ? (
                                     hotOffersProduct.slice(0, 4).map((product, index) => (
-                                        <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100 shadow-lg transition-transform duration-300 hover:scale-105">
+                                        <div key={index} className="card card-compact border-[1px] border-gray-300 bg-base-100 shadow-lg transition-transform duration-300 hover:scale-105 h-[290px]">
                                             <figure className="overflow-hidden rounded-lg">
-                                                <img className="h-[167px] w-full object-cover transition-transform duration-500 hover:scale-110" src={product.image} alt={product.title} />
+                                                <img className="h-[167px] w-full object-contain transition-transform duration-500 hover:scale-110" src={product.image} alt={product.title} />
                                             </figure>
                                             <div className="card-body">
-                                                <h2 className="card-title">{product.title}</h2>
+                                                <h2 className="text-base">{product.title}</h2>
                                                 <div className="card-actions justify-end">
-                                                    <Link to={`/productDetails/${product.id}`} className="btn bg-black hover:bg-gray-800 text-white">View Details</Link>
+                                                    <Link to={`/productDetails/${product.id}`} className="py-2 px-3 rounded-md bg-black hover:bg-gray-800 text-white">View Details</Link>
                                                 </div>
                                             </div>
                                         </div>
