@@ -3,10 +3,12 @@ import { Toaster } from "react-hot-toast";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
 
-import { MdCategory, MdDoNotDisturbOnTotalSilence, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdDoNotDisturbOnTotalSilence, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { TbCategoryPlus } from "react-icons/tb";
 import Navbar from "../Shared/Navbar/Navbar";
 import { GoListUnordered } from "react-icons/go";
 import { FaUserFriends } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 
 const AdminDashboard = () => {
@@ -55,12 +57,23 @@ const AdminDashboard = () => {
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu  w-80 min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
+                                <a
+                                    href="https://kopotakkhoelectronics.com/KpeAdmin-secret/admin/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="py-3 px-2 text-blue-800 flex gap-2 items-center hover:bg-black hover:text-white rounded-sm font-semibold"
+                                >
+                                    <div className="flex gap-2 items-center">
+                                        <MdDashboard className="text-2xl" />
+                                        <h3>Main Dashboard</h3>
+                                    </div>
+                                </a>
                                 <NavLink to="/adminDashboard/adminAddCategory" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>
 
                                     <div className="flex gap-2 items-center">
-                                        <MdCategory className="text-2xl" />
+                                        <TbCategoryPlus className="text-2xl" />
 
                                         <h3>Add Category</h3>
                                     </div></NavLink>

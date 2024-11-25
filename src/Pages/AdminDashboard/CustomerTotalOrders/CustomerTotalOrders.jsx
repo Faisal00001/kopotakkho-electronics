@@ -93,7 +93,7 @@ const CustomerTotalOrders = () => {
                                         <td className="px-6 py-4">
                                             {
                                                 order?.product?.price
-                                            }
+                                            }<span className="ml-2">BDT</span>
                                         </td>
                                         <td className="px-6 py-4">
                                             {

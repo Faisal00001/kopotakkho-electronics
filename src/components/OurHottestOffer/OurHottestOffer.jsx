@@ -11,18 +11,20 @@ const OurHottestOffer = () => {
             <span className="loading loading-ring loading-lg"></span>
         </div>
     }
-    const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true)
+    console.log(products.data)
+    const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true) || []
+
 
     return (
         <div>
 
             <h3 className="text-2xl font-bold text-center mb-10">Our hottest offers and more</h3>
             {
-                hotOffersProduct?.data?.length ? (
+                hotOffersProduct?.length ? (
                     <div className="container mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5">
                             {
-                                hotOffersProduct.data.slice(0, 6).map((product) => (
+                                hotOffersProduct.slice(0, 6).map((product) => (
                                     <ProductCard key={product.id} product={product}></ProductCard>
                                 ))
                             }

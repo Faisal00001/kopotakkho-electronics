@@ -127,7 +127,7 @@ const ConfirmOrder = () => {
                                 <option disabled value={''}>Select payment method</option>
                                 {/* <option value="paypal">PayPal</option> */}
                                 <option value="cash-on-delivery">Cash on Delivery</option>
-                                <option value="mobile-banking">Mobile Banking</option>
+                                {/* <option value="mobile-banking">Mobile Banking</option> */}
                             </select>
                         </dl>
 
