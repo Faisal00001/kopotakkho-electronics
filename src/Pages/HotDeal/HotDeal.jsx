@@ -22,15 +22,15 @@ const HotDeal = () => {
                                     <img
                                         src={product?.image || 'path/to/fallback-image.jpg'}
                                         alt={product?.title || "Product Image"}
-                                        className="h-[167px] w-full object-cover transition-transform duration-500 hover:scale-110"
+                                        className="h-[167px] w-full object-contain transition-transform duration-500 hover:scale-110"
                                     />
                                 </figure>
                                 <div className="card-body">
-                                    <h2 className="card-title">{product?.title || "Product Title"}</h2>
+                                    <h2 className="text-base font-bold">{product?.title || "Product Title"}</h2>
                                     <div className="card-actions justify-end">
                                         <Link
                                             to={`/productDetails/${product?.id}`}
-                                            className="btn btn-primary"
+                                            className="btn bg-black text-white hover:bg-black"
                                             onClick={(e) => product?.id ? null : e.preventDefault()}
                                         >
                                             View Details

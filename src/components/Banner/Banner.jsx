@@ -88,7 +88,7 @@ const Banner = () => {
                                                 <img className="h-[167px] w-full object-contain transition-transform duration-500 hover:scale-110" src={product.image} alt={product.title} />
                                             </figure>
                                             <div className="card-body">
-                                                <h2 className="text-base">{product.title}</h2>
+                                                <h2 className="text-base font-bold">{product.title}</h2>
                                                 <div className="card-actions justify-end">
                                                     <Link to={`/productDetails/${product.id}`} className="py-2 px-3 rounded-md bg-black hover:bg-gray-800 text-white">View Details</Link>
                                                 </div>
