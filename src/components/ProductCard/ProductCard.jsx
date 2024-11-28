@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
             <div className="rounded-lg overflow-hidden bg-white transition-transform hover:scale-105">
                 {/* Product Image */}
                 <img
-                    className="w-full h-[220px] object-cover"
+                    className="w-full h-[220px] object-contain"
                     src={image}
                     alt={title}
                 />
