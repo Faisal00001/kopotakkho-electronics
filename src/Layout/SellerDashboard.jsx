@@ -53,14 +53,14 @@ const SellerDashboard = () => {
             </div>
             <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row">
-                    <div className="drawer w-[25%] lg:drawer-open">
+                    <div className="drawer md:w-[25%] lg:drawer-open">
                         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                         <div className="drawer-content flex flex-col items-center justify-center">
                             {/* Page content here */}
-                            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+                            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden my-5">Click to open menus</label>
 
                         </div>
-                        <div className="drawer-side">
+                        <div className="drawer-side z-50 lg:z-0">
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                             <ul className="menu  w-80 min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
