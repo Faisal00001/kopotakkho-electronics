@@ -64,17 +64,17 @@ const Navbar = () => {
     return (
         <div className="sticky top-0 z-50">
             <div className="navbar bg-[#0046be] pl-5 ">
-                <div className="navbar-start">
+                <div className="navbar-start pl-5">
                     <div className="flex flex-row lg:gap-10 items-center relative">
-                        <Link className="w-24" to={'/'}>
+                        <Link className="w-[125px]" to={'/'}>
                             <img src={logo} alt="Logo" />
                         </Link>
-                        <div className="flex gap-2 relative ">
+                        <div className="flex gap-2 relative pl-40">
                             <input
                                 value={query}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
-                                className="focus:outline-none w-auto lg:w-[500px] py-4 pl-3 hidden lg:block rounded-sm text-sm border border-gray-300"
+                                className="focus:outline-none w-auto lg:w-[500px] py-3 pl-3 hidden lg:block rounded-sm text-sm border border-gray-300"
                                 type="text"
                                 placeholder="Search products, categories, seller..."
                             />

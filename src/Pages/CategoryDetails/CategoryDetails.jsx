@@ -46,7 +46,7 @@ const CategoryDetails = () => {
                 <div className="flex flex-col md:flex-row justify-center items-center gap-5">
                     <div className="w-full md:w-[50%] flex justify-center">
                         <div className="w-[85%]">
-                            <img src={categoryName.category_image} alt="" />
+                            <img className="h-[423px]" src={categoryName.category_image} alt="" />
                         </div>
                     </div>
                     <div className="w-full md:w-[50%] pl-6 md:pl-0">

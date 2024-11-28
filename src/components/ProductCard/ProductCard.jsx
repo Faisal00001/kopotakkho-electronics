@@ -6,29 +6,45 @@ const ProductCard = ({ product }) => {
     const { id, title, image, price } = product
     return (
         <div>
-            <div className="rounded">
-                <img className="h-[220px]" src={image} alt={title} />
-                <div className="px-2  py-2 mt-5">
-                    <div className="h-[50px]">
-                        <Link to={`/productDetails/${id}`}>
-                            <div className="text-base mb-2 cursor-pointer hover:underline">{title}</div>
+            <div className="rounded-lg overflow-hidden bg-white transition-transform hover:scale-105">
+                {/* Product Image */}
+                <img
+                    className="w-full h-[220px] object-cover"
+                    src={image}
+                    alt={title}
+                />
 
+                {/* Product Details */}
+                <div className="p-4">
+                    {/* Product Title */}
+                    <div className="h-[50px] overflow-hidden">
+                        <Link to={`/productDetails/${id}`}>
+                            <h2 className="text-lg font-semibold text-gray-800 hover:text-blue-600 hover:underline cursor-pointer transition-colors line-clamp-2">
+                                {title}
+                            </h2>
                         </Link>
                     </div>
-                    <div className="rating">
-                        <input type="radio" name="rating-2" className="mask w-4 mask-star-2 bg-yellow-400" />
-                        <input type="radio" name="rating-2" className="mask w-4 mask-star-2 bg-yellow-400" />
-                        <input type="radio" name="rating-2" className="mask w-4 mask-star-2 bg-yellow-400" />
-                        <input type="radio" name="rating-2" className="mask w-4 mask-star-2 bg-yellow-400" />
-                        <input type="radio" name="rating-2" className="mask w-4 mask-star-2 bg-yellow-400" />
 
+                    {/* Rating */}
+                    <div className="rating flex items-center gap-1 mt-3">
+                        <input type="radio" name={`rating-${id}`} className="mask mask-star-2 bg-yellow-400 w-5" />
+                        <input type="radio" name={`rating-${id}`} className="mask mask-star-2 bg-yellow-400 w-5" />
+                        <input type="radio" name={`rating-${id}`} className="mask mask-star-2 bg-yellow-400 w-5" />
+                        <input type="radio" name={`rating-${id}`} className="mask mask-star-2 bg-yellow-400 w-5" />
+                        <input type="radio" name={`rating-${id}`} className="mask mask-star-2 bg-yellow-400 w-5" />
                     </div>
-                    <div>
-                        <h3 className="font-semibold text-2xl">{price} BDT</h3>
+
+                    {/* Price */}
+                    <div className="mt-4">
+                        <h3 className="font-semibold text-xl text-gray-900">
+                            {price} BDT
+                        </h3>
                     </div>
-                    <div className="flex gap-2 items-center mt-5">
+
+                    {/* Availability */}
+                    <div className="flex items-center gap-2 mt-5 text-gray-600">
                         <FaCheck className="text-green-500" />
-                        <p className="tex-sm">Available to ship</p>
+                        <p className="text-sm">Available to ship</p>
                     </div>
                 </div>
             </div>
