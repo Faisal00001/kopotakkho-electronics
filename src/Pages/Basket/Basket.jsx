@@ -114,6 +114,11 @@ const Basket = () => {
     // }
 
     const handleCheckout = () => {
+        if (!user) {
+            navigate('/login')
+            return; // Exit the function early if user is not present
+        }
+
         localStorage.setItem('totalPrice', totalPrice)
         navigate('/dashboard/CustomerAddress')
     }
