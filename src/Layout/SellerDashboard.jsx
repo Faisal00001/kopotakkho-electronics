@@ -162,7 +162,7 @@ const SellerDashboard = () => {
 
                         </div>
                     </div>
-                    <div className="w-[75%]">
+                    <div className="md:w-[75%] px-5">
                         <Outlet></Outlet>
                     </div>
                 </div>
