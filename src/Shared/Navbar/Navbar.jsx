@@ -82,7 +82,8 @@ const Navbar = () => {
                             <div className="hidden lg:block">
                                 {/* Search results */}
                                 {results.length > 0 && query !== '' && (
-                                    <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                                    // Before Left-0 and w-full
+                                    <div className="absolute left-40 top-full mt-1 w-[500px] bg-white border border-gray-300 rounded-md shadow-lg z-10">
                                         <ul>
                                             {results.map((result) => (
                                                 <li key={result.id} className="p-2 hover:bg-gray-100">
@@ -96,7 +97,7 @@ const Navbar = () => {
                                                         )}
                                                         <div>
                                                             <p className="font-medium">{result.title}</p>
-                                                            <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p>
+                                                            {/* <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p> */}
                                                         </div>
                                                     </div>
                                                 </li>
@@ -286,7 +287,7 @@ const Navbar = () => {
                                                     )}
                                                     <div>
                                                         <p className="font-medium">{result.title}</p>
-                                                        <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p>
+                                                        {/* <p className="text-sm text-gray-500">{result.category} - {result.vendor}</p> */}
                                                     </div>
                                                 </div>
                                             </li>
