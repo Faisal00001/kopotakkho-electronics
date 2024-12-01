@@ -22,7 +22,7 @@ const OurHottestOffer = () => {
             {
                 hotOffersProduct?.length ? (
                     <div className="container mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 gap-5">
                             {
                                 hotOffersProduct.slice(0, 6).map((product) => (
                                     <ProductCard key={product.id} product={product}></ProductCard>
