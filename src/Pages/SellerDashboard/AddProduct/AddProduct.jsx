@@ -10,7 +10,7 @@ const AddProduct = () => {
     // const [Categories, setCategories] = useState([]);
     const [ProductImgs, setProductImgs] = useState([]);
     const [imagePreview, setImagePreview] = useState(null);
-
+    const [categoryError, setCategoryError] = useState(false);
     const [fileName, setFileName] = useState({ image: '', product_file: '', multiple_images: '' });
     const [formError, setFormError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
@@ -49,6 +49,9 @@ const AddProduct = () => {
             ...productData,
             [event.target.name]: event.target.value
         })
+        if (event.target.name === "category" && event.target.value) {
+            setCategoryError(false); // Reset error when valid category is selected
+        }
 
     }
 
@@ -187,6 +190,12 @@ const AddProduct = () => {
     // console.log('Image preview', imagePreview)
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!productData.category) {
+            setCategoryError(true);
+            setErrorMsg("Please select a category.");
+            return; // Prevent form submission if category is not selected
+        }
+
         try {
             // Prepare the main product data
             const formData = new FormData();
@@ -301,6 +310,7 @@ const AddProduct = () => {
                         }
 
                     </select>
+                    {categoryError && <p className="text-red-500 text-sm mt-1">Category is required.</p>}
 
                 </div>
                 <div className="mb-5">

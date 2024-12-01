@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoSearchSharp } from "react-icons/io5";
@@ -13,8 +13,37 @@ const CategoryDetails = () => {
     const [showCategoriesOptions, setShowCategoriesOptions] = useState(false)
     let { id } = useParams()
     let idInt = parseInt(id)
+    // const itemsPerPage = 10;
+    // const [isloading, setIsLoading] = useState(false);
+    // const [productContainer, setProductContainer] = useState([])
+    // const [totalPages, setTotalPages] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(1);
     const [products, loading] = useProducts()
     const [categories] = useCategories()
+    // useEffect(() => {
+    //     const fetchProducts = async (page) => {
+    //         setIsLoading(true);
+    //         try {
+    //             const response = await fetch(
+    //                 `https://kopotakkhoelectronics.com/api/products/?category=${idInt}&page=${page}`
+    //             );
+    //             if (!response.ok) {
+    //                 throw new Error("Failed to fetch products");
+    //             }
+    //             const data = await response.json();
+    //             setProductContainer(data.data || []);
+    //             const totalItems = data.count || 0;
+    //             setTotalPages(Math.ceil(totalItems / itemsPerPage));
+    //         } catch (error) {
+    //             console.error("Error fetching products:", error);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     };
+    //     fetchProducts(currentPage);
+    // }, [idInt, currentPage]);
+
+
     if (loading) {
         return "Loading"
     }
@@ -23,6 +52,7 @@ const CategoryDetails = () => {
     const categoryWiseProducts = products?.data.filter(product =>
         product.category === idInt
     )
+
 
 
     return (
