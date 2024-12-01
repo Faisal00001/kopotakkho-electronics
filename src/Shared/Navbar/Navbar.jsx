@@ -66,7 +66,7 @@ const Navbar = () => {
             <div className="navbar bg-[#0046be] pl-5 ">
                 <div className="navbar-start pl-5">
                     <div className="flex flex-row lg:gap-10 items-center relative">
-                        <Link className="w-[125px]" to={'/'}>
+                        <Link className="w-[80px] md:w-[125px]" to={'/'}>
                             <img src={logo} alt="Logo" />
                         </Link>
                         <div className="flex gap-2 relative pl-40">
