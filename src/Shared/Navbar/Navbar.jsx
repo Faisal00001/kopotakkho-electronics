@@ -9,9 +9,15 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../components/hooks/useAxiosPublic";
 import useAxiosSecure from "../../components/hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import logo from "../../assets/Logo/logo.png"
+import logo from "../../assets/Logo/Logo2.png"
+import useCategories from "../../components/hooks/useCategories";
 
 const Navbar = () => {
+    const [categories] = useCategories()
+    const [activeIndex, setActiveIndex] = useState(null); // Track which dropdown is open
+
+    const handleMouseEnter = (index) => setActiveIndex(index);
+    const handleMouseLeave = () => setActiveIndex(null);
     const baseUrl = 'https://kopotakkhoelectronics.com/api';
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -66,8 +72,8 @@ const Navbar = () => {
             <div className="navbar bg-[#0046be] pl-5 ">
                 <div className="navbar-start pl-5">
                     <div className="flex flex-row lg:gap-10 items-center relative">
-                        <Link className="w-[80px] md:w-[125px]" to={'/'}>
-                            <img src={logo} alt="Logo" />
+                        <Link className="w-[80px] md:w-[130px]" to={'/'}>
+                            <img src={logo} alt="Logo" className="object-cover" />
                         </Link>
                         <div className="flex gap-2 relative pl-40">
                             <input
@@ -301,47 +307,52 @@ const Navbar = () => {
                 </div>
                 <div className="hidden lg:block">
                     <ul className="flex gap-5  text-sm items-center text-white">
-                        <div className="group">
-                            <div className="flex py-3 gap-1 items-center cursor-pointer select-none">
-                                <li className="">Shop</li>
-                                <FaChevronDown />
-                            </div>
+                        <div>
+                            <div className="flex items-center cursor-pointer select-none">
+                                {categories?.data?.map((category, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative"
+                                        onMouseEnter={() => handleMouseEnter(index)}
+                                        onMouseLeave={handleMouseLeave}
+                                    >
+                                        <div className="flex gap-1 items-center cursor-pointer select-none">
+                                            <div tabIndex={0} role="button" className="py-3 m-1">
+                                                {category?.title}
+                                            </div>
+                                            <FaChevronDown
+                                                className={`mr-5 transition-transform duration-300 ${activeIndex === index ? "rotate-180" : "rotate-0"
+                                                    }`}
+                                            />
+                                        </div>
 
-                            {/* Drop Down Content */}
-                            <div className="rounded border-gray-500 bg-gray-100 border-[1px] py-2 absolute top-[133px] w-[250px] hidden group-hover:block shadow-md">
-                                <div className="text-black py-2 hover:bg-white pl-2 hover:text-blue-800 cursor-pointer">
-                                    Account Settings
-                                </div>
-                                <div className="text-black py-2 hover:bg-white pl-2 cursor-pointer hover:text-blue-800">
-                                    Account Settings
-                                </div>
-                                <div className="text-black py-2 hover:bg-white pl-2 cursor-pointer hover:text-blue-800">
-                                    Account Settings
-                                </div>
-                                <div className="text-black py-2 hover:bg-white pl-2 cursor-pointer hover:text-blue-800">
-                                    Account Settings
-                                </div>
+                                        {/* Dropdown */}
+                                        <ul
+                                            className={`absolute left-0 -mt-[0.5px] z-10 bg-white rounded-none w-52 p-2 text-black shadow border-[1px] border-gray-300 transition-all duration-300 ${activeIndex === index ? "opacity-100 visible" : "opacity-0 invisible"
+                                                }`}
+                                        >
+                                            <li>
+                                                <Link
+                                                    to={`/blogs`}
+                                                    className="block px-4 py-2 hover:bg-gray-300"
+                                                    onClick={handleMouseLeave} // Close dropdown on click
+                                                >
+                                                    Item 1
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    href="#"
+                                                    className="block px-4 py-2 hover:bg-gray-300"
+                                                    onClick={handleMouseLeave} // Close dropdown on click
+                                                >
+                                                    Item 2
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
-                        <div className="flex gap-1 items-center cursor-pointer">
-                            <li className="">Mothers Day Gifts</li>
-                            <FaChevronDown />
-                            {/* Drop Down Content */}
-                        </div>
-                        <div className="flex gap-1 items-center cursor-pointer">
-                            <li className="">Deals</li>
-                            <FaChevronDown />
-                            {/* Drop Down Content */}
-                        </div>
-                        <div className="flex gap-1 items-center cursor-pointer">
-                            <li className="">Outlet</li>
-                            <FaChevronDown />
-                            {/* Drop Down Content */}
-                        </div>
-                        <div className="flex gap-1 items-center cursor-pointer">
-                            <li className="">Services</li>
-                            <FaChevronDown />
-                            {/* Drop Down Content */}
                         </div>
                     </ul>
                 </div>

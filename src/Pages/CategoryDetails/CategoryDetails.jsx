@@ -9,6 +9,8 @@ import MenuEntry from "../../components/MenuEntry/MenuEntry";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import useCategories from "../../components/hooks/useCategories";
 import useProducts from "../../components/hooks/useProducts";
+import useCategoryWiseProducts from "../../components/hooks/useCategoryWiseProducts";
+import noData from "../../assets/Data_not_found/Data_not_found.png"
 const CategoryDetails = () => {
     const [showCategoriesOptions, setShowCategoriesOptions] = useState(false)
     let { id } = useParams()
@@ -18,8 +20,9 @@ const CategoryDetails = () => {
     // const [productContainer, setProductContainer] = useState([])
     // const [totalPages, setTotalPages] = useState(0);
     // const [currentPage, setCurrentPage] = useState(1);
-    const [products, loading] = useProducts()
-    const [categories] = useCategories()
+    // const [products, loading] = useProducts()
+    const [categories, loading] = useCategories()
+    const [categoryWiseProducts, categoryWiseloading] = useCategoryWiseProducts(idInt)
     // useEffect(() => {
     //     const fetchProducts = async (page) => {
     //         setIsLoading(true);
@@ -47,11 +50,14 @@ const CategoryDetails = () => {
     if (loading) {
         return "Loading"
     }
+    if (categoryWiseloading) {
+        return ""
+    }
     const categoryName = categories.data?.find(category => category.id === idInt)
 
-    const categoryWiseProducts = products?.data.filter(product =>
-        product.category === idInt
-    )
+    // const categoryWiseProducts = products?.data.filter(product =>
+    //     product.category === idInt
+    // )
 
 
 
@@ -95,6 +101,36 @@ const CategoryDetails = () => {
                 </div> */}
                 <div>
                     <div className="mt-20">
+                        <div className=" block md:hidden">
+                            <div onClick={() => setShowCategoriesOptions(!showCategoriesOptions)} className={`flex items-center justify-between pr-2  cursor-pointer hover:text-blue-800`}>
+                                <h3 className="font-bold select-none text-2xl">Categories</h3>
+                                {
+                                    showCategoriesOptions ? <IoIosArrowUp className="text-xl" /> : <IoIosArrowDown className="text-xl" />
+                                }
+
+
+                            </div>
+                            <div className={`mt-2 ${showCategoriesOptions ? 'block' : 'hidden'}`}>
+                                {
+                                    categories?.data.map(category => <MenuEntry key={category.id} option={category}></MenuEntry>)
+                                }
+                            </div>
+                            {/* <hr className="my-4" />
+                                <div onClick={() => setShowCategoriesOptions(!showCategoriesOptions)} className={`flex items-center justify-between pr-2 cursor-pointer hover:text-blue-800`}>
+                                    <h3 className="font-medium text-sm select-none">Shipping and Pickup</h3>
+
+                                    {
+                                        showCategoriesOptions ? <IoIosArrowUp className="text-xl" /> : <IoIosArrowDown className="text-xl" />
+                                    }
+                                </div>
+                                <div className={`mt-2 ${showCategoriesOptions ? 'block' : 'hidden'}`}>
+                                    {
+                                        categories?.data.map(category => <MenuEntry key={category.id} option={category}></MenuEntry>)
+                                    }
+                                </div>
+                                <hr className="mt-4" /> */}
+                            <hr className="mt-4" />
+                        </div>
                         <div className="grid grid-cols-5 divide-x-2">
                             <div className="col-span-1 hidden md:block">
                                 <div onClick={() => setShowCategoriesOptions(!showCategoriesOptions)} className={`flex items-center justify-between pr-2  cursor-pointer hover:text-blue-800`}>
@@ -129,7 +165,9 @@ const CategoryDetails = () => {
                             <div className="col-span-5 md:col-span-4 px-5 md:pl-5">
                                 <div className="bg-[#ECECEC] rounded-md flex justify-between items-center px-5 py-6">
                                     <div>
-                                        <p className="hidden md:block text-sm">{categoryWiseProducts.length} results</p>
+                                        <p className="hidden md:block text-sm">
+                                            {categoryWiseProducts?.data?.length || 0} results
+                                        </p>
                                         <div className="flex gap-5 items-center">
                                             <div className="flex items-center gap-3">
                                                 <input type="checkbox" className="toggle toggle-sm" defaultChecked />
@@ -146,38 +184,78 @@ const CategoryDetails = () => {
                                         </div>
                                         <div className="flex gap-5 items-center mt-3">
                                             <div className="dropdown">
-                                                <div tabIndex={0} role="button" className="btn m-1 border-2 bg-white border-blue-500 hover:bg-white hover:border-blue-500 px-10 font-normal">Filter</div>
-                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                                    <li><a>Item 1</a></li>
-                                                    <li><a>Item 2</a></li>
+                                                <div
+                                                    tabIndex={0}
+                                                    role="button"
+                                                    className="btn m-1 border-2 bg-white border-blue-500 hover:bg-white hover:border-blue-500 px-10 font-normal"
+                                                >
+                                                    Filter
+                                                </div>
+                                                <ul
+                                                    tabIndex={0}
+                                                    className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                                                >
+                                                    <li>
+                                                        <a>Item 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a>Item 2</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div className="dropdown">
-                                                <div tabIndex={0} role="button" className="btn m-1 border-2 border-blue-500 bg-white px-10 hover:bg-white hover:border-blue-500 font-normal">Best match</div>
-                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                                    <li><a>Item 1</a></li>
-                                                    <li><a>Item 2</a></li>
+                                                <div
+                                                    tabIndex={0}
+                                                    role="button"
+                                                    className="btn m-1 border-2 border-blue-500 bg-white px-10 hover:bg-white hover:border-blue-500 font-normal"
+                                                >
+                                                    Best match
+                                                </div>
+                                                <ul
+                                                    tabIndex={0}
+                                                    className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                                                >
+                                                    <li>
+                                                        <a>Item 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a>Item 2</a>
+                                                    </li>
                                                 </ul>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div>
                                         <div className="relative">
-                                            <input className="focus:outline-none w-auto lg:w-[300px] py-3 pl-3 hidden lg:block rounded-sm text-sm" type="text" placeholder="Search Here.." />
+                                            <input
+                                                className="focus:outline-none w-auto lg:w-[300px] py-3 pl-3 hidden lg:block rounded-sm text-sm"
+                                                type="text"
+                                                placeholder="Search Here.."
+                                            />
                                             <IoSearchSharp className="absolute hidden lg:block cursor-pointer text-blue-700 text-xl top-[25%] right-3" />
-
                                         </div>
                                     </div>
                                 </div>
                                 <div className="my-5">
                                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10 px-5 md:px-0 mt-10">
-                                        {
-                                            categoryWiseProducts.map(product => <ProductCard key={product.id} product={product}></ProductCard>)
-                                        }
+                                        {categoryWiseProducts?.data?.length > 0 ? (
+                                            categoryWiseProducts?.data?.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))
+                                        ) : (
+                                            <div className="flex flex-col justify-center items-center w-full">
+                                                <img
+                                                    src={noData} // Replace with your image path
+                                                    alt="No products available"
+                                                    className="w-1/2 mb-5"
+                                                />
+                                                <p className="text-center text-xl font-semibold">No Products Available</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

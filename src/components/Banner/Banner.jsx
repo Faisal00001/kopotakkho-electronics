@@ -160,40 +160,37 @@ const Banner = () => {
                         clickable: true,
                     }}
                     modules={[Pagination]}
-                    className="mySwiper pb-14"
+                    className="mySwiper"
                 >
                     <SwiperSlide className="px-5 md:px-0">
-                        <div className="bg-blue-800 rounded pb-10 md:pb-0 md:h-[600px]">
-                            <div className="flex flex-col-reverse md:flex-row items-center md:pt-[170px]">
-                                <div className="w-full md:w-[50%] mt-10">
-                                    <div className="flex  relative justify-center">
-                                        <div style={{
-                                            backgroundColor: '#EF4444',
-                                            transform: 'skew(-25deg)',
-                                            width: '240px', // Adjust width as needed
-                                            height: '60px', // Adjust height as needed
-                                        }}>
-
-                                        </div>
-                                        <div className="absolute top-[20%]">
-                                            <h3 className="text-2xl md:text-3xl font-bold text-slate-50">Top Deals</h3>
-                                        </div>
+                        <div className="flex items-center justify-center cursor-pointer">
+                            <div className="flip-card w-[100%] h-[600px] rounded-md" onMouseEnter={handleFliped}>
+                                <motion.div
+                                    className="flip-card-inner w-[100%] h-[80%]"
+                                    initial={false}
+                                    animate={{ rotateY: isFliped ? 180 : 360 }}
+                                    transition={{ duration: 0.6, animationDirection: "normal" }}
+                                    onAnimationComplete={() => setIsAnimating(false)}
+                                >
+                                    <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
+                                        backgroundImage: `url(${offer1})`
+                                    }}>
+                                        {/* <h1 className="text-2xl font-bold">Sky</h1>
+                                    <p>Lorem ipsum dolor sit amet consectetur</p> */}
                                     </div>
-                                    <h3 className="text-xl md:text-2xl text-slate-50 mt-5 font-bold text-center px-5">Don't miss out on this week's hottest deals</h3>
-                                    <div className="pl-14">
-                                        <button className="px-6 py-3 mt-10  bg-white text-blue-800 rounded text-sm font-semibold">Shop Now</button>
+                                    <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4" style={{
+                                        backgroundImage: `url(${offer2})`
+                                    }}>
+                                        {/* <h1 className="text-2xl font-bold">Maize</h1> */}
+                                        {/* <p>Lorem ipsum dolor sit amet consectetur</p> */}
                                     </div>
-                                </div>
-                                <div className="w-[80%] md:w-[50%] mt-10 md:pr-5">
-                                    <img className="" src={image1} alt="" />
-                                </div>
-
+                                </motion.div>
                             </div>
                         </div>
                     </SwiperSlide>
                     {
                         hotOffersProduct.length > 0 ? hotOffersProduct.slice(0, 4).map((product, index) => <SwiperSlide key={index} className="px-5 md:px-0">
-                            <div className="card card-compact border-[1px] border-gray-300 bg-base-100">
+                            <div className="card card-compact border-[1px] border-gray-300 bg-base-100 h-[480px]">
                                 <figure>
                                     <img className="h-[167px]"
                                         src={product.image}

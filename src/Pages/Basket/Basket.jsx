@@ -116,6 +116,11 @@ const Basket = () => {
     const handleCheckout = () => {
         if (!user) {
             navigate('/login')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Login to proceed for checkout!",
+            });
             return; // Exit the function early if user is not present
         }
 
@@ -210,7 +215,12 @@ const Basket = () => {
     // Update the price of the cart item based on the new quantity
     const handleAddToWishList = async (cartItem) => {
         if (!user) {
-            console.log('User not present');
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please Login to add product in your wishlist!",
+            });
+
             return; // Exit the function early if user is not present
         }
 

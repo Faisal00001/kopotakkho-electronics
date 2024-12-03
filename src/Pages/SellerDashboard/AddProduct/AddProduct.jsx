@@ -14,7 +14,7 @@ const AddProduct = () => {
     const [fileName, setFileName] = useState({ image: '', product_file: '', multiple_images: '' });
     const [formError, setFormError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
+
 
     const imageInputRef = useRef(null);
     const multipleImagesInputRef = useRef(null);
@@ -224,7 +224,7 @@ const AddProduct = () => {
             if (res.data.bool === false) {
                 setFormError(true);
                 setErrorMsg(res.data.msg || 'Oops... Something went wrong! hehe');
-                setSuccessMsg('');
+
                 return; // Exit the function early since there's an error
             }
 
@@ -247,7 +247,7 @@ const AddProduct = () => {
             });
             setFormError(false);
             setErrorMsg('');
-            setSuccessMsg('Product added successfully');
+
             setFileName({ image: '', product_file: '', multiple_images: '' });
             setImagePreview(null);
             // imageInputRef.current.value = '';
@@ -269,7 +269,7 @@ const AddProduct = () => {
                     .then(response => {
                         // console.log('Hello from here too');
                         // console.log(response);
-                        // toast.success('Image added successfully');
+                        toast.success('Product added successfully');
                     })
                     .catch(error => {
                         setFormError(true);
@@ -279,7 +279,7 @@ const AddProduct = () => {
 
             // Wait for all images to upload
             await Promise.all(uploadPromises);
-            console.log('All images have been uploaded successfully!');
+
         } catch (error) {
             console.error('Error during product submission:', error);
             setFormError(true);
@@ -293,14 +293,12 @@ const AddProduct = () => {
 
 
             <form className="max-w-sm mx-auto">
-                {successMsg &&
-                    <p className='text-success'>{successMsg}</p>
-                }
+
                 {errorMsg &&
                     <p className='text-danger'>{errorMsg}</p>
                 }
                 <div className="mb-5">
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Category</label>
                     <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name='category' value={productData.category} onChange={inputHandler} required>
                         <option value={""}>Choose a category</option>
                         {
@@ -314,37 +312,37 @@ const AddProduct = () => {
 
                 </div>
                 <div className="mb-5">
-                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 ">Title</label>
                     <input type="text" value={productData.title} name="title" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
 
                 </div>
                 {/* <div className="mb-5">
-                    <label htmlFor="slug" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-                    <input type="text" value={productData.slug} name="slug" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    <label htmlFor="slug" className="block mb-2 text-sm font-medium text-gray-900 ">Slug</label>
+                    <input type="text" value={productData.slug} name="slug" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
 
                 </div> */}
                 <div className="mb-5">
-                    <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                    <input type="text" value={productData.price} name="price" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
+                    <input type="text" value={productData.price} name="price" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
 
                 </div>
 
                 <div className="mb-5">
-                    <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Details</label>
-                    <textarea id="message" value={productData.detail} name="detail" onChange={inputHandler} rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." />
+                    <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 ">Details</label>
+                    <textarea id="message" value={productData.detail} name="detail" onChange={inputHandler} rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your thoughts here..." />
                 </div>
                 <div className="mb-5">
-                    <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
-                    <textarea id="message" value={productData.tags} name="tags" onChange={inputHandler} rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." />
+                    <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 ">Tags</label>
+                    <textarea id="message" value={productData.tags} name="tags" onChange={inputHandler} rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Write your tags here..." />
                 </div>
                 <div className="mb-5">
-                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Demo URL</label>
-                    <input type="url" value={productData.demo_url} name="demo_url" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Demo URL</label>
+                    <input type="url" value={productData.demo_url} name="demo_url" onChange={inputHandler} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " required />
 
                 </div>
                 <div className="relative mb-5 flex w-full max-w-sm flex-col gap-1">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Featured Image</label>
-                    <input type="file" onChange={fileHandler} name='image' className="w-full overflow-clip rounded-xl border border-slate-300 bg-slate-100/50 text-sm text-slate-700 file:mr-4 file:cursor-pointer file:border-none file:bg-slate-100 file:px-4 file:py-2 file:font-medium file:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-75 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:file:bg-slate-800 dark:file:text-white dark:focus-visible:outline-blue-600" />
+                    <label className="block mb-2 text-sm font-medium text-gray-900 ">Featured Image</label>
+                    <input type="file" onChange={fileHandler} name='image' className="w-full overflow-clip rounded-xl border border-slate-300 bg-slate-100/50 text-sm text-slate-700 file:mr-4 file:cursor-pointer file:border-none file:bg-slate-100 file:px-4 file:py-2 file:font-medium file:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-75 dark:border-slate-700 " />
                 </div>
                 {imagePreview && (
                     <div className="mb-3">
@@ -352,8 +350,8 @@ const AddProduct = () => {
                     </div>
                 )}
                 <div className="relative mb-5 flex w-full max-w-sm flex-col gap-1">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Multiple Featured Image</label>
-                    <input type="file" multiple name='multiple_images' onChange={multipleFileHandler} className="w-full overflow-clip rounded-xl border border-slate-300 bg-slate-100/50 text-sm text-slate-700 file:mr-4 file:cursor-pointer file:border-none file:bg-slate-100 file:px-4 file:py-2 file:font-medium file:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-75 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:file:bg-slate-800 dark:file:text-white dark:focus-visible:outline-blue-600" />
+                    <label className="block mb-2 text-sm font-medium text-gray-900 ">Multiple Featured Image</label>
+                    <input type="file" multiple name='multiple_images' onChange={multipleFileHandler} className="w-full overflow-clip rounded-xl border border-slate-300 bg-slate-100/50 text-sm text-slate-700 file:mr-4 file:cursor-pointer file:border-none file:bg-slate-100 file:px-4 file:py-2 file:font-medium file:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-75 " />
                 </div>
 
 
@@ -361,17 +359,17 @@ const AddProduct = () => {
 
                 <div className="flex items-start mb-5">
                     <div className="flex items-center h-5">
-                        <input name='publish_status' checked={productData.publish_status} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                        <input name='publish_status' checked={productData.publish_status} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" required />
                     </div>
                     <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Publish</label>
                 </div>
                 <div className="flex items-start mb-5">
                     <div className="flex items-center h-5">
-                        <input name='hot_deal' checked={productData.hot_deal} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                        <input name='hot_deal' checked={productData.hot_deal} onChange={checkBoxHandler} type="checkbox" defaultValue className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" required />
                     </div>
                     <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hot Deal</label>
                 </div>
-                <button onClick={handleSubmit} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Product</button>
+                <button onClick={handleSubmit} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Add Product</button>
             </form>
 
 

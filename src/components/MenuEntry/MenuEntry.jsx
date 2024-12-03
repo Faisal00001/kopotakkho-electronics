@@ -6,9 +6,9 @@ const MenuEntry = ({ option }) => {
     return (
         <div>
             <ul className="list-none py-2 text-sm">
-                <li className="hover:underline cursor-pointer">
-                    <Link to={`/categories/${id}`}>{title}</Link>
-                </li>
+                <Link to={`/categories/${id}`} className="hover:underline cursor-pointer">
+                    <p>{title}</p>
+                </Link>
             </ul>
 
         </div>
