@@ -264,7 +264,7 @@ const AddProduct = () => {
                         // console.log('Hello from here too');
                         // console.log(response);
                         toast.success('Product added successfully');
-                        navigate(`sellerDashboard/addSpecificationOnParticularProduct/${response?.data?.id}`)
+                        // navigate(`/sellerDashboard/addSpecificationOnParticularProduct/${response?.data?.id}`)
                     })
                     .catch(error => {
                         setFormError(true);
