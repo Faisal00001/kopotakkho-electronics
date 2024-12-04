@@ -1,7 +1,9 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import { jwtDecode } from 'jwt-decode';
+import { useContext } from "react";
 const PrivateRoute = ({ children }) => {
+    const { customerLogoutHandler } = useContext
     const user = JSON.parse(localStorage.getItem('user'))
 
     const access_token = user?.access_token
@@ -32,7 +34,7 @@ const PrivateRoute = ({ children }) => {
         // Check if the token is expired
         if (decodedToken.exp < currentTime) {
             // Token has expired, clear storage and redirect to login
-            localStorage.removeItem('user');
+            customerLogoutHandler();
 
             <Navigate to={'/'}></Navigate>
         }

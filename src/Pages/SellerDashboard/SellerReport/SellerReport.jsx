@@ -2,8 +2,10 @@
 import { useCallback, useEffect, useState } from "react";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import Chart from 'react-apexcharts';
+import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 
 const SellerReport = () => {
+    const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic()
     const vendor = JSON.parse(localStorage.getItem('user'))
     const vendor_id = vendor.id
@@ -28,7 +30,7 @@ const SellerReport = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axiosPublic.get(`/vendor/${vendor_id}/${reportTypeUrl}/`);
+            const response = await axiosSecure.get(`/vendor/${vendor_id}/${reportTypeUrl}/`);
             const dates = response?.data?.data.map(item => item.date); // Correctly accessing the nested data
             const totals = response?.data?.data.map(item => item.total_orders);
             setDates(dates);
@@ -40,7 +42,7 @@ const SellerReport = () => {
         } finally {
             setLoading(false);
         }
-    }, [reportType, axiosPublic, vendor_id]);
+    }, [reportType, axiosSecure, vendor_id]);
     useEffect(() => {
         fetchReportData(); // Fetch data when reportType changes
     }, [fetchReportData]);

@@ -1,12 +1,35 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 // import { useNavigate } from "react-router-dom";
 // import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://kopotakkhoelectronics.com/api'
+    baseURL: 'https://kopotakkhoelectronics.com/api',
+    maxContentLength: Infinity, // Increase maximum request content length
+    maxBodyLength: Infinity,
 });
+// Customer logout handler
+const customerLogoutHandler = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
 
+    const refreshToken = user.refresh_token;
+    const accessToken = user.access_token;
+
+    if (refreshToken && accessToken) {
+        try {
+            const response = await axiosInstance.post('/logout/', { refresh_token: refreshToken });
+
+            if (response.status === 200) {
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error("Customer logout failed:", error.response?.data || error.message);
+        }
+    }
+};
 const useAxiosSecure = () => {
+
     axiosSecure.interceptors.request.use(function (config) {
         const user = localStorage.getItem('user');
 
@@ -41,6 +64,7 @@ const useAxiosSecure = () => {
         if (status === 401 || status === 403) {
             console.error("Unauthorized or forbidden request");
             // Optional: Handle unauthorized access differently if needed
+            customerLogoutHandler()
             return Promise.reject(new Error("Unauthorized access"));
         }
 

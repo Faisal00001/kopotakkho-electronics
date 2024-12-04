@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode"; // Import jwt-decode to decode the token
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-    const axiosSecure = useAxiosSecure();
+    const axiosSecure = useAxiosSecure(AuthContext);
     const [user, setUser] = useState(null);
     const isLogin = localStorage.getItem('user');
     const [loadingUser, setLoadingUser] = useState(true);

@@ -2,21 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import useCategories from "../../../components/hooks/useCategories";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 
 
 const AddProduct = () => {
     const vendor = JSON.parse(localStorage.getItem('user'))
-    // const axiosPublic = useAxiosPublic()
-    const axiosSecure = useAxiosSecure()
-    const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
     // const [Categories, setCategories] = useState([]);
     const [ProductImgs, setProductImgs] = useState([]);
     const [imagePreview, setImagePreview] = useState(null);
     const [categoryError, setCategoryError] = useState(false);
     const [fileName, setFileName] = useState({ image: '', product_file: '', multiple_images: '' });
     const [formError, setFormError] = useState(false);
+    const [successMsg, setSuccessMsg] = useState('')
     const [errorMsg, setErrorMsg] = useState('');
 
 
@@ -218,10 +215,16 @@ const AddProduct = () => {
             formData.append('publish_status', productData.publish_status);
 
             // Submit the product data
-            const res = await axiosSecure.post('/products/', formData);
+            const res = await axiosPublic.post('/products/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
             if (res.data.bool === false) {
                 setFormError(true);
+                setSuccessMsg('')
                 setErrorMsg(res.data.msg || 'Oops... Something went wrong! hehe');
 
                 return; // Exit the function early since there's an error
@@ -259,12 +262,16 @@ const AddProduct = () => {
                 imageFormData.append('product', res.data.id);
                 imageFormData.append('image', item);
 
-                return axiosSecure.post('/product-imgs/', imageFormData)
+                return axiosPublic.post('/product-imgs/', imageFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(response => {
                         // console.log('Hello from here too');
                         // console.log(response);
-                        toast.success('Product added successfully');
-                        // navigate(`/sellerDashboard/addSpecificationOnParticularProduct/${response?.data?.id}`)
+                        setSuccessMsg('Product added successfully');
                     })
                     .catch(error => {
                         setFormError(true);
@@ -288,7 +295,10 @@ const AddProduct = () => {
 
 
             <form className="max-w-sm mx-auto">
-
+                {
+                    successMsg &&
+                    <p className="text-green-500">{successMsg}</p>
+                }
                 {errorMsg &&
                     <p className='text-danger'>{errorMsg}</p>
                 }
