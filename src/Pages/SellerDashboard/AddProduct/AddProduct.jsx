@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import useCategories from "../../../components/hooks/useCategories";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
 
 
 const AddProduct = () => {
     const vendor = JSON.parse(localStorage.getItem('user'))
-    const axiosPublic = useAxiosPublic()
+    // const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
     // const [Categories, setCategories] = useState([]);
     const [ProductImgs, setProductImgs] = useState([]);
     const [imagePreview, setImagePreview] = useState(null);
@@ -214,12 +218,7 @@ const AddProduct = () => {
             formData.append('publish_status', productData.publish_status);
 
             // Submit the product data
-            const res = await axiosPublic.post('/products/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const res = await axiosSecure.post('/products/', formData);
 
             if (res.data.bool === false) {
                 setFormError(true);
@@ -260,16 +259,12 @@ const AddProduct = () => {
                 imageFormData.append('product', res.data.id);
                 imageFormData.append('image', item);
 
-                return axiosPublic.post('/product-imgs/', imageFormData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
+                return axiosSecure.post('/product-imgs/', imageFormData)
                     .then(response => {
                         // console.log('Hello from here too');
                         // console.log(response);
                         toast.success('Product added successfully');
+                        navigate(`sellerDashboard/addSpecificationOnParticularProduct/${response?.data?.id}`)
                     })
                     .catch(error => {
                         setFormError(true);
