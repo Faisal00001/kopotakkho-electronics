@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
             return true; // If decoding fails, consider token expired
         }
     };
-    // Clear all cookies
+    // Clear all cookies clean
     const clearAllCookies = () => {
         const cookies = document.cookie.split(";");
 
