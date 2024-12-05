@@ -11,7 +11,6 @@ const OurHottestOffer = () => {
             <span className="loading loading-ring loading-lg"></span>
         </div>
     }
-    console.log(products.data)
     const hotOffersProduct = products?.data?.filter(product => product.hot_deal === true) || []
 
 

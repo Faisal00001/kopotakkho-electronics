@@ -31,6 +31,17 @@ const AuthProvider = ({ children }) => {
             return true; // If decoding fails, consider token expired
         }
     };
+    // Function to clear all cookies
+    const clearAllCookies = () => {
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+        }
+    };
 
     // Customer logout handler
     const customerLogoutHandler = async () => {
@@ -45,6 +56,8 @@ const AuthProvider = ({ children }) => {
 
                 if (response.status === 200) {
                     localStorage.removeItem('user');
+                    sessionStorage.clear(); // Clear all session storage data
+                    clearAllCookies(); // Call the function to clear all cookies
                     window.location.href = '/';
                 }
             } catch (error) {
