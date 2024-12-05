@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import useAxiosSecure from "../components/hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -31,24 +31,32 @@ const AuthProvider = ({ children }) => {
             return true; // If decoding fails, consider token expired
         }
     };
-    // Function to clear all cookies
+    // Clear all cookies
     const clearAllCookies = () => {
         const cookies = document.cookie.split(";");
 
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i];
+        cookies.forEach(cookie => {
             const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
-        }
+            const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
+
+            // Clear cookie for current domain
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+
+            // Attempt to clear the cookie for root domain (if applicable)
+            const domainParts = window.location.hostname.split(".");
+            if (domainParts.length > 1) {
+                const rootDomain = `.${domainParts.slice(-2).join(".")}`; // Example: .kopotakkhoelectronics.com
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=${rootDomain}`;
+            }
+        });
     };
 
-    // Customer logout handler
-    const customerLogoutHandler = async () => {
+
+    const customerLogoutHandler = useCallback(async () => {
         const user = JSON.parse(localStorage.getItem("user"));
 
-        const refreshToken = user.refresh_token;
-        const accessToken = user.access_token;
+        const refreshToken = user?.refresh_token;
+        const accessToken = user?.access_token;
 
         if (refreshToken && accessToken) {
             try {
@@ -64,7 +72,7 @@ const AuthProvider = ({ children }) => {
                 console.error("Customer logout failed:", error.response?.data || error.message);
             }
         }
-    };
+    }, []);
 
     useEffect(() => {
         // Check if user is present in localStorage
@@ -84,7 +92,7 @@ const AuthProvider = ({ children }) => {
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
-    }, []);
+    }, [customerLogoutHandler]);
 
     useEffect(() => {
         // Update localStorage whenever cartItems changes
