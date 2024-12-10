@@ -257,7 +257,7 @@ const AddProduct = () => {
 
 
             // Now, upload multiple images associated with the product
-            const uploadPromises = ProductImgs.map(item => {
+            const uploadPromises = ProductImgs.map((item) => {
                 const imageFormData = new FormData();
                 imageFormData.append('product', res.data.id);
                 imageFormData.append('image', item);
@@ -297,7 +297,7 @@ const AddProduct = () => {
             <form className="max-w-sm mx-auto">
                 {
                     successMsg &&
-                    <p className="text-green-500">{successMsg}</p>
+                    <p className="text-green-600 text-center my-5 text-4xl font-bold">{successMsg}</p>
                 }
                 {errorMsg &&
                     <p className='text-danger'>{errorMsg}</p>

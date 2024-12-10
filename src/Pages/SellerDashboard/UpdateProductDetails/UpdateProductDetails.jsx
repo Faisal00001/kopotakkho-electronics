@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../../components/hooks/useAxiosPublic";
 import axios from "axios";
+import useAxiosSecure from "../../../components/hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 
 const UpdateProductDetails = () => {
@@ -10,6 +13,7 @@ const UpdateProductDetails = () => {
     const vendor = JSON.parse(localStorage.getItem('user'));
     const token = vendor.access_token;
     const { id } = useParams();
+    const axiosSecure = useAxiosSecure()
     const axiosPublic = useAxiosPublic();
     const product_id = id;
 
@@ -103,17 +107,38 @@ const UpdateProductDetails = () => {
     };
 
     const deleteImage = (image_id) => {
-        axios.delete(`${baseUrl}/product-img-delete/${image_id}/`)
-            .then(response => {
-                setProductData(prev => ({
-                    ...prev,
-                    product_image: prev.product_image.filter(img => img.id !== image_id),
-                }));
-                console.log(response);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/product-img-delete/${image_id}/`)
+                    .then(response => {
+                        setProductData(prev => ({
+                            ...prev,
+                            product_image: prev.product_image.filter(img => img.id !== image_id),
+                        }));
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+
+                    })
+                    .catch(error => {
+                        toast.error('Failed to delete the file')
+                        console.error('Error:', error);
+                    });
+
+
+            }
+        });
+
     };
 
     const checkBoxHandler = (e) => {
@@ -158,25 +183,27 @@ const UpdateProductDetails = () => {
                     setErrorMsg(response.data.msg || 'Oops... Something went wrong!');
                     setSuccessMsg('');
                 } else {
-                    setProductData({
-                        category: '',
-                        vendor: '',
-                        title: '',
-                        detail: '',
-                        price: '',
-                        usd_price: '',
-                        tags: '',
-                        image: '',
-                        demo_url: '',
-                        publish_status: false,
-                        product_image: [],
-                        product_file: '',
-                    });
+                    // Make changes
+                    // setProductData({
+                    //     category: '',
+                    //     vendor: '',
+                    //     title: '',
+                    //     detail: '',
+                    //     price: '',
+                    //     usd_price: '',
+                    //     tags: '',
+                    //     image: '',
+                    //     demo_url: '',
+                    //     publish_status: false,
+                    //     product_image: [],
+                    //     product_file: '',
+                    // });
 
                     setErrorMsg('');
                     setSuccessMsg('Product updated successfully');
-                    setFileName({ image: '', product_file: '', multiple_images: '' });
-                    setImagePreview(null);
+                    // Make changes
+                    // setFileName({ image: '', product_file: '', multiple_images: '' });
+                    // setImagePreview(null);
                     // Reset file inputs
                     // imageInputRef.current.value = '';
                     // multipleImagesInputRef.current.value = '';
@@ -209,13 +236,13 @@ const UpdateProductDetails = () => {
                 setSuccessMsg('');
             });
     };
-
+    console.log(ProductData)
     return (
         <div>
             <h3 className="text-2xl md:text-4xl text-center font-bold">Update Product</h3>
             <div className="ml-10 my-10">
 
-                {successMsg && <p className='text-success'>{successMsg}</p>}
+                {successMsg && <p className='text-success text-center my-5 text-4xl font-bold'>{successMsg}</p>}
                 {errorMsg && <p className='text-danger'>{errorMsg}</p>}
                 <form className="max-w-sm mx-auto">
                     <div className="mb-5">
@@ -261,7 +288,7 @@ const UpdateProductDetails = () => {
                     </div>
                     <div className="mb-5">
                         <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Demo Url</label>
-                        <input type="text" name="demo_url" onChange={inputHandler} value={ProductData.demo_url} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        <input type="text" name="demo_url" onChange={inputHandler} value={ProductData.demo_url} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                     <div className="mb-5">
 
@@ -306,7 +333,7 @@ const UpdateProductDetails = () => {
                                             style={{ maxWidth: '100%', height: 'auto' }}
                                         />
                                         <div>
-                                            <button onClick={() => deleteImage(index)} className="absolute top-1 right-5 btn bg-red-500 text-white hover:bg-red-500">Delete</button>
+                                            <button type="button" onClick={() => deleteImage(product.id)} className="absolute top-1 right-5 btn bg-red-500 text-white hover:bg-red-500">Delete</button>
                                         </div>
                                     </div>
                                 );

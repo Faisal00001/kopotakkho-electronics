@@ -53,7 +53,7 @@ const SellerProducts = () => {
             }
         });
     }
-
+    console.log('Vendor produycts', vendorProducts)
     return (
         <div >
             <div className="ml-10">
