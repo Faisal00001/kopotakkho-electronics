@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -24,6 +24,6 @@
 }
 
 body {
-  font-family: "Crimson Text", serif;
+  font-family: "JetBrains Mono", serif;
   font-style: normal;
 }

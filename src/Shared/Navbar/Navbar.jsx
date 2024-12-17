@@ -308,7 +308,7 @@ const Navbar = () => {
                 <div className="hidden lg:block">
                     <ul className="flex gap-5  text-sm items-center text-white">
                         <div>
-                            <div className="flex items-center cursor-pointer select-none">
+                            <div className="flex items-center cursor-pointer select-none ">
                                 {categories?.data?.map((category, index) => (
                                     <div
                                         key={index}

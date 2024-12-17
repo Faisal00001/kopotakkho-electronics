@@ -56,6 +56,13 @@ import AddProductSpecification from "../Pages/SellerDashboard/AddProductSpecific
 import AddSpecificationOnParticularProduct from "../Pages/SellerDashboard/AddSpecificationOnParticularProduct/AddSpecificationOnParticularProduct";
 import HotDeal from "../Pages/HotDeal/HotDeal";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import ManageStock from "../Pages/SellerDashboard/ManageStock/ManageStock";
+import AddStock from "../Pages/SellerDashboard/AddStock/AddStock";
+import SupplierManager from "../Pages/SellerDashboard/SupplierManager/SupplierManager";
+import AddSupplier from "../Pages/SellerDashboard/AddSupplier/AddSupplier";
+import SearchResultSupplier from "../Pages/SellerDashboard/SearchResultSupplier/SearchResultSupplier";
+import SearchResultsManageStocks from "../Pages/SellerDashboard/SearchResultsMangeStocks/SearchResultsManageStocks";
+
 
 
 
@@ -249,6 +256,31 @@ const router = createBrowserRouter([
             {
                 path: 'addSpecificationOnParticularProduct/:id',
                 element: <AddSpecificationOnParticularProduct></AddSpecificationOnParticularProduct>
+            },
+            {
+                path: 'manageStock',
+                element: <ManageStock></ManageStock>
+            },
+            {
+                path: 'addStock',
+                element: <AddStock></AddStock>
+            },
+            {
+                path: 'supplierManager',
+                element: <SupplierManager></SupplierManager>
+            },
+            {
+                path: 'addSupplier',
+                element: <AddSupplier></AddSupplier>
+            },
+            {
+                path: 'searchResultSupplier',
+                element: <SearchResultSupplier></SearchResultSupplier>
+            },
+            {
+                path: 'searchResultsManageStocks',
+                element: <SearchResultsManageStocks></SearchResultsManageStocks>
+
             }
         ]
     },

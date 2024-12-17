@@ -4,7 +4,7 @@ import useAxiosSecure from '../../../components/hooks/useAxiosSecure';
 
 const SellerProfile = () => {
     const axiosSecure = useAxiosSecure();
-    const baseUrl = 'http://127.0.0.1:8000/api';
+    const baseUrl = 'https://kopotakkhoelectronics.com/api';
     const [profileData, setProfileData] = useState({
         id: '',
         user: {

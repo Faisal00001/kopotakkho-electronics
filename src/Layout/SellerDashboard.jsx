@@ -4,7 +4,7 @@ import Navbar from "../Shared/Navbar/Navbar";
 import { MdAssignmentAdd, MdListAlt, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { IoIosTimer } from "react-icons/io";
-import { FaClipboardList, FaRegUserCircle } from "react-icons/fa";
+import { FaChevronDown, FaClipboardList, FaRegUserCircle } from "react-icons/fa";
 import { GoChecklist } from "react-icons/go";
 import Footer from "../Shared/Footer/Footer";
 import { Toaster } from "react-hot-toast";
@@ -13,11 +13,16 @@ import { FaUsersLine } from "react-icons/fa6";
 import { BiSolidReport } from "react-icons/bi";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
+import { SiShutterstock } from "react-icons/si";
 
 
 const SellerDashboard = () => {
     const location = useLocation()
     const [pathName, setPathName] = useState('')
+    const [open, setOpen] = useState(false);
+    const handleMouseLeave = (value) => {
+        setOpen(false)
+    }
     useEffect(() => {
         if (location.pathname === '/dashboard/orderHistory') {
             setPathName('Order History')
@@ -147,6 +152,49 @@ const SellerDashboard = () => {
 
                                         <h3>Add Product Specification</h3>
                                     </div></NavLink>
+                                {/* POS */}
+                                <div
+
+                                    className="relative"
+                                    onMouseEnter={() => setOpen(true)}
+                                    onMouseLeave={() => setOpen(false)}
+                                >
+                                    <div className="flex gap-1 items-center cursor-pointer select-none hover:bg-black hover:text-white px-2 text-blue-800">
+                                        <SiShutterstock className="text-2xl"></SiShutterstock>
+                                        <div tabIndex={0} role="button" className="py-3 m-1">
+                                            POS
+                                        </div>
+                                        <FaChevronDown
+                                            className={`mr-5 transition-transform duration-300 ${open === true ? "rotate-180" : "rotate-0"
+                                                }`}
+                                        />
+                                    </div>
+
+                                    {/* Dropdown */}
+                                    <ul
+                                        className={`absolute left-0 -mt-[0.5px] z-10 bg-white rounded-none w-52 p-2 text-black shadow border-[1px] border-gray-300 transition-all duration-300 ${open === true ? "opacity-100 visible" : "opacity-0 invisible"
+                                            }`}
+                                    >
+                                        <li>
+                                            <Link
+                                                to={'/sellerDashboard/manageStock'}
+                                                className="block px-4 py-2 hover:bg-gray-300"
+                                                onClick={handleMouseLeave} // Close dropdown on click
+                                            >
+                                                Manage Stock
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                to={'/sellerDashboard/supplierManager'}
+                                                className="block px-4 py-2 hover:bg-gray-300"
+                                                onClick={handleMouseLeave} // Close dropdown on click
+                                            >
+                                                Supplier Manage
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
                                 {/* <NavLink to="/sellerDashboard/updateProduct" className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "bg-blue-900 font-semibold py-3 px-2 rounded-sm text-white" : "py-3 px-2 text-blue-800"
                                 }>

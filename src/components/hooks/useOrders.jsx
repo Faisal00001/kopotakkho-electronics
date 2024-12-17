@@ -14,7 +14,7 @@ const useOrders = () => {
         queryKey: ['userOrders', currentPage],
         queryFn: async () => {
             const res = await axiosPublic.get(`/customer/${userId}/order-items/?format=json&page=${currentPage}`);
-            setTotalPage(Math.ceil(res.data.count / 10))
+            setTotalPage(Math.ceil(res.count / 1))
             return res.data;
         }
     })
